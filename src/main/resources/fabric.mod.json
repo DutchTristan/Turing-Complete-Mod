@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "turingcomplete",
+	"version": "${version}",
+	"name": "TuringComplete",
+	"description": "This mods adds the basic building blocks of a computer to Minecraft!",
+	"authors": [
+		"DutchTristan"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/turingcomplete/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"name.turingcomplete.TuringComplete"
+		],
+		"client": [
+			"name.turingcomplete.TuringCompleteClient"
+		],
+		"fabric-datagen": [
+			"name.turingcomplete.TuringCompleteDataGenerator"
+		]
+	},
+	"mixins": [
+		"turingcomplete.mixins.json",
+		{
+			"config": "turingcomplete.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.3",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "": {
+      "model" : "turingcomplete:block/nand_gate_block"
+    },
+    "facing=north" : {
+      "model" : "turingcomplete:block/nand_gate_block", "y": 0
+    },
+    "facing=east": {
+      "model" : "turingcomplete:block/nand_gate_block", "y": 90
+    },
+    "facing=south": {
+      "model" : "turingcomplete:block/nand_gate_block", "y": 180
+    },
+    "facing=west": {
+      "model" : "turingcomplete:block/nand_gate_block", "y": 270
+    }
+  }
+}
