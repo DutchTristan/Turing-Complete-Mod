@@ -2,6 +2,8 @@ package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
 import name.turingcomplete.block.NAND_Gate_Block;
+import name.turingcomplete.block.NOT_Gate_Block;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
@@ -15,6 +17,9 @@ public class blockInit {
     public static final NAND_Gate_Block NAND_GATE_BLOCK = registerWithItem("nand_gate_block",
             new NAND_Gate_Block(Settings.copy(Blocks.COMPARATOR)));
 
+
+    public static final NOT_Gate_Block NOT_GATE = registerWithItem("not_gate_block",
+            new NOT_Gate_Block(AbstractBlock.Settings.copy(Blocks.COMPARATOR)));
 
     public static <T extends Block> T register(String name, T block){
         return Registry.register(Registries.BLOCK, TuringComplete.id(name), block);

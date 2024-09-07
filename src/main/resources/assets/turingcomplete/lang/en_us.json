@@ -1,4 +1,5 @@
 {
   "item.turingcomplete.nand_gate" : "NAND Gate",
-  "block.turingcomplete.nand_gate_block" : "NAND Gate Block"
+  "block.turingcomplete.nand_gate_block" : "NAND Gate Block",
+  "block.turingcomplete.not_gate_block" : "NOT Gate Block"
 }

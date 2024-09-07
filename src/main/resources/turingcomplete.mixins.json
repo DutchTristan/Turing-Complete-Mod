@@ -1,11 +1,12 @@
 {
-	"required": true,
-	"package": "name.turingcomplete.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"ExampleMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "name.turingcomplete.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ExampleMixin",
+    "RedstoneWireBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }
