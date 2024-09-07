@@ -4,7 +4,9 @@ import com.mojang.serialization.MapCodec;
 import name.turingcomplete.init.blockEntityTypeInit;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
@@ -34,6 +36,10 @@ public class NOT_Gate_Block extends AbstractRedstoneGateBlock{
             setDefaultState(getDefaultState().with(SWAPPED_DIR, false));
     }
 
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+        this.updateTarget(world, pos, state);
+    }
 
     public MapCodec<ComparatorBlock> getCodec() {
         return CODEC;
@@ -66,7 +72,7 @@ public class NOT_Gate_Block extends AbstractRedstoneGateBlock{
     protected boolean hasPower(World world, BlockPos pos, BlockState state) {
         Direction frontDir = state.get(FACING);
         BlockPos frontPos = pos.offset(frontDir);
-        int i = this.getPower(world, frontPos, state);
+        int i = this.getPower(world, pos, state);
         return i == 0;
     }
 
@@ -78,9 +84,9 @@ public class NOT_Gate_Block extends AbstractRedstoneGateBlock{
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (hasPower(world, pos, state)) {
-            world.setBlockState(pos, (BlockState)state.with(POWERED, true), 2);
+            world.setBlockState(pos, (BlockState)state.with(POWERED, true));
         } else {
-            world.setBlockState(pos, (BlockState)state.with(POWERED, false), 2);
+            world.setBlockState(pos, (BlockState)state.with(POWERED, false));
         }
 
         super.scheduledTick(state, world, pos, random);
