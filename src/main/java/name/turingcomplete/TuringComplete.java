@@ -1,5 +1,6 @@
 package name.turingcomplete;
 
+import name.turingcomplete.block.NOT_Gate_Block;
 import name.turingcomplete.init.blockEntityTypeInit;
 import name.turingcomplete.init.blockInit;
 import name.turingcomplete.init.itemInit;
