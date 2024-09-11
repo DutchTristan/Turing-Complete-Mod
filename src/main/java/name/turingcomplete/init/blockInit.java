@@ -5,7 +5,6 @@ import name.turingcomplete.block.NAND_Gate_Block;
 import name.turingcomplete.block.NOT_Gate_Block;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -13,11 +12,12 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 
-import static net.minecraft.block.AbstractBlock.*;
-
 public class blockInit {
-    public static final NAND_Gate_Block NAND_GATE_BLOCK = registerWithItem("nand_gate_block",
-            new NAND_Gate_Block(Settings.copy(Blocks.COMPARATOR)));
+    public static final NAND_Gate_Block NAND_GATE = registerWithItem("nand_gate_block",
+            new NAND_Gate_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
 
 
     public static final NOT_Gate_Block NOT_GATE = registerWithItem("not_gate_block",

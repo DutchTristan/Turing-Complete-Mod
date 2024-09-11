@@ -1,29 +1,36 @@
 package name.turingcomplete.block;
 
-import net.minecraft.block.Block;
+import name.turingcomplete.AbstractLogicGate;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 
-public class NAND_Gate_Block extends Block {
+
+public class NAND_Gate_Block extends AbstractLogicGate {
 
     public NAND_Gate_Block(Settings settings) {
         super(settings);
     }
 
     @Override
-    protected int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
-        return super.getStrongRedstonePower(state, world, pos, direction);
+    public String getBlockIdPath() { return "nand_gate"; }
+
+    @Override
+    public boolean gateConditionsMet(BlockState thisBlockState, World world, BlockPos pos)
+    {
+        boolean left = getSideInputLevel(thisBlockState, world, pos,0) > 0;
+        boolean right = getSideInputLevel(thisBlockState, world, pos, 1) > 0;
+        return !(left && right);
     }
 
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context){
+    @Override
+    public boolean supportsSideDirection() {
+        return true;
+    }
 
-        return VoxelShapes.cuboid(0, 0, 0, 1, 0.125, 1);
-
+    @Override
+    public boolean supportsBackDirection() {
+        return false;
     }
 
 
