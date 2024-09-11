@@ -5,22 +5,17 @@ import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
@@ -30,7 +25,7 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
     public AbstractLogicGate(AbstractBlock.Settings settings) {
         super(settings);
 
-        setDefaultState(getDefaultState().with(POWERED, true));
+        setDefaultState(getDefaultState());
     }
 
     @Override
@@ -51,8 +46,13 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         return VoxelShapes.cuboid(0, 0, 0, 1, 0.125, 1);
     }
 
-    public BlockState getPlacementState(ItemPlacementContext context) {
-        return super.getPlacementState(context).with(Properties.HORIZONTAL_FACING, context.getHorizontalPlayerFacing().getOpposite());
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx)
+    {
+        BlockState state = getDefaultState();
+        state = state.with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        state = state.with(POWERED, gateConditionsMet(state, ctx.getWorld(), ctx.getBlockPos()));
+        return state;
     }
 
     @Override
@@ -60,20 +60,11 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         return 0;
     }
 
+    //=============================================
+
     @Override
     protected boolean hasPower(World world, BlockPos pos, BlockState state) {
         return gateConditionsMet(state, world, pos);
-    }
-
-    @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (hasPower(world, pos, state)) {
-            world.setBlockState(pos, (BlockState)state.with(POWERED, true));
-        } else {
-            world.setBlockState(pos, (BlockState)state.with(POWERED, false));
-        }
-
-        super.scheduledTick(state, world, pos, random);
     }
 
     public Boolean dustConnectsToThis(BlockState state, Direction dir) {
@@ -141,20 +132,11 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         return getInput(world, sidePos, sideDir);
     }
 
-    protected int getFrontInputLevel(BlockState state, WorldView world, BlockPos pos)
-    {
-        Direction frontDir = state.get(FACING);
-        BlockPos frontPos = pos.offset(frontDir);
-        return getInput(world, frontPos, frontDir);
-    }
-
     //===============================================================================
 
     public String getBlockIdPath() {
         return null;
     }
 
-    public boolean gateConditionsMet(BlockState state, World world, BlockPos pos) {
-        return false;
-    }
+    public abstract boolean gateConditionsMet(BlockState state, World world, BlockPos pos);
 }

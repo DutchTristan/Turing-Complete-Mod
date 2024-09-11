@@ -14,6 +14,9 @@ public class blockEntityTypeInit {
     public static final BlockEntityType<ExampleBE> NAND_GATE = register("nand_gate_block",
             BlockEntityType.Builder.create(ExampleBE::new, blockInit.NAND_GATE).build());
 
+    public static final BlockEntityType<ExampleBE> AND_GATE = register("and_gate_block",
+            BlockEntityType.Builder.create(ExampleBE::new, blockInit.AND_GATE).build());
+
     public static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type){
         return Registry.register(Registries.BLOCK_ENTITY_TYPE, TuringComplete.id(name), type);
     }

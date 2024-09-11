@@ -3,6 +3,7 @@ package name.turingcomplete.init;
 import name.turingcomplete.TuringComplete;
 import name.turingcomplete.block.NAND_Gate_Block;
 import name.turingcomplete.block.NOT_Gate_Block;
+import name.turingcomplete.block.AND_Gate_Block;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.piston.PistonBehavior;
@@ -22,6 +23,12 @@ public class blockInit {
 
     public static final NOT_Gate_Block NOT_GATE = registerWithItem("not_gate_block",
             new NOT_Gate_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
+    public static final AND_Gate_Block AND_GATE = registerWithItem("and_gate_block",
+            new AND_Gate_Block(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
