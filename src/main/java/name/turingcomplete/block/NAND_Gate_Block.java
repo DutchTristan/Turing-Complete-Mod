@@ -32,6 +32,4 @@ public class NAND_Gate_Block extends AbstractLogicGate {
     public boolean supportsBackDirection() {
         return false;
     }
-
-
 }

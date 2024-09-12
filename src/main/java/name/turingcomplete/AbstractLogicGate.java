@@ -31,6 +31,7 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         this.updateTarget(world, pos, state);
+        this.updatePowered(world,pos,state);
     }
 
     public MapCodec<ComparatorBlock> getCodec() {
@@ -78,7 +79,7 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
             return supportsSideDirection();
         }
         if(dir == face_front) {
-            return true;//supportsBackDirection();
+            return true;
         }
         else return supportsBackDirection();
     }
