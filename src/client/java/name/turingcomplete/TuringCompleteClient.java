@@ -12,5 +12,6 @@ public class TuringCompleteClient implements ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlock(blockInit.NOT_GATE, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(blockInit.NAND_GATE, RenderLayer.getCutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(blockInit.NOR_GATE, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(blockInit.XNOR_GATE, RenderLayer.getCutout());
 	}
 }

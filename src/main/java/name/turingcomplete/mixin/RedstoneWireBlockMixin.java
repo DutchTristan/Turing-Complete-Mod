@@ -23,7 +23,9 @@ public class RedstoneWireBlockMixin {
                 !(state.getBlock() instanceof NAND_Gate_Block) &&
                 !(state.getBlock() instanceof AND_Gate_Block) &&
                 !(state.getBlock() instanceof NOR_Gate_Block) &&
-                !(state.getBlock() instanceof OR_Gate_Block))
+                !(state.getBlock() instanceof OR_Gate_Block) &&
+                !(state.getBlock() instanceof XOR_Gate_Block) &&
+                !(state.getBlock() instanceof XNOR_Gate_Block))
             return;
 
         //check for null direction
@@ -65,6 +67,20 @@ public class RedstoneWireBlockMixin {
         if(state.getBlock() instanceof NOR_Gate_Block)
         {
             NOR_Gate_Block algb = (NOR_Gate_Block)state.getBlock();
+            e.setReturnValue(algb.dustConnectsToThis(state, dir));
+            e.cancel();
+            return;
+        }
+        if(state.getBlock() instanceof XOR_Gate_Block)
+        {
+            XOR_Gate_Block algb = (XOR_Gate_Block)state.getBlock();
+            e.setReturnValue(algb.dustConnectsToThis(state, dir));
+            e.cancel();
+            return;
+        }
+        if(state.getBlock() instanceof XNOR_Gate_Block)
+        {
+            XNOR_Gate_Block algb = (XNOR_Gate_Block)state.getBlock();
             e.setReturnValue(algb.dustConnectsToThis(state, dir));
             e.cancel();
             return;

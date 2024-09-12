@@ -50,6 +50,18 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
+    public static final XNOR_Gate_Block XNOR_GATE = registerWithItem("xnor_gate_block",
+            new XNOR_Gate_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
+    public static final XOR_Gate_Block XOR_GATE = registerWithItem("xor_gate_block",
+            new XOR_Gate_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
     public static <T extends Block> T register(String name, T block){
         return Registry.register(Registries.BLOCK, TuringComplete.id(name), block);
     }
