@@ -14,11 +14,11 @@
   },
   "pattern": [
     "GR ",
-    " NG",
+    " N ",
     "GR "
   ],
   "result": {
     "count": 1,
-    "id": "turingcomplete:and_gate_block"
+    "id": "turingcomplete:or_gate_block"
   }
 }

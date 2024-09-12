@@ -1,10 +1,7 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
-import name.turingcomplete.block.Logic_Base_Plate_Block;
-import name.turingcomplete.block.NAND_Gate_Block;
-import name.turingcomplete.block.NOT_Gate_Block;
-import name.turingcomplete.block.AND_Gate_Block;
+import name.turingcomplete.block.*;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.piston.PistonBehavior;
@@ -40,6 +37,12 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)
             ));
+
+    public static final OR_Gate_Block OR_GATE = registerWithItem("or_gate_block",
+            new OR_Gate_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
 
     public static <T extends Block> T register(String name, T block){
         return Registry.register(Registries.BLOCK, TuringComplete.id(name), block);

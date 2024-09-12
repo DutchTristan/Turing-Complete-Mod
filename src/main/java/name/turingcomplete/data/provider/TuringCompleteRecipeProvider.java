@@ -51,7 +51,17 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .input('R', Blocks.REDSTONE_WIRE)
                 .input('G', blockInit.NOT_GATE)
                 .pattern("GR ")
-                .pattern("RNG")
+                .pattern(" NG")
+                .pattern("GR ")
+                .criterion(hasItem(Blocks.SMOOTH_STONE_SLAB),conditionsFromItem(Blocks.SMOOTH_STONE_SLAB))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.OR_GATE, 1)
+                .input('N', blockInit.NAND_GATE)
+                .input('R', Blocks.REDSTONE_WIRE)
+                .input('G', blockInit.NOT_GATE)
+                .pattern("GR ")
+                .pattern(" N ")
                 .pattern("GR ")
                 .criterion(hasItem(Blocks.SMOOTH_STONE_SLAB),conditionsFromItem(Blocks.SMOOTH_STONE_SLAB))
                 .offerTo(exporter);
