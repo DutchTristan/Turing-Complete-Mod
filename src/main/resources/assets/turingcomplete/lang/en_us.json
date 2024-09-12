@@ -3,6 +3,9 @@
   "block.turingcomplete.not_gate_block" : "NOT Gate Block",
   "block.turingcomplete.and_gate_block" : "AND Gate Block",
   "block.turingcomplete.or_gate_block" : "OR Gate Block",
+  "block.turingcomplete.nor_gate_block" : "NOR Gate Block",
+  "block.turingcomplete.xor_gate_block" : "XOR Gate Block",
+  "block.turingcomplete.xnor_gate_block" : "XNOR Gate Block",
   "block.turingcomplete.logic_base_plate_block" : "Logic Base Plate",
   "itemGroup.turingcomplete.group" : "Turing Complete"
 }

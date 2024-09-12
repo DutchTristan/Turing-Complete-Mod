@@ -21,6 +21,7 @@ public class itemGroupInit {
                 entries.add(blockInit.NOT_GATE);
                 entries.add(blockInit.OR_GATE);
                 entries.add(blockInit.AND_GATE);
+                entries.add(blockInit.NOR_GATE);
             })
             .build());
 

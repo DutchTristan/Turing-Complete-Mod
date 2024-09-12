@@ -44,6 +44,12 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
+    public static final NOR_Gate_Block NOR_GATE = registerWithItem("nor_gate_block",
+            new NOR_Gate_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
     public static <T extends Block> T register(String name, T block){
         return Registry.register(Registries.BLOCK, TuringComplete.id(name), block);
     }

@@ -1,8 +1,6 @@
 package name.turingcomplete.mixin;
 
-import name.turingcomplete.block.AND_Gate_Block;
-import name.turingcomplete.block.NOT_Gate_Block;
-import name.turingcomplete.block.NAND_Gate_Block;
+import name.turingcomplete.block.*;
 import net.minecraft.block.RedstoneWireBlock;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -23,7 +21,9 @@ public class RedstoneWireBlockMixin {
         //check for block type
         if(!(state.getBlock() instanceof NOT_Gate_Block) &&
                 !(state.getBlock() instanceof NAND_Gate_Block) &&
-                !(state.getBlock() instanceof AND_Gate_Block))
+                !(state.getBlock() instanceof AND_Gate_Block) &&
+                !(state.getBlock() instanceof NOR_Gate_Block) &&
+                !(state.getBlock() instanceof OR_Gate_Block))
             return;
 
         //check for null direction
@@ -51,6 +51,20 @@ public class RedstoneWireBlockMixin {
         if(state.getBlock() instanceof AND_Gate_Block)
         {
             AND_Gate_Block algb = (AND_Gate_Block)state.getBlock();
+            e.setReturnValue(algb.dustConnectsToThis(state, dir));
+            e.cancel();
+            return;
+        }
+        if(state.getBlock() instanceof OR_Gate_Block)
+        {
+            OR_Gate_Block algb = (OR_Gate_Block)state.getBlock();
+            e.setReturnValue(algb.dustConnectsToThis(state, dir));
+            e.cancel();
+            return;
+        }
+        if(state.getBlock() instanceof NOR_Gate_Block)
+        {
+            NOR_Gate_Block algb = (NOR_Gate_Block)state.getBlock();
             e.setReturnValue(algb.dustConnectsToThis(state, dir));
             e.cancel();
             return;
