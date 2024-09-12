@@ -1,0 +1,8 @@
+{
+  "render_type": "cutout",
+  "variants": {
+    "": {
+      "model": "turingcomplete:block/logic_base_plate_block"
+    }
+  }
+}

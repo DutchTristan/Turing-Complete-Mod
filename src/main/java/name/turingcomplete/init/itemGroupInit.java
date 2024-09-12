@@ -16,6 +16,7 @@ public class itemGroupInit {
             .icon(() -> new ItemStack(blockInit.AND_GATE))
             .displayName(TITLE)
             .entries((context, entries) -> {
+                entries.add(blockInit.LOGIC_BASE_PLATE_BLOCK);
                 entries.add(blockInit.NAND_GATE);
                 entries.add(blockInit.NOT_GATE);
                 entries.add(blockInit.AND_GATE);

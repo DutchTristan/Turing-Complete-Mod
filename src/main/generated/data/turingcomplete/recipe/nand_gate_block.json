@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "E": {
+      "item": "turingcomplete:logic_base_plate_block"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "T": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "pattern": [
+    " R ",
+    "TRT",
+    "EEE"
+  ],
+  "result": {
+    "count": 3,
+    "id": "turingcomplete:nand_gate_block"
+  }
+}

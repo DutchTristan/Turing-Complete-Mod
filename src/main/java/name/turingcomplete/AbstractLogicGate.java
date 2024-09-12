@@ -51,7 +51,7 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
     {
         BlockState state = getDefaultState();
         state = state.with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
-        state = state.with(POWERED, gateConditionsMet(state, ctx.getWorld(), ctx.getBlockPos()));
+        state = state.with(POWERED, hasPower(ctx.getWorld(), ctx.getBlockPos(), state));
         return state;
     }
 

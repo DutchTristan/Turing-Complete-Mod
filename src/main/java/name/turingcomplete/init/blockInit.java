@@ -1,6 +1,7 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
+import name.turingcomplete.block.Logic_Base_Plate_Block;
 import name.turingcomplete.block.NAND_Gate_Block;
 import name.turingcomplete.block.NOT_Gate_Block;
 import name.turingcomplete.block.AND_Gate_Block;
@@ -32,6 +33,13 @@ public class blockInit {
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
+
+    public static final Logic_Base_Plate_Block LOGIC_BASE_PLATE_BLOCK = registerWithItem("logic_base_plate_block",
+            new Logic_Base_Plate_Block(Block.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+            ));
 
     public static <T extends Block> T register(String name, T block){
         return Registry.register(Registries.BLOCK, TuringComplete.id(name), block);
