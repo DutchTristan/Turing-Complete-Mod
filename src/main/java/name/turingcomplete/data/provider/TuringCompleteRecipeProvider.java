@@ -65,5 +65,33 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .pattern("GR ")
                 .criterion(hasItem(Blocks.SMOOTH_STONE_SLAB),conditionsFromItem(Blocks.SMOOTH_STONE_SLAB))
                 .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.NOR_GATE, 1)
+                .input('N', blockInit.NAND_GATE)
+                .input('R', Blocks.REDSTONE_WIRE)
+                .input('G', blockInit.NOT_GATE)
+                .pattern("GR ")
+                .pattern(" NG")
+                .pattern("GR ")
+                .criterion(hasItem(Blocks.SMOOTH_STONE_SLAB),conditionsFromItem(Blocks.SMOOTH_STONE_SLAB))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.XOR_GATE, 1)
+                .input('N', blockInit.NAND_GATE)
+                .input('R', Blocks.REDSTONE_WIRE)
+                .pattern(" N ")
+                .pattern("NRN")
+                .pattern(" N ")
+                .criterion(hasItem(Blocks.SMOOTH_STONE_SLAB),conditionsFromItem(Blocks.SMOOTH_STONE_SLAB))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.XNOR_GATE, 1)
+                .input('X', blockInit.XOR_GATE)
+                .input('N', blockInit.NOT_GATE)
+                .pattern("   ")
+                .pattern(" XN")
+                .pattern("   ")
+                .criterion(hasItem(Blocks.SMOOTH_STONE_SLAB),conditionsFromItem(Blocks.SMOOTH_STONE_SLAB))
+                .offerTo(exporter);
     }
 }
