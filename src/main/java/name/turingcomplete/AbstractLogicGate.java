@@ -133,6 +133,27 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         return getInput(world, sidePos, sideDir);
     }
 
+    protected int getFrontInputLevel(BlockState state, WorldView world, BlockPos pos)
+    {
+        //get side dir
+        Direction frontDir = getGateFrontDir(state);
+        if(frontDir == null) return 0;
+
+        //get input level
+        BlockPos sidePos = pos.offset(frontDir);
+        return getInput(world, sidePos, frontDir);
+    }
+
+    @Nullable
+    public Direction getGateFrontDir(BlockState state)
+    {
+        //get direction
+        if(!supportsBackDirection()) return null;
+
+        //return
+        return state.get(FACING);
+    }
+
     //===============================================================================
 
     public String getBlockIdPath() {

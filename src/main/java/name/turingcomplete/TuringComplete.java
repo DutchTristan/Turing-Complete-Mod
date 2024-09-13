@@ -1,7 +1,6 @@
 package name.turingcomplete;
 
 
-import name.turingcomplete.init.blockEntityTypeInit;
 import name.turingcomplete.init.blockInit;
 import name.turingcomplete.init.itemInit;
 import name.turingcomplete.init.itemGroupInit;
@@ -30,8 +29,6 @@ public class TuringComplete implements ModInitializer {
 		LOGGER.info("Items initialised...");
 		blockInit.load();
 		LOGGER.info("Blocks initialised...");
-		blockEntityTypeInit.load();
-		LOGGER.info("Block Entities initialised...");
 		itemGroupInit.load();
 		LOGGER.info("Item Group initialised...");
 
