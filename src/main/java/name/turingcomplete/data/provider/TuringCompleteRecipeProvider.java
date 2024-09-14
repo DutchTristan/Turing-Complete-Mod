@@ -50,9 +50,9 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .input('N', blockInit.NAND_GATE)
                 .input('R', Blocks.REDSTONE_WIRE)
                 .input('G', blockInit.NOT_GATE)
-                .pattern("GR ")
+                .pattern(" R ")
                 .pattern(" NG")
-                .pattern("GR ")
+                .pattern(" R ")
                 .criterion(hasItem(Blocks.SMOOTH_STONE_SLAB),conditionsFromItem(Blocks.SMOOTH_STONE_SLAB))
                 .offerTo(exporter);
 

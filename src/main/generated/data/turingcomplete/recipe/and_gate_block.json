@@ -13,9 +13,9 @@
     }
   },
   "pattern": [
-    "GR ",
+    " R ",
     " NG",
-    "GR "
+    " R "
   ],
   "result": {
     "count": 1,
