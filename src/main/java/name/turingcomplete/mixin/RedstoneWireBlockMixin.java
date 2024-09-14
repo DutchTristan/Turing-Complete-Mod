@@ -1,5 +1,6 @@
 package name.turingcomplete.mixin;
 
+import name.turingcomplete.AbstractLogicGate;
 import name.turingcomplete.block.*;
 import net.minecraft.block.RedstoneWireBlock;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,13 +20,7 @@ public class RedstoneWireBlockMixin {
     private static void connectsTo_tcd_mixin(BlockState state, Direction dir, CallbackInfoReturnable<Boolean> e)
     {
         //check for block type
-        if(!(state.getBlock() instanceof NOT_Gate_Block) &&
-                !(state.getBlock() instanceof NAND_Gate_Block) &&
-                !(state.getBlock() instanceof AND_Gate_Block) &&
-                !(state.getBlock() instanceof NOR_Gate_Block) &&
-                !(state.getBlock() instanceof OR_Gate_Block) &&
-                !(state.getBlock() instanceof XOR_Gate_Block) &&
-                !(state.getBlock() instanceof XNOR_Gate_Block))
+        if (!(state.getBlock() instanceof AbstractLogicGate))
             return;
 
         //check for null direction
@@ -35,52 +30,11 @@ public class RedstoneWireBlockMixin {
             e.cancel();
             return;
         }
-
-        if(state.getBlock() instanceof NOT_Gate_Block)
+        // use dustConnectsToThis(state, dir) to determine whether redstone dust should or should not
+        // connect to that side of the Logic Gate.
+        if(state.getBlock() instanceof AbstractLogicGate)
         {
-            NOT_Gate_Block algb = (NOT_Gate_Block)state.getBlock();
-            e.setReturnValue(algb.dustConnectsToThis(state, dir));
-            e.cancel();
-            return;
-        }
-        if(state.getBlock() instanceof NAND_Gate_Block)
-        {
-            NAND_Gate_Block algb = (NAND_Gate_Block)state.getBlock();
-            e.setReturnValue(algb.dustConnectsToThis(state, dir));
-            e.cancel();
-            return;
-        }
-        if(state.getBlock() instanceof AND_Gate_Block)
-        {
-            AND_Gate_Block algb = (AND_Gate_Block)state.getBlock();
-            e.setReturnValue(algb.dustConnectsToThis(state, dir));
-            e.cancel();
-            return;
-        }
-        if(state.getBlock() instanceof OR_Gate_Block)
-        {
-            OR_Gate_Block algb = (OR_Gate_Block)state.getBlock();
-            e.setReturnValue(algb.dustConnectsToThis(state, dir));
-            e.cancel();
-            return;
-        }
-        if(state.getBlock() instanceof NOR_Gate_Block)
-        {
-            NOR_Gate_Block algb = (NOR_Gate_Block)state.getBlock();
-            e.setReturnValue(algb.dustConnectsToThis(state, dir));
-            e.cancel();
-            return;
-        }
-        if(state.getBlock() instanceof XOR_Gate_Block)
-        {
-            XOR_Gate_Block algb = (XOR_Gate_Block)state.getBlock();
-            e.setReturnValue(algb.dustConnectsToThis(state, dir));
-            e.cancel();
-            return;
-        }
-        if(state.getBlock() instanceof XNOR_Gate_Block)
-        {
-            XNOR_Gate_Block algb = (XNOR_Gate_Block)state.getBlock();
+            AbstractLogicGate algb = (AbstractLogicGate) state.getBlock();
             e.setReturnValue(algb.dustConnectsToThis(state, dir));
             e.cancel();
             return;

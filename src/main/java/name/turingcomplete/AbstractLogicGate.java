@@ -22,31 +22,38 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
     public static final MapCodec<ComparatorBlock> CODEC = createCodec(ComparatorBlock::new);
     public static final BooleanProperty POWERED = Properties.POWERED;
 
+    // constructor
     public AbstractLogicGate(AbstractBlock.Settings settings) {
         super(settings);
 
         setDefaultState(getDefaultState());
     }
 
+    // When the logic gate is placed, the target and itself is updated, so a block update
+    // is not necessary for the logic gate to work
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         this.updateTarget(world, pos, state);
         this.updatePowered(world,pos,state);
     }
 
+    // don't worry about this, but it is important
     public MapCodec<ComparatorBlock> getCodec() {
         return CODEC;
     }
 
+    // defines the special placement properties that can be set later
     @Override
     protected void appendProperties(StateManager.Builder<Block, net.minecraft.block.BlockState> builder) {
         builder.add(Properties.HORIZONTAL_FACING, Properties.POWERED);
     }
 
+    // hitbox for the logic gate
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {
         return VoxelShapes.cuboid(0, 0, 0, 1, 0.125, 1);
     }
 
+    // Gets information about how the logic gate should be placed (direction and powered state)
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx)
     {
@@ -56,42 +63,54 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         return state;
     }
 
+    // Determines how long the logic gate waits before acting (1 tick repeater = return 2)
     @Override
     protected int getUpdateDelayInternal(BlockState state) {
         return 0;
     }
 
-    //=============================================
-
+    // Calls gateConditionsMet() to determine if an output should be on
     @Override
     protected boolean hasPower(World world, BlockPos pos, BlockState state) {
         return gateConditionsMet(state, world, pos);
     }
 
+    //=============================================
+
+    // used by RedstoneWireBlockMixin to determine where redstone should connect
     public Boolean dustConnectsToThis(BlockState state, Direction dir) {
         //get gate state dir
         Direction face_front = state.get(FACING);
         Direction left_side = getGateSideDir(state, 0);
         Direction right_side = getGateSideDir(state, 1);
 
-        //return
+        //return connect values
         if (dir == left_side || dir == right_side){
             return supportsSideDirection();
         }
-        if(dir == face_front) {
+        else if(dir == face_front) {
             return true;
         }
-        else return supportsBackDirection();
+        else if(dir == face_front.getOpposite()) {
+            return supportsBackDirection();
+        }
+        return null;
     }
 
+    // returns whether the logic gate should have side connections
     public boolean supportsSideDirection() {
         return false;
     }
 
+    //returns whether the logic gate should have a back connection
     public boolean supportsBackDirection(){
         return true;
     }
 
+    //=============================================
+
+    // uses int right more so as a boolean, 1 means turn to the right,
+    // 0 means turn to the left.
     @Nullable
     public Direction getGateSideDir(BlockState state, int right)
     {
@@ -107,7 +126,8 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         return sideDir;
     }
 
-
+    // gets the input and returns 0 if there is no input, and returns 15 (max redstone level)
+    // if there is an input
     protected int getInput(WorldView world, BlockPos pos, Direction dir)
     {
         BlockState blockState = world.getBlockState(pos);
@@ -122,6 +142,7 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         }
     }
 
+    // Calls getInput() for the side of the block, again using right as a boolean
     protected int getSideInputLevel(BlockState state, WorldView world, BlockPos pos, int right)
     {
         //get side dir
@@ -133,6 +154,7 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         return getInput(world, sidePos, sideDir);
     }
 
+    // Does the same as function getSideInputLevel(), but for front direction.
     protected int getFrontInputLevel(BlockState state, WorldView world, BlockPos pos)
     {
         //get side dir
@@ -144,6 +166,8 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         return getInput(world, sidePos, frontDir);
     }
 
+    // gets the direction for the back input (front and back
+    // are confusing with redstone gates) if supportsBackDirection() returns true
     @Nullable
     public Direction getGateFrontDir(BlockState state)
     {
@@ -160,5 +184,6 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
         return null;
     }
 
+    // Abstract function to be overridden by the logic gates with their own logic
     public abstract boolean gateConditionsMet(BlockState state, World world, BlockPos pos);
 }

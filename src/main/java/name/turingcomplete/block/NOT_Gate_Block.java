@@ -21,5 +21,4 @@ public class NOT_Gate_Block extends AbstractLogicGate {
         boolean input = getFrontInputLevel(thisBlockState, world, pos) > 0;
         return !input;
     }
-
 }
