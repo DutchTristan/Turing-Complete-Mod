@@ -3,13 +3,13 @@
 	"id": "turingcomplete",
 	"version": "${version}",
 	"name": "TuringComplete",
-	"description": "This mods adds the basic building blocks of a computer to Minecraft!",
+	"description": "Logic Gates in Minecraft!",
 	"authors": [
 		"DutchTristan"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://dutchtristan.notion.site/1012fafe7a8b8069bff6f6302be56027?v=91bce163e32843df8294d1b40f396841&pvs=74",
+		"sources": "https://github.com/DutchTristan/Turing-Complete-Mod"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/turingcomplete/icon.png",
