@@ -1,7 +1,7 @@
 {
   "render_type": "cutout",
   "variants": {
-    "facing=nxorth,powered=false" : {
+    "facing=north,powered=false" : {
       "model" : "turingcomplete:block/xor_gate_block", "y": 180
     },
     "facing=east,powered=false": {
@@ -13,7 +13,7 @@
     "facing=west,powered=false": {
       "model" : "turingcomplete:block/xor_gate_block", "y": 90
     },
-    "facing=nxorth,powered=true" : {
+    "facing=north,powered=true" : {
       "model" : "turingcomplete:block/xor_gate_block_on", "y": 180
     },
     "facing=east,powered=true": {
