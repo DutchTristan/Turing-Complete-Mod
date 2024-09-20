@@ -13,9 +13,6 @@ public class NOT_Gate_Block extends AbstractLogicGate {
     }
 
     @Override
-    public String getBlockIdPath() { return "not_gate"; }
-
-    @Override
     public boolean gateConditionsMet(BlockState thisBlockState, World world, BlockPos pos)
     {
         boolean input = getFrontInputLevel(thisBlockState, world, pos) > 0;

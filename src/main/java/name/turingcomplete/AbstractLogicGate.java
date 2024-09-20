@@ -180,10 +180,6 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
 
     //===============================================================================
 
-    public String getBlockIdPath() {
-        return null;
-    }
-
     // Abstract function to be overridden by the logic gates with their own logic
     public abstract boolean gateConditionsMet(BlockState state, World world, BlockPos pos);
 }

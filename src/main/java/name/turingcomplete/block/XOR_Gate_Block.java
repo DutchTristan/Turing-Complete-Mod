@@ -13,9 +13,6 @@ public class XOR_Gate_Block extends AbstractLogicGate {
     }
 
     @Override
-    public String getBlockIdPath() { return "xor_gate"; }
-
-    @Override
     public boolean gateConditionsMet(BlockState thisBlockState, World world, BlockPos pos)
     {
         boolean left = getSideInputLevel(thisBlockState, world, pos,0) > 0;

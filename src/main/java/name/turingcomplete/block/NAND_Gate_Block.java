@@ -13,9 +13,6 @@ public class NAND_Gate_Block extends AbstractLogicGate {
     }
 
     @Override
-    public String getBlockIdPath() { return "nand_gate"; }
-
-    @Override
     public boolean gateConditionsMet(BlockState thisBlockState, World world, BlockPos pos)
     {
         boolean left = getSideInputLevel(thisBlockState, world, pos,0) > 0;
