@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nand_gate_block": {
+    "has_or_gate_block": {
       "conditions": {
         "items": [
           {
-            "items": "turingcomplete:nand_gate_block"
+            "items": "turingcomplete:or_gate_block"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "turingcomplete:or_gate_block"
+        "recipe": "turingcomplete:3or_gate_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_nand_gate_block"
+      "has_or_gate_block"
     ]
   ],
   "rewards": {
     "recipes": [
-      "turingcomplete:or_gate_block"
+      "turingcomplete:3or_gate_block"
     ]
   }
 }

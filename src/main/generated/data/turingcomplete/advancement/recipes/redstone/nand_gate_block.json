@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_smooth_stone_slab": {
+    "has_logic_base_plate_block": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:smooth_stone_slab"
+            "items": "turingcomplete:logic_base_plate_block"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_smooth_stone_slab"
+      "has_logic_base_plate_block"
     ]
   ],
   "rewards": {

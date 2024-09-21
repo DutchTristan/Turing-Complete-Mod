@@ -24,6 +24,8 @@ public class itemGroupInit {
                 entries.add(blockInit.NOR_GATE);
                 entries.add(blockInit.XOR_GATE);
                 entries.add(blockInit.XNOR_GATE);
+                entries.add(blockInit.THREE_AND_GATE);
+                entries.add(blockInit.THREE_OR_GATE);
             })
             .build());
 
