@@ -72,22 +72,11 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
     // Calls gateConditionsMet() to determine if an output should be on
     @Override
     protected boolean hasPower(World world, BlockPos pos, BlockState state) {
-        if (hasEnable(world, pos, state)){
-            return gateConditionsMet(state, world, pos);
-        }
-        else{
-            return false;
-        }
+        return gateConditionsMet(state, world, pos);
     }
 
-    protected boolean hasEnable(World world, BlockPos pos, BlockState state){
-        if (getSideInputLevel(state, world, pos, 1) > 0){
-            world.setBlockState(pos, state.with(ENABLED, true));
-            return true;
-        }
-        world.setBlockState(pos, state.with(ENABLED, false));
-        return false;
-    }
+    public abstract boolean hasEnable(World world, BlockPos pos, BlockState state);
+
 
     //=============================================
 

@@ -12,20 +12,19 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SWITCH_Gate_Block extends AbstractEnableGate {
+public class MEMORY_Cell_Block extends AbstractEnableGate {
 
-    public SWITCH_Gate_Block(Settings settings) {
+    public MEMORY_Cell_Block(Settings settings) {
         super(settings);
     }
 
     @Override
     public boolean gateConditionsMet(BlockState thisBlockState, World world, BlockPos pos) {
+        boolean back = getFrontInputLevel(thisBlockState, world, pos) > 0;
         if (hasEnable(world, pos, thisBlockState)){
-            boolean back = getFrontInputLevel(thisBlockState, world, pos) > 0;
             return back;
         }
-        return false;
-
+        return thisBlockState.get(POWERED);
     }
 
     @Override
@@ -36,10 +35,5 @@ public class SWITCH_Gate_Block extends AbstractEnableGate {
         }
         world.setBlockState(pos, state.with(ENABLED, false));
         return false;
-    }
-
-    @Override
-    public void appendTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-        tooltip.add(Text.translatable("block.turingcomplete.switch_gate_block.tooltip").formatted(Formatting.RED).formatted(Formatting.ITALIC));
     }
 }
