@@ -110,5 +110,15 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .pattern("   ")
                 .criterion(hasItem(blockInit.OR_GATE),conditionsFromItem(blockInit.OR_GATE))
                 .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.SWITCH_GATE, 1)
+                .input('C', Blocks.COMPARATOR)
+                .input('R', Blocks.REDSTONE_WIRE)
+                .input('T', Blocks.REDSTONE_TORCH)
+                .pattern("TR ")
+                .pattern("RCR")
+                .pattern("   ")
+                .criterion(hasItem(Blocks.COMPARATOR),conditionsFromItem(Blocks.COMPARATOR))
+                .offerTo(exporter);
     }
 }

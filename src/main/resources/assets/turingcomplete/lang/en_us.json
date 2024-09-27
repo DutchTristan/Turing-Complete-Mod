@@ -9,5 +9,7 @@
   "block.turingcomplete.logic_base_plate_block" : "Logic Base Plate",
   "block.turingcomplete.3and_gate_block" : "3-AND Gate Block",
   "block.turingcomplete.3or_gate_block" : "3-OR Gate Block",
+  "block.turingcomplete.switch_gate_block" : "Switch Gate Block",
+  "block.turingcomplete.switch_gate_block.tooltip" : "Also known as the Tristate Buffer",
   "itemGroup.turingcomplete.group" : "Turing Complete"
 }

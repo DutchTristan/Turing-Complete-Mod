@@ -1,6 +1,8 @@
-// 1.21	2024-09-21T13:12:45.355196	TuringComplete/Recipes
+// 1.21	2024-09-27T10:25:15.821205	TuringComplete/Recipes
+40eaafbd02e4fdb3a45152489fd3955b109ae442 data/turingcomplete/advancement/recipes/redstone/switch_gate_block.json
 929eb1b47d0e3a29e6b7fced56820384dabace5d data/turingcomplete/recipe/or_gate_block.json
 48aa1296a3799e5fb25407f110d44100ef42a909 data/turingcomplete/advancement/recipes/redstone/not_gate_block.json
+49b0287cf547fe643af63e822850a9438a9e6bb3 data/turingcomplete/recipe/switch_gate_block.json
 84d09467bdce2be318319c948240197c756e2154 data/turingcomplete/advancement/recipes/redstone/nand_gate_block.json
 79e92995772681c3c87c0a3e2b757c6b4d51db1e data/turingcomplete/advancement/recipes/redstone/or_gate_block.json
 5252c490e6cd6d27f7633b1204007d6ded7be58b data/turingcomplete/advancement/recipes/redstone/xor_gate_block.json

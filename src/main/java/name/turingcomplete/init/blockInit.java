@@ -62,6 +62,8 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
+    //===============================================================================================
+
     public static final THREE_AND_Gate_Block THREE_AND_GATE = registerWithItem("3and_gate_block",
             new THREE_AND_Gate_Block(AbstractBlock.Settings.create()
                     .breakInstantly()
@@ -70,6 +72,14 @@ public class blockInit {
 
     public static final THREE_OR_Gate_Block THREE_OR_GATE = registerWithItem("3or_gate_block",
             new THREE_OR_Gate_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
+    //===============================================================================================
+
+    public static final SWITCH_Gate_Block SWITCH_GATE = registerWithItem("switch_gate_block",
+            new SWITCH_Gate_Block(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
