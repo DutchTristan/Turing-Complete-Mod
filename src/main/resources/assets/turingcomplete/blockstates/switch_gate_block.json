@@ -25,6 +25,18 @@
     "facing=west,powered=false,enabled=true": {
       "model" : "turingcomplete:block/switch_gate_block_e_off", "y": 90
     },
+    "facing=north,powered=true,enabled=false" : {
+      "model" : "turingcomplete:block/switch_gate_block_on", "y": 180
+    },
+    "facing=east,powered=true,enabled=false": {
+      "model" : "turingcomplete:block/switch_gate_block_on", "y": 270
+    },
+    "facing=south,powered=true,enabled=false": {
+      "model" : "turingcomplete:block/switch_gate_block_on", "y": 0
+    },
+    "facing=west,powered=true,enabled=false": {
+      "model" : "turingcomplete:block/switch_gate_block_on", "y": 90
+    },
     "facing=north,powered=true,enabled=true" : {
       "model" : "turingcomplete:block/switch_gate_block_e_on", "y": 180
     },
