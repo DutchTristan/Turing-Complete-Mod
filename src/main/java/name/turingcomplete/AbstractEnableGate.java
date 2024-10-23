@@ -122,7 +122,8 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
         boolean a =
                 blockState.getWeakRedstonePower(world, pos, dir) +
                         blockState.getStrongRedstonePower(world, pos, dir) > 0;
-        if (!a) {
+        boolean b = world.getEmittedRedstonePower(pos,dir) > 0;
+        if (!a && !b) {
             return 0;
         }
         else{
