@@ -54,7 +54,7 @@ public class Half_Adder extends MultiBlockGate {
 
     @Override
     public boolean gateConditionsMet(BlockState state, World world, BlockPos pos) {
-        /*if (state.get(PART) == BLOCK_PART.TOP){
+        if (state.get(PART) == BLOCK_PART.TOP){
             if (getSideInput(world,state,pos) > 0) {
                 this.setHalfSum(world,pos,state,true);
             } else {
@@ -80,7 +80,7 @@ public class Half_Adder extends MultiBlockGate {
                 return (state1.get(HALFSUM) ^ state2.get(HALFSUM));
             }
             return false;
-        }*/
+        }
         return false;
     }
     
