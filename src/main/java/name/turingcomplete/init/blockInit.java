@@ -93,6 +93,14 @@ public class blockInit {
 
     //===============================================================================================
 
+    public static final Half_Adder HALF_ADDER = registerWithItem("half_adder",
+            new Half_Adder(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
+
+
 
 
     public static <T extends Block> T register(String name, T block){
