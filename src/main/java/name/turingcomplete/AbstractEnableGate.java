@@ -3,11 +3,14 @@ package name.turingcomplete;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -22,12 +25,13 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
     public static final MapCodec<ComparatorBlock> CODEC = createCodec(ComparatorBlock::new);
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty ENABLED = Properties.ENABLED;
+    public static final BooleanProperty SWAPPED_DIR = BooleanProperty.of("swapped_direction");
 
     // constructor
     public AbstractEnableGate(Settings settings) {
         super(settings);
 
-        setDefaultState(getDefaultState().with(POWERED, false).with(ENABLED, false));
+        setDefaultState(getDefaultState().with(POWERED, false).with(ENABLED, false).with(SWAPPED_DIR, false));
     }
 
     // When the logic gate is placed, the target and itself is updated, so a block update
@@ -46,7 +50,14 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
     // defines the special placement properties that can be set later
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(Properties.HORIZONTAL_FACING, POWERED, ENABLED);
+        builder.add(Properties.HORIZONTAL_FACING, POWERED, ENABLED, SWAPPED_DIR);
+    }
+
+    @Override
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        boolean swapped = state.get(SWAPPED_DIR);
+        world.setBlockState(pos, state.with(SWAPPED_DIR, !swapped), Block.NOTIFY_ALL);
+        return ActionResult.SUCCESS;
     }
 
     // hitbox for the logic gate
@@ -84,13 +95,16 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
     public Boolean dustConnectsToThis(BlockState state, Direction dir) {
         //get gate state dir
         Direction face_front = state.get(FACING);
-        Direction left_side = getGateSideDir(state, 0);
+        Direction enable_side = getGateSideDir(state, 0);
+        if (state.get(SWAPPED_DIR)){
+            enable_side = getGateSideDir(state, 1);
+        }
 
         //return connect values
-        if (dir == left_side || dir == face_front || dir == face_front.getOpposite()){
+        if (dir == enable_side || dir == face_front || dir == face_front.getOpposite()){
             return true;
         }
-        else if (dir == left_side.getOpposite()){
+        else if (dir == enable_side.getOpposite()){
             return false;
         }
         return null;
@@ -98,16 +112,16 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
 
     //=============================================
 
-    // uses int right more so as a boolean, 1 means turn to the right,
-    // 0 means turn to the left.
+    // uses int left more so as a boolean, 0 means turn to the right,
+    // 1 means turn to the left.
     @Nullable
-    public Direction getGateSideDir(BlockState state, int right)
+    public Direction getGateSideDir(BlockState state, int left)
     {
         //get direction
         Direction sideDir = state.get(FACING);
 
         //rotate front direction
-        if(right == 1) sideDir = sideDir.rotateYClockwise();
+        if(left == 1) sideDir = sideDir.rotateYClockwise();
         else sideDir = sideDir.rotateYCounterclockwise();
 
         //return
@@ -131,10 +145,10 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
     }
 
     // Calls getInput() for the side of the block, again using right as a boolean
-    protected int getSideInputLevel(BlockState state, WorldView world, BlockPos pos, int right)
+    protected int getSideInputLevel(BlockState state, WorldView world, BlockPos pos, int left)
     {
         //get side dir
-        Direction sideDir = getGateSideDir(state, right);
+        Direction sideDir = getGateSideDir(state, left);
         if(sideDir == null) return 0;
 
         //get input level

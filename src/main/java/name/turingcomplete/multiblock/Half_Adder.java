@@ -28,7 +28,7 @@ public class Half_Adder extends MultiBlockGate {
         return 2;
     }
 
-    @Override
+
     public boolean hasEnable(World world, BlockPos pos, BlockState state) {
         if (state.get(PART) == BLOCK_PART.MIDDLE) {
             Direction dir1 = state.get(FACING).rotateYCounterclockwise();

@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
 import net.minecraft.world.tick.TickPriority;
 
-public abstract class MultiBlockGate extends AbstractEnableGate{
+public abstract class MultiBlockGate extends AbstractLogicGate{
     public static final EnumProperty<BLOCK_PART> PART = EnumProperty.of("part", BLOCK_PART.class);
 
 
