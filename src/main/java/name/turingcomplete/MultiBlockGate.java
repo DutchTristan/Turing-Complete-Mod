@@ -28,7 +28,7 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
 
 
     public static final BooleanProperty SUM = Properties.POWERED;
-    public static final BooleanProperty CARRY = Properties.ENABLED;
+    public static final BooleanProperty CARRY = BooleanProperty.of("carry");
     public static final BooleanProperty HALFSUM = BooleanProperty.of("halfsum");
 
     protected static final VoxelShape SHAPE = VoxelShapes.cuboid(0, 0, 0, 1, 0.125, 1);

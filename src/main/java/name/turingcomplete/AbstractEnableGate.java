@@ -6,6 +6,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
@@ -56,7 +58,12 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
         boolean swapped = state.get(SWAPPED_DIR);
-        world.setBlockState(pos, state.with(SWAPPED_DIR, !swapped), Block.NOTIFY_ALL);
+        state = state.with(SWAPPED_DIR, !swapped);
+        state = state.with(POWERED, hasPower(world,pos, state));
+        state = state.with(ENABLED, hasEnable(world,pos,state));
+
+        world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.5F);
+        this.updateTarget(world, pos, state);
         return ActionResult.SUCCESS;
     }
 
