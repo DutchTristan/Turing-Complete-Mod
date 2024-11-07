@@ -4,14 +4,10 @@ import com.mojang.serialization.MapCodec;
 import name.turingcomplete.BLOCK_PART;
 import name.turingcomplete.MultiBlockGate;
 import net.minecraft.block.*;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.tick.TickPriority;
-
-import static net.minecraft.block.RedstoneWireBlock.POWER;
 
 
 public class Half_Adder extends MultiBlockGate {
@@ -28,37 +24,7 @@ public class Half_Adder extends MultiBlockGate {
 
     @Override
     protected int getUpdateDelayInternal(BlockState state) {
-        return 2;
-    }
-
-
-    public boolean hasCarry(World world, BlockPos pos, BlockState state) {
-        /*if (state.get(PART) == BLOCK_PART.MIDDLE) {
-            Direction dir1 = state.get(FACING).rotateYCounterclockwise();
-            Direction dir2 = state.get(FACING).rotateYClockwise();
-            BlockPos pos1 = pos.offset(dir1);
-            BlockPos pos2 = pos.offset(dir2);
-            BlockState state1 = world.getBlockState(pos1);
-            BlockState state2 = world.getBlockState(pos2);
-            BlockPos SumPos = pos1.offset(dir1);
-            BlockState SumState = world.getBlockState(SumPos);
-            if (SumState.isOf(Blocks.REDSTONE_WIRE)) {
-                if (state1.get(HALFSUM) && state2.get(HALFSUM)) {
-                    world.setBlockState(SumPos, state.with(POWER, 15), Block.NOTIFY_LISTENERS);
-                    return true;
-                } else {
-                    world.setBlockState(SumPos, state.with(POWER, 0), Block.NOTIFY_LISTENERS);
-                    return false;
-                }
-            }
-        }*/
-        if (state.get(PART) == BLOCK_PART.BOTTOM){
-            BlockState MidBlock = world.getBlockState(pos.offset(state.get(FACING).rotateYClockwise()));
-            if (!MidBlock.get(POWERED) && state.get(HALFSUM)){
-                return true;
-            }
-        }
-        return false;
+        return 0;
     }
 
     @Override
@@ -79,14 +45,19 @@ public class Half_Adder extends MultiBlockGate {
         }
         if (state.get(PART) == BLOCK_PART.MIDDLE) {
             world.setBlockState(pos, state.with(HALFSUM,false));
-            Direction dir1 = state.get(FACING).rotateYCounterclockwise();
-            Direction dir2 = state.get(FACING).rotateYClockwise();
-            BlockPos pos1 = pos.offset(dir1);
-            BlockPos pos2 = pos.offset(dir2);
+            Direction dir = state.get(FACING).rotateYCounterclockwise();
+            BlockPos pos1 = pos.offset(dir);
+            BlockPos pos2 = pos.offset(dir.getOpposite());
             BlockState state1 = world.getBlockState(pos1);
             BlockState state2 = world.getBlockState(pos2);
             if (state1.isOf(this) && state2.isOf(this)) {
-                return (state1.get(HALFSUM) ^ state2.get(HALFSUM));
+                if (getSideInput(world, state1, pos1) > 0 && getSideInput(world, state2, pos2) > 0){
+                    world.setBlockState(pos1,state1.with(CARRY, true));
+                }
+                else{
+                    world.setBlockState(pos1, state1.with(CARRY, false));
+                }
+                return ((getSideInput(world, state1, pos1) > 0) ^ (getSideInput(world, state2, pos2) > 0));
             }
             return false;
         }
@@ -96,27 +67,23 @@ public class Half_Adder extends MultiBlockGate {
     //=============================================
 
     @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        boolean bl = (Boolean)state.get(POWERED);
-        boolean bl2 = this.hasPower(world, pos, state);
-        if (bl && !bl2) {
-            world.setBlockState(pos, state.with(POWERED, Boolean.valueOf(false)), Block.NOTIFY_LISTENERS);
-        } else if (!bl) {
-            world.setBlockState(pos, state.with(POWERED, Boolean.valueOf(true)), Block.NOTIFY_LISTENERS);
-            if (!bl2) {
-                world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+    protected int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
+        if (state.get(PART) == BLOCK_PART.MIDDLE) {
+            if (!(Boolean) state.get(POWERED)) {
+                return 0;
+            } else {
+                return state.get(FACING) == direction ? this.getOutputLevel(world, pos, state) : 0;
             }
         }
-        boolean bl3 = this.hasCarry(world,pos,state);
-        if (bl3){
-            world.setBlockState(pos.offset(state.get(FACING).rotateYCounterclockwise()), state.with(POWER, 15), Block.NOTIFY_LISTENERS);
+        else if (state.get(PART) == BLOCK_PART.BOTTOM){
+            if (!(Boolean) state.get(CARRY)) {
+                return 0;
+            } else {
+                return state.get(FACING).rotateYClockwise() == direction ? this.getOutputLevel(world, pos, state) : 0;
+            }
         }
-        else{
-            world.setBlockState(pos.offset(state.get(FACING).rotateYCounterclockwise()), state.with(POWER, 15), Block.NOTIFY_LISTENERS);
-        }
-
+        return 0;
     }
-
 
     //=============================================
     
