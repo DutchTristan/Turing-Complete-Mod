@@ -62,6 +62,31 @@
     },
     "facing=west,halfsum=true,part=bottom,carry=true": {
       "model" : "turingcomplete:block/half_adder_bottom_on_carry", "y": 90
+    },
+
+    "facing=north,part=middle,powered=false": {
+      "model" : "turingcomplete:block/half_adder_middle", "y": 180
+    },
+    "facing=east,part=middle,powered=false": {
+      "model" : "turingcomplete:block/half_adder_middle", "y": 270
+    },
+    "facing=south,part=middle,powered=false": {
+      "model" : "turingcomplete:block/half_adder_middle", "y": 0
+    },
+    "facing=west,part=middle,powered=false": {
+      "model" : "turingcomplete:block/half_adder_middle", "y": 90
+    },
+    "facing=north,part=middle,powered=true": {
+      "model" : "turingcomplete:block/half_adder_middle_on", "y": 180
+    },
+    "facing=east,part=middle,powered=true": {
+      "model" : "turingcomplete:block/half_adder_middle_on", "y": 270
+    },
+    "facing=south,part=middle,powered=true": {
+      "model" : "turingcomplete:block/half_adder_middle_on", "y": 0
+    },
+    "facing=west,part=middle,powered=true": {
+      "model" : "turingcomplete:block/half_adder_middle_on", "y": 90
     }
 
   }

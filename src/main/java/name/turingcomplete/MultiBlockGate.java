@@ -21,6 +21,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.TickPriority;
 
 public abstract class MultiBlockGate extends AbstractLogicGate{
@@ -47,6 +48,22 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
+    }
+
+    @Override
+    protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        BlockPos blockPos = pos.down();
+        Direction dir = state.get(FACING).rotateYClockwise();
+        BlockPos underBlock1 = blockPos.offset(dir);
+        BlockPos underBlock2 = blockPos.offset(dir.getOpposite());
+        BlockPos Block1 = underBlock1.up();
+        BlockPos Block2 = underBlock2.up();
+        Boolean a = this.canPlaceAbove(world,blockPos, world.getBlockState(blockPos));
+        Boolean b = this.canPlaceAbove(world,underBlock1, world.getBlockState(underBlock1));
+        Boolean c = this.canPlaceAbove(world,underBlock2, world.getBlockState(underBlock2));
+        //Boolean d = world.getBlockState(Block1).equals(Blocks.AIR.getDefaultState());
+        //Boolean e = world.getBlockState(Block2).equals(Blocks.AIR.getDefaultState());
+        return (a && b && c);// && d && e);
     }
 
     @Override
@@ -151,12 +168,4 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
         int output = getInput(world,redstonePos,redstoneDir);
         return output;
     }
-
-    @Override
-    protected boolean hasPower(World world, BlockPos pos, BlockState state) {
-        //boolean b = hasEnable(world,pos,state);
-        return gateConditionsMet(state, world, pos) ;//&& !b;
-    }
-
-
 }
