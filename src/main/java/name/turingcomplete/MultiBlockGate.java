@@ -52,18 +52,21 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
 
     @Override
     protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        BlockPos blockPos = pos.down();
-        Direction dir = state.get(FACING).rotateYClockwise();
-        BlockPos underBlock1 = blockPos.offset(dir);
-        BlockPos underBlock2 = blockPos.offset(dir.getOpposite());
-        BlockPos Block1 = underBlock1.up();
-        BlockPos Block2 = underBlock2.up();
-        Boolean a = this.canPlaceAbove(world,blockPos, world.getBlockState(blockPos));
-        Boolean b = this.canPlaceAbove(world,underBlock1, world.getBlockState(underBlock1));
-        Boolean c = this.canPlaceAbove(world,underBlock2, world.getBlockState(underBlock2));
-        //Boolean d = world.getBlockState(Block1).equals(Blocks.AIR.getDefaultState());
-        //Boolean e = world.getBlockState(Block2).equals(Blocks.AIR.getDefaultState());
-        return (a && b && c);// && d && e);
+        if (state.get(PART) == BLOCK_PART.MIDDLE) {
+            BlockPos blockPos = pos.down();
+            Direction dir = state.get(FACING).rotateYClockwise();
+            BlockPos underBlock1 = blockPos.offset(dir);
+            BlockPos underBlock2 = blockPos.offset(dir.getOpposite());
+            BlockPos Block1 = underBlock1.up();
+            BlockPos Block2 = underBlock2.up();
+            Boolean a = this.canPlaceAbove(world, blockPos, world.getBlockState(blockPos));
+            Boolean b = this.canPlaceAbove(world, underBlock1, world.getBlockState(underBlock1));
+            Boolean c = this.canPlaceAbove(world, underBlock2, world.getBlockState(underBlock2));
+            //Boolean d = world.getBlockState(Block1).isAir();
+            //Boolean e = world.getBlockState(Block2).isAir();
+            return (a && b && c);// && d && e);
+        }
+        return true;
     }
 
     @Override
