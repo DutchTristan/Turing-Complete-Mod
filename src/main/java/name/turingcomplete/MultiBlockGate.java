@@ -111,25 +111,18 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
 
     @Override
     protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-
-        boolean validPlace = !canPlaceAt(state,world, pos);
-        boolean sideExists;
         Direction dir = state.get(FACING);
-        if (state.get(PART) == BLOCK_PART.MIDDLE){
-            BlockState top = world.getBlockState(pos.offset(dir.rotateYClockwise()));
-            BlockState bottom = world.getBlockState(pos.offset(dir.rotateYCounterclockwise()));
-            sideExists = top.isOf(this) && bottom.isOf(this);
+        if (direction == dir.rotateYCounterclockwise() && state.get(PART) == BLOCK_PART.MIDDLE){
+            return neighborState.isOf(this) ? state : Blocks.AIR.getDefaultState();
         }
-        else if (state.get(PART) == BLOCK_PART.TOP){
-            BlockState mid = world.getBlockState(pos.offset(dir.rotateYCounterclockwise()));
-            sideExists = mid.isOf(this);
+        else if (direction == dir.rotateYClockwise() && state.get(PART) == BLOCK_PART.MIDDLE){
+            return neighborState.isOf(this) ? state : Blocks.AIR.getDefaultState();
         }
-        else {
-            BlockState mid = world.getBlockState(pos.offset(dir.rotateYClockwise()));
-            sideExists = mid.isOf(this);
+        else if (state.get(PART) == BLOCK_PART.TOP && direction == dir.rotateYCounterclockwise()){
+            return neighborState.isOf(this) ? state : Blocks.AIR.getDefaultState();
         }
-        if (sideExists && validPlace){
-            return Blocks.AIR.getDefaultState();
+        else if (state.get(PART) == BLOCK_PART.BOTTOM && direction == dir.rotateYClockwise()){
+            return neighborState.isOf(this) ? state : Blocks.AIR.getDefaultState();
         }
         return super.getStateForNeighborUpdate(state,direction,neighborState,world,pos,neighborPos);
     }
