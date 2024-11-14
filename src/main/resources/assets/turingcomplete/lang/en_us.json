@@ -13,5 +13,6 @@
   "block.turingcomplete.switch_gate_block.tooltip" : "Also known as the Tri-state Buffer",
   "block.turingcomplete.memory_cell_gate" : "1-bit Memory Cell Block",
   "block.turingcomplete.half_adder" :  "Half Adder",
+  "block.turingcomplete.full_adder" : "Full Adder",
   "itemGroup.turingcomplete.group" : "Turing Complete"
 }

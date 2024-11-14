@@ -1,9 +1,6 @@
 package name.turingcomplete;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -18,10 +15,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldEvents;
-import net.minecraft.world.WorldView;
+import net.minecraft.world.*;
 import net.minecraft.world.tick.TickPriority;
 
 public abstract class MultiBlockGate extends AbstractLogicGate{
@@ -52,21 +46,8 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
 
     @Override
     protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        if (state.get(PART) == BLOCK_PART.MIDDLE) {
-            BlockPos blockPos = pos.down();
-            Direction dir = state.get(FACING).rotateYClockwise();
-            BlockPos underBlock1 = blockPos.offset(dir);
-            BlockPos underBlock2 = blockPos.offset(dir.getOpposite());
-            BlockPos Block1 = underBlock1.up();
-            BlockPos Block2 = underBlock2.up();
-            Boolean a = this.canPlaceAbove(world, blockPos, world.getBlockState(blockPos));
-            Boolean b = this.canPlaceAbove(world, underBlock1, world.getBlockState(underBlock1));
-            Boolean c = this.canPlaceAbove(world, underBlock2, world.getBlockState(underBlock2));
-            //Boolean d = world.getBlockState(Block1).isAir();
-            //Boolean e = world.getBlockState(Block2).isAir();
-            return (a && b && c);// && d && e);
-        }
-        return true;
+        BlockPos bottomPos = pos.down();
+        return this.canPlaceAbove(world,bottomPos,world.getBlockState(bottomPos));
     }
 
     @Override
@@ -106,15 +87,78 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx)
     {
-        BlockState state = getDefaultState();
-        state = state.with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
-        return state;
+        World world = ctx.getWorld();
+        BlockPos midPos = ctx.getBlockPos();
+        BlockState midState = this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+
+        Direction topDir = midState.get(FACING).rotateYClockwise();
+        BlockPos topPos = midPos.offset(topDir);
+        BlockState topState = this.getDefaultState().with(FACING, midState.get(FACING));
+        boolean top = topState.canPlaceAt(world,topPos) && world.getBlockState(topPos).canReplace(ctx);
+
+        BlockPos bottomPos = midPos.offset(topDir.getOpposite());
+        BlockState bottomState = this.getDefaultState().with(FACING, midState.get(FACING));
+        boolean bottom = bottomState.canPlaceAt(world,bottomPos) && world.getBlockState(bottomPos).canReplace(ctx);
+        if (!top || !bottom){
+            return null;
+        }
+        else {
+            BlockState state = getDefaultState();
+            state = state.with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+            return state;
+        }
+    }
+
+    @Override
+    protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+
+        boolean validPlace = !canPlaceAt(state,world, pos);
+        boolean sideExists;
+        Direction dir = state.get(FACING);
+        if (state.get(PART) == BLOCK_PART.MIDDLE){
+            BlockState top = world.getBlockState(pos.offset(dir.rotateYClockwise()));
+            BlockState bottom = world.getBlockState(pos.offset(dir.rotateYCounterclockwise()));
+            sideExists = top.isOf(this) && bottom.isOf(this);
+        }
+        else if (state.get(PART) == BLOCK_PART.TOP){
+            BlockState mid = world.getBlockState(pos.offset(dir.rotateYCounterclockwise()));
+            sideExists = mid.isOf(this);
+        }
+        else {
+            BlockState mid = world.getBlockState(pos.offset(dir.rotateYClockwise()));
+            sideExists = mid.isOf(this);
+        }
+        if (sideExists && validPlace){
+            return Blocks.AIR.getDefaultState();
+        }
+        return super.getStateForNeighborUpdate(state,direction,neighborState,world,pos,neighborPos);
     }
 
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player){
-        Direction direction = state.get(FACING).rotateYCounterclockwise();
-        if (state.get(PART) != BLOCK_PART.TOP && state.get(PART) != BLOCK_PART.BOTTOM){
+        Direction direction = state.get(FACING);
+        BlockPos topPos = null;
+        BlockPos bottomPos = null;
+        BlockPos midPos = null;
+        if (state.get(PART) == BLOCK_PART.MIDDLE){
+            topPos = pos.offset(state.get(FACING).rotateYClockwise());
+            bottomPos = pos.offset(state.get(FACING).rotateYCounterclockwise());
+            midPos = pos;
+        }
+        else if (state.get(PART) == BLOCK_PART.TOP){
+            topPos = pos;
+            bottomPos = pos.offset(direction.rotateYCounterclockwise(), 2);
+            midPos = pos.offset(direction.rotateYCounterclockwise());
+        }
+        else{
+            topPos = pos.offset(direction.rotateYClockwise(), 2);
+            bottomPos = pos;
+            midPos = pos.offset(direction.rotateYClockwise());
+        }
+        world.breakBlock(midPos,!player.isCreative(),player,1);
+        world.breakBlock(topPos,false,player,1);
+        world.breakBlock(bottomPos,false,player,1);
+            /*
             BlockPos top = findEnd(world,pos,state);
             BlockState Top = world.getBlockState(top);
             BlockPos next;
@@ -150,7 +194,7 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
                 world.setBlockState(current, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
                 world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, current, Block.getRawIdFromState(Current));
             }
-        }
+        }*/
         return super.onBreak(world,pos,state,player);
     }
 

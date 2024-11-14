@@ -99,6 +99,12 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
+    public static final Half_Adder FULL_ADDER = registerWithItem("full_adder",
+            new Half_Adder(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
 
 
 
