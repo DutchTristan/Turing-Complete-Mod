@@ -45,12 +45,6 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
     }
 
     @Override
-    protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        BlockPos bottomPos = pos.down();
-        return this.canPlaceAbove(world,bottomPos,world.getBlockState(bottomPos));
-    }
-
-    @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
         Direction direction = state.get(FACING);
@@ -151,55 +145,7 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
         world.breakBlock(midPos,!player.isCreative(),player,1);
         world.breakBlock(topPos,false,player,1);
         world.breakBlock(bottomPos,false,player,1);
-            /*
-            BlockPos top = findEnd(world,pos,state);
-            BlockState Top = world.getBlockState(top);
-            BlockPos next;
-            while (Top.get(PART) != BLOCK_PART.BOTTOM && Top.isOf(this)){
-                next = top.offset(direction);
-                world.setBlockState(top, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);//| Block.SKIP_DROPS);
-                world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, top, Block.getRawIdFromState(Top));
-                top = next;
-                Top = world.getBlockState(top);
-            }
-            if (Top.isOf(this)) {
-                world.setBlockState(top, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
-                world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, top, Block.getRawIdFromState(Top));
-            }
-        } else {
-            BLOCK_PART Start = state.get(PART);
-            BLOCK_PART End = BLOCK_PART.BOTTOM;
-            if (Start == BLOCK_PART.BOTTOM){
-                direction = direction.getOpposite();
-                End = BLOCK_PART.TOP;
-            }
-            BlockPos current = pos;
-            BlockState Current = world.getBlockState(pos);
-            BlockPos next;
-            while (Current.isOf(this) && Current.get(PART) != End){
-                next = current.offset(direction);
-                world.setBlockState(current, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);// | Block.SKIP_DROPS);
-                world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, current, Block.getRawIdFromState(Current));
-                current = next;
-                Current = world.getBlockState(current);
-            }
-            if (Current.isOf(this)) {
-                world.setBlockState(current, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
-                world.syncWorldEvent(player, WorldEvents.BLOCK_BROKEN, current, Block.getRawIdFromState(Current));
-            }
-        }*/
         return super.onBreak(world,pos,state,player);
-    }
-
-    public BlockPos findEnd(World world, BlockPos pos, BlockState state){
-        Direction direction = state.get(FACING).rotateYClockwise();
-        BlockPos top = pos.offset(direction);
-        BlockState Top = world.getBlockState(top);
-        while (Top.get(PART) != BLOCK_PART.TOP && Top.isOf(this)){
-            top = pos.offset(direction);
-            Top = world.getBlockState(top);
-        }
-        return top;
     }
 
     public int getSideInput(World world, BlockState state, BlockPos pos){
