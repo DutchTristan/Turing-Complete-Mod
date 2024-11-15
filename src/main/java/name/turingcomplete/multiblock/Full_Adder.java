@@ -4,10 +4,13 @@ import com.mojang.serialization.MapCodec;
 import name.turingcomplete.BLOCK_PART;
 import name.turingcomplete.MultiBlockGate;
 import net.minecraft.block.*;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.tick.TickPriority;
 
 
 public class Full_Adder extends MultiBlockGate {
@@ -30,8 +33,8 @@ public class Full_Adder extends MultiBlockGate {
     @Override
     public boolean gateConditionsMet(BlockState state, World world, BlockPos pos) {
         if (state.get(PART) == BLOCK_PART.TOP){
-            this.setHalfSum(world,pos,state,getSideInput(world,state,pos) > 0);
-            this.setCarryIn(world,pos,state,getcarryInput(world,state,pos) > 0);
+            world.setBlockState(pos,state.with(CARRY,getcarryInput(world,state,pos)>0)
+                                        .with(HALFSUM,getSideInput(world,state,pos)>0));
         }
         else if (state.get(PART) == BLOCK_PART.BOTTOM){
             this.setHalfSum(world,pos,state, getSideInput(world, state, pos) > 0);
@@ -101,10 +104,5 @@ public class Full_Adder extends MultiBlockGate {
 
     public void setHalfSum(World world, BlockPos pos, BlockState state, boolean value){
         world.setBlockState(pos, state.with(HALFSUM,value));
-    }
-    public void setCarryIn(World world, BlockPos pos, BlockState state, boolean value){
-        if (state.get(PART) == BLOCK_PART.TOP) {
-            world.setBlockState(pos, state.with(CARRY,value));
-        }
     }
 }
