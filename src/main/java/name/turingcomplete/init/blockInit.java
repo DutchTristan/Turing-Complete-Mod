@@ -2,6 +2,7 @@ package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
 import name.turingcomplete.block.*;
+import name.turingcomplete.multiblock.Full_Adder;
 import name.turingcomplete.multiblock.Half_Adder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -99,8 +100,8 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final Half_Adder FULL_ADDER = registerWithItem("full_adder",
-            new Half_Adder(AbstractBlock.Settings.create()
+    public static final Full_Adder FULL_ADDER = registerWithItem("full_adder",
+            new Full_Adder(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));

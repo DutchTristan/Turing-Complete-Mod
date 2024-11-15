@@ -154,4 +154,11 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
         int output = getInput(world,redstonePos,redstoneDir);
         return output;
     }
+
+    public int getcarryInput(World world, BlockState state, BlockPos pos){
+        Direction redstoneDir = state.get(FACING).rotateYClockwise();
+        BlockPos redstonePos = pos.offset(redstoneDir);
+        int output = getInput(world,redstonePos,redstoneDir);
+        return output;
+    }
 }
