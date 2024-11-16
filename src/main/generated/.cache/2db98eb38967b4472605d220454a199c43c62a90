@@ -1,5 +1,7 @@
-// 1.21	2024-09-27T12:14:21.788208	TuringComplete/Recipes
+// 1.21	2024-11-16T10:07:29.267111	TuringComplete/Recipes
 56e6fe980043f32dc9d50bc0c7e7c3c96e6635de data/turingcomplete/recipe/memory_cell_gate.json
+20322c7c3e801e0b48ef3f9310b577bc8e11b37e data/turingcomplete/advancement/recipes/redstone/half_adder.json
+de8906bc4c826eb3608a100fe5f7a0190f0585c6 data/turingcomplete/recipe/half_adder.json
 84d09467bdce2be318319c948240197c756e2154 data/turingcomplete/advancement/recipes/redstone/nand_gate_block.json
 79e92995772681c3c87c0a3e2b757c6b4d51db1e data/turingcomplete/advancement/recipes/redstone/or_gate_block.json
 5252c490e6cd6d27f7633b1204007d6ded7be58b data/turingcomplete/advancement/recipes/redstone/xor_gate_block.json
@@ -15,7 +17,9 @@ b050bb72287bf56764cc7146e123683fa9a23856 data/turingcomplete/advancement/recipes
 f79e69c8e7e72275b440a2a04090fe1c5a45c7de data/turingcomplete/advancement/recipes/redstone/and_gate_block.json
 c9dcbc01f69eb1d94d546f028e818e447d8ee991 data/turingcomplete/advancement/recipes/redstone/3or_gate_block.json
 d9778ae830798f7d7d63bc9293852ab0b0ddc61a data/turingcomplete/recipe/xnor_gate_block.json
+17502f2352ef9c3df3ce564d5a03899216d43c1a data/turingcomplete/advancement/recipes/redstone/full_adder.json
 40eaafbd02e4fdb3a45152489fd3955b109ae442 data/turingcomplete/advancement/recipes/redstone/switch_gate_block.json
+48a426dcf626c2f6f56a28368d78401465aa62f1 data/turingcomplete/recipe/full_adder.json
 929eb1b47d0e3a29e6b7fced56820384dabace5d data/turingcomplete/recipe/or_gate_block.json
 48aa1296a3799e5fb25407f110d44100ef42a909 data/turingcomplete/advancement/recipes/redstone/not_gate_block.json
 49b0287cf547fe643af63e822850a9438a9e6bb3 data/turingcomplete/recipe/switch_gate_block.json

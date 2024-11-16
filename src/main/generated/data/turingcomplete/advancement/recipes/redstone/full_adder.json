@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_half_adder": {
+      "conditions": {
+        "items": [
+          {
+            "items": "turingcomplete:half_adder"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_or_gate_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "turingcomplete:or_gate_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "turingcomplete:full_adder"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_half_adder",
+      "has_or_gate_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "turingcomplete:full_adder"
+    ]
+  }
+}
