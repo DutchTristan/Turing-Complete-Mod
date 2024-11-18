@@ -61,8 +61,12 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
         state = state.with(SWAPPED_DIR, !swapped);
         state = state.with(POWERED, hasPower(world,pos, state));
         state = state.with(ENABLED, hasEnable(world,pos,state));
-
-        world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.5F);
+        if (swapped) {
+            world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.5F);
+        }
+        else {
+            world.playSound(player,pos,SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.55F);
+        }
         this.updateTarget(world, pos, state);
         return ActionResult.SUCCESS;
     }

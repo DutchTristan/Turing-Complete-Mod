@@ -14,5 +14,6 @@
   "block.turingcomplete.memory_cell_gate" : "1-bit Memory Cell Block",
   "block.turingcomplete.half_adder" :  "Half Adder",
   "block.turingcomplete.full_adder" : "Full Adder",
+  "block.turingcomplete.redstone_bridge" : "Redstone Bridge",
   "itemGroup.turingcomplete.group" : "Turing Complete"
 }
