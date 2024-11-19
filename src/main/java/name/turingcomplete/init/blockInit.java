@@ -106,7 +106,7 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final Redstone_Bridge_Block REDSTONE_BRIDGE_BLOCK = registerWithItem("redstone_bridge.json",
+    public static final Redstone_Bridge_Block REDSTONE_BRIDGE_BLOCK = registerWithItem("redstone_bridge",
             new Redstone_Bridge_Block(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)

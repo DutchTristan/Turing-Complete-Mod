@@ -1,7 +1,6 @@
 package name.turingcomplete.block;
 
 import name.turingcomplete.AbstractEnableGate;
-import name.turingcomplete.BLOCK_PART;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
