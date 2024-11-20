@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "A": {
+      "item": "turingcomplete:and_gate_block"
+    },
+    "W": {
+      "item": "minecraft:redstone"
+    },
+    "X": {
+      "item": "turingcomplete:xor_gate_block"
+    }
+  },
+  "pattern": [
+    "WW ",
+    " WX",
+    "WA "
+  ],
+  "result": {
+    "count": 1,
+    "id": "turingcomplete:half_adder"
+  }
+}

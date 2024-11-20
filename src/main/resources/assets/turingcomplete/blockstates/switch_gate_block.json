@@ -1,53 +1,101 @@
 {
   "render_type": "cutout",
   "variants": {
-    "facing=north,powered=false,enabled=false" : {
+    "facing=north,powered=false,enabled=false,swapped_direction=false" : {
       "model" : "turingcomplete:block/switch_gate_block", "y": 180
     },
-    "facing=east,powered=false,enabled=false": {
+    "facing=east,powered=false,enabled=false,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block", "y": 270
     },
-    "facing=south,powered=false,enabled=false": {
+    "facing=south,powered=false,enabled=false,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block", "y": 0
     },
-    "facing=west,powered=false,enabled=false": {
+    "facing=west,powered=false,enabled=false,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block", "y": 90
     },
-    "facing=north,powered=false,enabled=true" : {
+    "facing=north,powered=false,enabled=true,swapped_direction=false" : {
       "model" : "turingcomplete:block/switch_gate_block_e_off", "y": 180
     },
-    "facing=east,powered=false,enabled=true": {
+    "facing=east,powered=false,enabled=true,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block_e_off", "y": 270
     },
-    "facing=south,powered=false,enabled=true": {
+    "facing=south,powered=false,enabled=true,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block_e_off", "y": 0
     },
-    "facing=west,powered=false,enabled=true": {
+    "facing=west,powered=false,enabled=true,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block_e_off", "y": 90
     },
-    "facing=north,powered=true,enabled=false" : {
+    "facing=north,powered=true,enabled=false,swapped_direction=false" : {
       "model" : "turingcomplete:block/switch_gate_block_on", "y": 180
     },
-    "facing=east,powered=true,enabled=false": {
+    "facing=east,powered=true,enabled=false,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block_on", "y": 270
     },
-    "facing=south,powered=true,enabled=false": {
+    "facing=south,powered=true,enabled=false,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block_on", "y": 0
     },
-    "facing=west,powered=true,enabled=false": {
+    "facing=west,powered=true,enabled=false,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block_on", "y": 90
     },
-    "facing=north,powered=true,enabled=true" : {
+    "facing=north,powered=true,enabled=true,swapped_direction=false" : {
       "model" : "turingcomplete:block/switch_gate_block_e_on", "y": 180
     },
-    "facing=east,powered=true,enabled=true": {
+    "facing=east,powered=true,enabled=true,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block_e_on", "y": 270
     },
-    "facing=south,powered=true,enabled=true": {
+    "facing=south,powered=true,enabled=true,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block_e_on", "y": 0
     },
-    "facing=west,powered=true,enabled=true": {
+    "facing=west,powered=true,enabled=true,swapped_direction=false": {
       "model" : "turingcomplete:block/switch_gate_block_e_on", "y": 90
+    },
+    "facing=north,powered=false,enabled=false,swapped_direction=true" : {
+      "model" : "turingcomplete:block/switch_gate_block_flip", "y": 180
+    },
+    "facing=east,powered=false,enabled=false,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_flip", "y": 270
+    },
+    "facing=south,powered=false,enabled=false,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_flip", "y": 0
+    },
+    "facing=west,powered=false,enabled=false,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_flip", "y": 90
+    },
+    "facing=north,powered=false,enabled=true,swapped_direction=true" : {
+      "model" : "turingcomplete:block/switch_gate_block_e_off_flip", "y": 180
+    },
+    "facing=east,powered=false,enabled=true,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_e_off_flip", "y": 270
+    },
+    "facing=south,powered=false,enabled=true,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_e_off_flip", "y": 0
+    },
+    "facing=west,powered=false,enabled=true,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_e_off_flip", "y": 90
+    },
+    "facing=north,powered=true,enabled=false,swapped_direction=true" : {
+      "model" : "turingcomplete:block/switch_gate_block_on_flip", "y": 180
+    },
+    "facing=east,powered=true,enabled=false,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_on_flip", "y": 270
+    },
+    "facing=south,powered=true,enabled=false,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_on_flip", "y": 0
+    },
+    "facing=west,powered=true,enabled=false,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_on_flip", "y": 90
+    },
+    "facing=north,powered=true,enabled=true,swapped_direction=true" : {
+      "model" : "turingcomplete:block/switch_gate_block_e_on_flip", "y": 180
+    },
+    "facing=east,powered=true,enabled=true,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_e_on_flip", "y": 270
+    },
+    "facing=south,powered=true,enabled=true,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_e_on_flip", "y": 0
+    },
+    "facing=west,powered=true,enabled=true,swapped_direction=true": {
+      "model" : "turingcomplete:block/switch_gate_block_e_on_flip", "y": 90
     }
   }
 }

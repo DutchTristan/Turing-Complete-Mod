@@ -28,6 +28,9 @@ public class itemGroupInit {
                 entries.add(blockInit.THREE_OR_GATE);
                 entries.add(blockInit.SWITCH_GATE);
                 entries.add(blockInit.MEMORY_CELL);
+                entries.add(blockInit.HALF_ADDER);
+                entries.add(blockInit.FULL_ADDER);
+                entries.add(blockInit.REDSTONE_BRIDGE_BLOCK);
             })
             .build());
 

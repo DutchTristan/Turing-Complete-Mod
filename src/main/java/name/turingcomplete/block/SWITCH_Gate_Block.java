@@ -30,7 +30,12 @@ public class SWITCH_Gate_Block extends AbstractEnableGate {
 
     @Override
     public boolean hasEnable(World world, BlockPos pos, BlockState state){
-        if (getSideInputLevel(state, world, pos, 1) > 0){
+        boolean left = !state.get(SWAPPED_DIR);
+        int leftParameter = 0;
+        if (left){
+            leftParameter = 1;
+        }
+        if (getSideInputLevel(state, world, pos, leftParameter) > 0){
             world.setBlockState(pos, state.with(ENABLED, true));
             return true;
         }

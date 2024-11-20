@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "turingcomplete:half_adder"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        },
+        {
+          "block": "turingcomplete:half_adder",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "part": "middle"
+          }
+        }
+      ]
+    }
+  ]
+}

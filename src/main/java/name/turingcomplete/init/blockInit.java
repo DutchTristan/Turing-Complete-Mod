@@ -2,6 +2,8 @@ package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
 import name.turingcomplete.block.*;
+import name.turingcomplete.multiblock.Full_Adder;
+import name.turingcomplete.multiblock.Half_Adder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.piston.PistonBehavior;
@@ -91,6 +93,26 @@ public class blockInit {
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
     //===============================================================================================
+
+    public static final Half_Adder HALF_ADDER = registerWithItem("half_adder",
+            new Half_Adder(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
+    public static final Full_Adder FULL_ADDER = registerWithItem("full_adder",
+            new Full_Adder(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
+    public static final Redstone_Bridge_Block REDSTONE_BRIDGE_BLOCK = registerWithItem("redstone_bridge",
+            new Redstone_Bridge_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
+
+
 
 
 

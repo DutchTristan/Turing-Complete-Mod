@@ -129,5 +129,36 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .pattern("WRW")
                 .criterion(hasItem(Blocks.REPEATER),conditionsFromItem(Blocks.REPEATER))
                 .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.HALF_ADDER, 1)
+                .input('X', blockInit.XOR_GATE)
+                .input('A', blockInit.AND_GATE)
+                .input('W', Blocks.REDSTONE_WIRE)
+                .pattern("WW ")
+                .pattern(" WX")
+                .pattern("WA ")
+                .criterion(hasItem(blockInit.XOR_GATE),conditionsFromItem(blockInit.XOR_GATE))
+                .criterion(hasItem(blockInit.AND_GATE),conditionsFromItem(blockInit.AND_GATE))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.FULL_ADDER, 1)
+                .input('H', blockInit.HALF_ADDER)
+                .input('O', blockInit.OR_GATE)
+                .input('W', Blocks.REDSTONE_WIRE)
+                .pattern("HW ")
+                .pattern(" HW")
+                .pattern(" WO")
+                .criterion(hasItem(blockInit.HALF_ADDER),conditionsFromItem(blockInit.HALF_ADDER))
+                .criterion(hasItem(blockInit.OR_GATE),conditionsFromItem(blockInit.OR_GATE))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.REDSTONE_BRIDGE_BLOCK, 1)
+                .input('R', Blocks.REPEATER)
+                .input('W', Blocks.REDSTONE_WIRE)
+                .pattern(" W ")
+                .pattern("WRW")
+                .pattern(" W ")
+                .criterion(hasItem(Blocks.REPEATER),conditionsFromItem(Blocks.REPEATER))
+                .offerTo(exporter);
     }
 }
