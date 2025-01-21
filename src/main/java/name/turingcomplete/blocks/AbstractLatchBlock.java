@@ -1,6 +1,7 @@
-package name.turingcomplete;
+package name.turingcomplete.blocks;
 
 import com.mojang.serialization.MapCodec;
+import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -18,15 +19,18 @@ import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 
-public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
+public abstract class AbstractLatchBlock extends AbstractRedstoneGateBlock implements ConnectsToRedstone{
     public static final MapCodec<ComparatorBlock> CODEC = createCodec(ComparatorBlock::new);
     public static final BooleanProperty POWERED = Properties.POWERED;
+    public static final BooleanProperty SET = propertyInit.SET;
 
     // constructor
-    public AbstractLogicGate(AbstractBlock.Settings settings) {
+    public AbstractLatchBlock(Settings settings) {
         super(settings);
-
-        setDefaultState(getDefaultState());
+        setDefaultState(getDefaultState()
+                .with(SET,false)
+                .with(POWERED, false)
+        );
     }
 
     // When the logic gate is placed, the target and itself is updated, so a block update
@@ -44,8 +48,8 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
 
     // defines the special placement properties that can be set later
     @Override
-    protected void appendProperties(StateManager.Builder<Block, net.minecraft.block.BlockState> builder) {
-        builder.add(Properties.HORIZONTAL_FACING, Properties.POWERED);
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(Properties.HORIZONTAL_FACING, Properties.POWERED, SET);
     }
 
     // hitbox for the logic gate
@@ -55,10 +59,10 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
 
     // Gets information about how the logic gate should be placed (direction and powered state)
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx)
-    {
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockState state = getDefaultState();
         state = state.with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        state = state.with(SET, hasPower(ctx.getWorld(), ctx.getBlockPos(), state));
         state = state.with(POWERED, hasPower(ctx.getWorld(), ctx.getBlockPos(), state));
         return state;
     }
@@ -66,13 +70,19 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
     // Determines how long the logic gate waits before acting (1 tick repeater = return 2)
     @Override
     protected int getUpdateDelayInternal(BlockState state) {
-        return 0;
+        return 2;
     }
 
     // Calls gateConditionsMet() to determine if an output should be on
     @Override
     protected boolean hasPower(World world, BlockPos pos, BlockState state) {
-        return gateConditionsMet(state, world, pos);
+        boolean cond = latchConditionsMet(state, world, pos);
+        boolean is_set = state.get(SET);
+
+        if (is_set != cond)
+            world.setBlockState(pos,state.with(SET, cond));
+
+        return cond;
     }
 
     //=============================================
@@ -158,7 +168,7 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
     protected int getFrontInputLevel(BlockState state, WorldView world, BlockPos pos)
     {
         //get side dir
-        Direction frontDir = getGateFrontDir(state);
+        Direction frontDir = getLatchFrontDir(state);
         if(frontDir == null) return 0;
 
         //get input level
@@ -169,7 +179,7 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
     // gets the direction for the back input (front and back
     // are confusing with redstone gates) if supportsBackDirection() returns true
     @Nullable
-    public Direction getGateFrontDir(BlockState state)
+    public Direction getLatchFrontDir(BlockState state)
     {
         //get direction
         if(!supportsBackDirection()) return null;
@@ -181,5 +191,5 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock{
     //===============================================================================
 
     // Abstract function to be overridden by the logic gates with their own logic
-    public abstract boolean gateConditionsMet(BlockState state, World world, BlockPos pos);
+    public abstract boolean latchConditionsMet(BlockState state, World world, BlockPos pos);
 }

@@ -1,4 +1,4 @@
-package name.turingcomplete;
+package name.turingcomplete.blocks;
 
 import net.minecraft.util.StringIdentifiable;
 

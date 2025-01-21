@@ -1,6 +1,6 @@
-package name.turingcomplete.block;
+package name.turingcomplete.blocks.block;
 
-import name.turingcomplete.AbstractEnableGate;
+import name.turingcomplete.blocks.AbstractEnableGate;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

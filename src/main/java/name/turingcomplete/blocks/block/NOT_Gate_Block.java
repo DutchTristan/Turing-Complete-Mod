@@ -1,6 +1,6 @@
-package name.turingcomplete.block;
+package name.turingcomplete.blocks.block;
 
-import name.turingcomplete.AbstractLogicGate;
+import name.turingcomplete.blocks.AbstractLogicGate;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

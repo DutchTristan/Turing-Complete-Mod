@@ -1,14 +1,14 @@
-package name.turingcomplete.block;
+package name.turingcomplete.blocks.block;
 
-import name.turingcomplete.AbstractLogicGate;
+import name.turingcomplete.blocks.AbstractLogicGate;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
-public class OR_Gate_Block extends AbstractLogicGate {
+public class NOR_Gate_Block extends AbstractLogicGate {
 
-    public OR_Gate_Block(Settings settings) {
+    public NOR_Gate_Block(Settings settings) {
         super(settings);
     }
 
@@ -17,7 +17,7 @@ public class OR_Gate_Block extends AbstractLogicGate {
     {
         boolean left = getSideInputLevel(thisBlockState, world, pos,0) > 0;
         boolean right = getSideInputLevel(thisBlockState, world, pos, 1) > 0;
-        return left || right;
+        return !(left || right);
     }
 
     @Override

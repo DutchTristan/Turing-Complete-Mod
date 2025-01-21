@@ -1,16 +1,13 @@
-package name.turingcomplete.multiblock;
+package name.turingcomplete.blocks.multiblock;
 
 import com.mojang.serialization.MapCodec;
-import name.turingcomplete.BLOCK_PART;
-import name.turingcomplete.MultiBlockGate;
+import name.turingcomplete.blocks.BLOCK_PART;
+import name.turingcomplete.blocks.MultiBlockGate;
 import net.minecraft.block.*;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.tick.TickPriority;
 
 
 public class Full_Adder extends MultiBlockGate {

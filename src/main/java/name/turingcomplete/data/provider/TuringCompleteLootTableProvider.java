@@ -1,8 +1,6 @@
 package name.turingcomplete.data.provider;
 
-import name.turingcomplete.TuringComplete;
 import name.turingcomplete.init.blockInit;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.registry.RegistryWrapper;
@@ -30,6 +28,7 @@ public class TuringCompleteLootTableProvider extends FabricBlockLootTableProvide
         addDrop(blockInit.XOR_GATE, drops(blockInit.XOR_GATE));
         addDrop(blockInit.FULL_ADDER, drops(blockInit.FULL_ADDER));
         addDrop(blockInit.HALF_ADDER, drops(blockInit.HALF_ADDER));
+        addDrop(blockInit.SR_LATCH_BLOCK, drops(blockInit.SR_LATCH_BLOCK));
     }
 }
 

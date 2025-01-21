@@ -1,6 +1,7 @@
-package name.turingcomplete;
+package name.turingcomplete.blocks;
 
 import com.mojang.serialization.MapCodec;
+import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,7 +28,7 @@ public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
     public static final MapCodec<ComparatorBlock> CODEC = createCodec(ComparatorBlock::new);
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty ENABLED = Properties.ENABLED;
-    public static final BooleanProperty SWAPPED_DIR = BooleanProperty.of("swapped_direction");
+    public static final BooleanProperty SWAPPED_DIR = propertyInit.SWAPPED_DIR;
 
     // constructor
     public AbstractEnableGate(Settings settings) {

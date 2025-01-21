@@ -1,4 +1,4 @@
-package name.turingcomplete.block;
+package name.turingcomplete.blocks.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.block.Block;

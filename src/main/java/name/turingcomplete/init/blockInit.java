@@ -1,9 +1,9 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
-import name.turingcomplete.block.*;
-import name.turingcomplete.multiblock.Full_Adder;
-import name.turingcomplete.multiblock.Half_Adder;
+import name.turingcomplete.blocks.block.*;
+import name.turingcomplete.blocks.multiblock.Full_Adder;
+import name.turingcomplete.blocks.multiblock.Half_Adder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.piston.PistonBehavior;
@@ -92,6 +92,14 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
+    //===============================================================================================
+    public static final SR_LATCH_Block SR_LATCH_BLOCK = registerWithItem("sr_latch_block",
+                new SR_LATCH_Block(AbstractBlock.Settings.create()
+                        .breakInstantly()
+                        .sounds(BlockSoundGroup.STONE)
+                        .pistonBehavior(PistonBehavior.DESTROY)
+                )
+            );
     //===============================================================================================
 
     public static final Half_Adder HALF_ADDER = registerWithItem("half_adder",

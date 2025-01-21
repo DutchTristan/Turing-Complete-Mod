@@ -1,8 +1,8 @@
-package name.turingcomplete.multiblock;
+package name.turingcomplete.blocks.multiblock;
 
 import com.mojang.serialization.MapCodec;
-import name.turingcomplete.BLOCK_PART;
-import name.turingcomplete.MultiBlockGate;
+import name.turingcomplete.blocks.BLOCK_PART;
+import name.turingcomplete.blocks.MultiBlockGate;
 import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
