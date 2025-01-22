@@ -1,4 +1,4 @@
-// 1.21	2025-01-21T13:14:29.166719646	TuringComplete/Recipes
+// 1.21	2025-01-22T18:10:45.416040217	TuringComplete/Recipes
 7e1cfbae5d8c8cfd1f539d4727c822bb48c1e8ff data/turingcomplete/recipe/nand_gate_block.json
 56e6fe980043f32dc9d50bc0c7e7c3c96e6635de data/turingcomplete/recipe/memory_cell_gate.json
 fbadedcca0b9ab2d2b713d9f1549a9862c133e44 data/turingcomplete/recipe/and_gate_block.json
@@ -6,7 +6,7 @@ fbadedcca0b9ab2d2b713d9f1549a9862c133e44 data/turingcomplete/recipe/and_gate_blo
 b050bb72287bf56764cc7146e123683fa9a23856 data/turingcomplete/advancement/recipes/redstone/nor_gate_block.json
 7221fe9a3463c80520873e8373fce80d6ecca11d data/turingcomplete/advancement/recipes/building_blocks/logic_base_plate_block.json
 48aa1296a3799e5fb25407f110d44100ef42a909 data/turingcomplete/advancement/recipes/redstone/not_gate_block.json
-962f92fe129cf33200771e0b6c4115e604e3644c data/turingcomplete/advancement/recipes/redstone/sr_latch_block.json
+833d957b2804ae02d69735cdb80017befe4e0b4b data/turingcomplete/advancement/recipes/redstone/sr_latch_block.json
 84d09467bdce2be318319c948240197c756e2154 data/turingcomplete/advancement/recipes/redstone/nand_gate_block.json
 f79e69c8e7e72275b440a2a04090fe1c5a45c7de data/turingcomplete/advancement/recipes/redstone/and_gate_block.json
 52769ed35d24843b596899852a9918f477853d8f data/turingcomplete/advancement/recipes/redstone/redstone_bridge.json
@@ -15,7 +15,7 @@ de8906bc4c826eb3608a100fe5f7a0190f0585c6 data/turingcomplete/recipe/half_adder.j
 bba4b0d3ef9e1e5f46438ac01ff0241f9cdc41ce data/turingcomplete/advancement/recipes/redstone/xnor_gate_block.json
 c9dcbc01f69eb1d94d546f028e818e447d8ee991 data/turingcomplete/advancement/recipes/redstone/3or_gate_block.json
 d7f9a9b50f5fe8d77eae494e62d9ab688787f06a data/turingcomplete/recipe/3and_gate_block.json
-cef8a467ab85e11b52ab8224362afd622e851ca9 data/turingcomplete/recipe/sr_latch_block.json
+284a45a96b7cab442d0756329d3b8e94d2b332d2 data/turingcomplete/recipe/sr_latch_block.json
 1c991065a934b60c7e2ff50830c81b81f977aa43 data/turingcomplete/recipe/nor_gate_block.json
 b1ced315606961dd55dac4f816cdd2eb25dbd03f data/turingcomplete/recipe/3or_gate_block.json
 17502f2352ef9c3df3ce564d5a03899216d43c1a data/turingcomplete/advancement/recipes/redstone/full_adder.json

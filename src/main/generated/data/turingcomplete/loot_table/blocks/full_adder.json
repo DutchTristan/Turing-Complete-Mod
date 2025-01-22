@@ -6,6 +6,13 @@
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
+        },
+        {
+          "block": "turingcomplete:full_adder",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "part": "middle"
+          }
         }
       ],
       "entries": [

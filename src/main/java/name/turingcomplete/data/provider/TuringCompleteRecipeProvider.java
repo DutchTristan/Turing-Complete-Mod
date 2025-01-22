@@ -163,11 +163,11 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
 
         ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.SR_LATCH_BLOCK, 1)
                 .input('R', Blocks.REDSTONE_WIRE)
-                .input('N', blockInit.NAND_GATE)
+                .input('N', blockInit.NOR_GATE)
                 .pattern("RNR")
                 .pattern(" R ")
                 .pattern("RNR")
-                .criterion(hasItem(blockInit.NAND_GATE),conditionsFromItem(blockInit.NAND_GATE))
+                .criterion(hasItem(blockInit.NOR_GATE),conditionsFromItem(blockInit.NOR_GATE))
                 .offerTo(exporter);
     }
 }

@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks;
 
+import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,7 +17,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.*;
 
 public abstract class MultiBlockGate extends AbstractLogicGate{
-    public static final EnumProperty<BLOCK_PART> PART = EnumProperty.of("part", BLOCK_PART.class);
+    public static final EnumProperty<BLOCK_PART> PART = propertyInit.BLOCK_PART;
 
 
     public static final BooleanProperty SUM = Properties.POWERED;
@@ -121,9 +122,8 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player){
         Direction direction = state.get(FACING);
-        BlockPos topPos = null;
-        BlockPos bottomPos = null;
-        BlockPos midPos = null;
+        BlockPos topPos, bottomPos, midPos;
+
         if (state.get(PART) == BLOCK_PART.MIDDLE){
             topPos = pos.offset(state.get(FACING).rotateYClockwise());
             bottomPos = pos.offset(state.get(FACING).rotateYCounterclockwise());

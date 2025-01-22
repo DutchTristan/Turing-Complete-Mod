@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_nand_gate_block": {
+    "has_nor_gate_block": {
       "conditions": {
         "items": [
           {
-            "items": "turingcomplete:nand_gate_block"
+            "items": "turingcomplete:nor_gate_block"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_nand_gate_block"
+      "has_nor_gate_block"
     ]
   ],
   "rewards": {

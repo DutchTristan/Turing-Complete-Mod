@@ -3,7 +3,7 @@
   "category": "redstone",
   "key": {
     "N": {
-      "item": "turingcomplete:nand_gate_block"
+      "item": "turingcomplete:nor_gate_block"
     },
     "R": {
       "item": "minecraft:redstone"
