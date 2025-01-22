@@ -1,0 +1,20 @@
+{
+  "block.turingcomplete.nand_gate_block" : "Bloco de Lógica NAND",
+  "block.turingcomplete.not_gate_block" : "Bloco de Lógica NOT",
+  "block.turingcomplete.and_gate_block" : "Bloco de Lógica AND",
+  "block.turingcomplete.or_gate_block" : "Bloco de Lógica OR",
+  "block.turingcomplete.nor_gate_block" : "Bloco de Lógica NOR",
+  "block.turingcomplete.xor_gate_block" : "Bloco de Lógica XOR",
+  "block.turingcomplete.xnor_gate_block" : "Bloco de Lógica XNOR",
+  "block.turingcomplete.logic_base_plate_block" : "Base de Placa Lógica",
+  "block.turingcomplete.3and_gate_block" : "Bloco de Lógica 3-AND",
+  "block.turingcomplete.3or_gate_block" : "Bloco de Lógica 3-OR",
+  "block.turingcomplete.switch_gate_block" : "Bloco de Lógica de Comutação",
+  "block.turingcomplete.sr_latch_block" : "Bloco de Trava SR",
+  "block.turingcomplete.switch_gate_block.tooltip" : "Também Conhecido Como Buffer De Três Estados",
+  "block.turingcomplete.memory_cell_gate" : "Bloco de Célula de Memória 1-bit",
+  "block.turingcomplete.half_adder" :  "Meio Somador",
+  "block.turingcomplete.full_adder" : "Somador",
+  "block.turingcomplete.redstone_bridge" : "Ponte de Redstone",
+  "itemGroup.turingcomplete.group" : "Turing Complete"
+}
