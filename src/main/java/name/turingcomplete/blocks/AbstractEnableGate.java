@@ -24,7 +24,7 @@ import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 
-public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock{
+public abstract class AbstractEnableGate extends AbstractRedstoneGateBlock implements ConnectsToRedstone{
     public static final MapCodec<ComparatorBlock> CODEC = createCodec(ComparatorBlock::new);
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty ENABLED = Properties.ENABLED;
