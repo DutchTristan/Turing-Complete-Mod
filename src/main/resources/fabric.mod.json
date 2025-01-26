@@ -1,0 +1,45 @@
+{
+	"schemaVersion": 1,
+	"id": "turingcomplete",
+	"version": "${version}",
+	"name": "Turing Complete (Unofficial)",
+	"description": "Logic Gates in Minecraft!",
+	"authors": [
+		"DutchTristan",
+		"KOSmek"
+	],
+	"contact": {
+		"homepage": "https://dutchtristan.notion.site/1012fafe7a8b8069bff6f6302be56027?v=91bce163e32843df8294d1b40f396841&pvs=74",
+		"sources": "https://github.com/DutchTristan/Turing-Complete-Mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/turing-complete-unofficial/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"kosmek.turing_complete.TuringCompleteUnofficial"
+		],
+		"client": [
+			"kosmek.turing_complete.TuringCompleteUnofficialClient"
+		],
+		"fabric-datagen": [
+			"kosmek.turing_complete.TuringCompleteUnofficialDataGenerator"
+		]
+	},
+	"mixins": [
+		"turing-complete-unofficial.mixins.json",
+		{
+			"config": "turing-complete-unofficial.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

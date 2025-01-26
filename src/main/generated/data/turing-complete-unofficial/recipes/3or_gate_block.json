@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "O": {
+      "item": "turingcomplete:or_gate_block"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "RRO",
+    " OR",
+    "   "
+  ],
+  "result": {
+    "item": "turingcomplete:3or_gate_block"
+  },
+  "show_notification": true
+}

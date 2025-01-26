@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": {
+      "item": "minecraft:comparator"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "T": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "pattern": [
+    "TR ",
+    "RCR",
+    "   "
+  ],
+  "result": {
+    "item": "turingcomplete:switch_gate_block"
+  },
+  "show_notification": true
+}

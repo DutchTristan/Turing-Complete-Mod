@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "N": {
+      "item": "turingcomplete:nand_gate_block"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "RR ",
+    "RN ",
+    "RR "
+  ],
+  "result": {
+    "count": 2,
+    "item": "turingcomplete:not_gate_block"
+  },
+  "show_notification": true
+}
