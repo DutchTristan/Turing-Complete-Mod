@@ -30,7 +30,8 @@ public class itemGroupInit {
                 entries.add(blockInit.MEMORY_CELL);
                 entries.add(blockInit.HALF_ADDER);
                 entries.add(blockInit.FULL_ADDER);
-                entries.add(blockInit.REDSTONE_BRIDGE_BLOCK);
+                entries.add(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK);
+                entries.add(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK);
                 entries.add(blockInit.SR_LATCH_BLOCK);
             })
             .build());

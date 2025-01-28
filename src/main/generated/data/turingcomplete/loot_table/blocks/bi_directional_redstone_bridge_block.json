@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "turingcomplete:redstone_bridge"
+          "name": "turingcomplete:bi_directional_redstone_bridge_block"
         }
       ],
       "rolls": 1.0

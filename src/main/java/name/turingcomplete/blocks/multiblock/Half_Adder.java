@@ -23,11 +23,6 @@ public class Half_Adder extends MultiBlockGate {
     }
 
     @Override
-    protected int getUpdateDelayInternal(BlockState state) {
-        return 0;
-    }
-
-    @Override
     public boolean gateConditionsMet(BlockState state, World world, BlockPos pos) {
         if (state.get(PART) == BLOCK_PART.TOP){
             if (getSideInput(world,state,pos) > 0) {

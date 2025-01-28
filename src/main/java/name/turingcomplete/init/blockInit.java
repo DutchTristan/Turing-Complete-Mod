@@ -114,12 +114,17 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final Redstone_Bridge_Block REDSTONE_BRIDGE_BLOCK = registerWithItem("redstone_bridge",
-            new Redstone_Bridge_Block(AbstractBlock.Settings.create()
+    public static final BiDirectionalRedstoneBridgeBlock BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("bi_directional_redstone_bridge_block",
+            new BiDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
+    public static final OmniDirectionalRedstoneBridgeBlock OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("omni_directional_redstone_bridge_block",
+            new OmniDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
 
 
 

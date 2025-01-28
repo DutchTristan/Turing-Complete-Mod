@@ -27,18 +27,22 @@ public class TuringCompleteLootTableProvider extends FabricBlockLootTableProvide
 
     @Override
     public void generate() {
+        addDrop(blockInit.LOGIC_BASE_PLATE_BLOCK, drops(blockInit.LOGIC_BASE_PLATE_BLOCK));
+
         addDrop(blockInit.NAND_GATE, drops(blockInit.NAND_GATE));
         addDrop(blockInit.AND_GATE, drops(blockInit.AND_GATE));
-        addDrop(blockInit.LOGIC_BASE_PLATE_BLOCK, drops(blockInit.LOGIC_BASE_PLATE_BLOCK));
         addDrop(blockInit.NOR_GATE, drops(blockInit.NOR_GATE));
         addDrop(blockInit.NOT_GATE, drops(blockInit.NOT_GATE));
         addDrop(blockInit.OR_GATE, drops(blockInit.OR_GATE));
-        addDrop(blockInit.REDSTONE_BRIDGE_BLOCK, drops(blockInit.REDSTONE_BRIDGE_BLOCK));
-        addDrop(blockInit.SWITCH_GATE, drops(blockInit.SWITCH_GATE));
         addDrop(blockInit.THREE_AND_GATE, drops(blockInit.THREE_AND_GATE));
         addDrop(blockInit.THREE_OR_GATE, drops(blockInit.THREE_OR_GATE));
         addDrop(blockInit.XNOR_GATE, drops(blockInit.XNOR_GATE));
         addDrop(blockInit.XOR_GATE, drops(blockInit.XOR_GATE));
+
+        addDrop(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, drops(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK));
+        addDrop(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK, drops(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK));
+
+        addDrop(blockInit.SWITCH_GATE, drops(blockInit.SWITCH_GATE));
         addDrop(blockInit.SR_LATCH_BLOCK, drops(blockInit.SR_LATCH_BLOCK));
 
         addDrop(blockInit.HALF_ADDER, drop_if_property(blockInit.HALF_ADDER,propertyInit.BLOCK_PART,BLOCK_PART.MIDDLE));

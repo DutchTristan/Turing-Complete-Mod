@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures" : {
+    "layer0": "turingcomplete:item/omni_directional_redstone_bridge"
+  }
+}

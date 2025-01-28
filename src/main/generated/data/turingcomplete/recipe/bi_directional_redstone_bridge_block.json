@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 1,
-    "id": "turingcomplete:redstone_bridge"
+    "id": "turingcomplete:bi_directional_redstone_bridge_block"
   }
 }

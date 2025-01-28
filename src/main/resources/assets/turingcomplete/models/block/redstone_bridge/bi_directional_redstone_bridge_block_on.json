@@ -2,7 +2,7 @@
   "textures": {
     "particle": "block/comparator",
     "slab": "block/smooth_stone",
-    "top": "turingcomplete:block/redstone_bridge/redstone_bridge_e_on"
+    "top": "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_on"
   },
   "elements": [
     {
