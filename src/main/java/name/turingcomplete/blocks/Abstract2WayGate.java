@@ -2,10 +2,7 @@ package name.turingcomplete.blocks;
 
 import com.mojang.serialization.MapCodec;
 import name.turingcomplete.init.propertyInit;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ComparatorBlock;
-import net.minecraft.block.HorizontalFacingBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,6 +20,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -90,8 +88,8 @@ public abstract class Abstract2WayGate extends HorizontalFacingBlock implements 
 
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (state.canPlaceAt(world, pos)){}
-//            this.checkForUpdate(world,pos,state);
+        if (state.canPlaceAt(world, pos))
+            this.checkForUpdate(world,pos,state);
         else {
             BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
 
@@ -110,7 +108,7 @@ public abstract class Abstract2WayGate extends HorizontalFacingBlock implements 
     protected void updateShape(World world,BlockPos pos, BlockState state){}
     protected abstract void checkForUpdate(World world, BlockPos pos, BlockState state);
 
-    protected void updateTarget(World world, BlockPos pos, BlockState state, Direction direction) {
+    protected void updateTarget(World world, BlockPos pos, Direction direction) {
         BlockPos blockPos = pos.offset(direction.getOpposite());
         world.updateNeighbor(blockPos, this, pos);
         world.updateNeighborsExcept(blockPos, this, direction);
@@ -121,10 +119,20 @@ public abstract class Abstract2WayGate extends HorizontalFacingBlock implements 
 
     //=============================================
 
-    protected boolean isInputPowered(World world, BlockPos pos, BlockState state, Direction direction) {
+    protected boolean isInputPowered(World world, BlockPos pos, Direction direction) {
         BlockState sourceState = world.getBlockState(pos.offset(direction));
         int power = sourceState.getWeakRedstonePower(world,pos,direction.getOpposite());
         return power > 0;
+    }
+
+    @Override
+    protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        BlockPos blockPos = pos.down();
+        return this.canPlaceAbove(world, blockPos, world.getBlockState(blockPos));
+    }
+
+    protected boolean canPlaceAbove(WorldView world, BlockPos pos, BlockState state) {
+        return state.isSideSolid(world, pos, Direction.UP, SideShapeType.RIGID);
     }
 
     protected int getUpdateDelayInternal(BlockState state) {return 2;}

@@ -2,10 +2,7 @@ package name.turingcomplete.blocks.block;
 
 import name.turingcomplete.blocks.ConnectsToRedstone;
 import name.turingcomplete.init.propertyInit;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
@@ -18,6 +15,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 
 public class OmniDirectionalRedstoneBridgeBlock extends Block implements ConnectsToRedstone {
     private static final IntProperty POWER_Z;
@@ -219,9 +217,17 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
         return 0;
     }
 
+    @Override
+    protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        BlockPos blockPos = pos.down();
+        return this.canPlaceAbove(world, blockPos, world.getBlockState(blockPos));
+    }
 
+    protected boolean canPlaceAbove(WorldView world, BlockPos pos, BlockState state) {
+        return state.isSideSolid(world, pos, Direction.UP, SideShapeType.RIGID);
+    }
 
-    public static int getWireColor(BlockState state,IntProperty property) {
+    public static int getWireColor(BlockState state, IntProperty property) {
         Vec3d vec3d = COLORS[state.get(property)];
         return MathHelper.packRgb((float)vec3d.getX(), (float)vec3d.getY(), (float)vec3d.getZ());
     }

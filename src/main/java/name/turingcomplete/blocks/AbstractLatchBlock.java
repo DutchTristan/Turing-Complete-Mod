@@ -4,18 +4,26 @@ import com.mojang.serialization.MapCodec;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.tick.TickPriority;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -23,6 +31,7 @@ public abstract class AbstractLatchBlock extends AbstractRedstoneGateBlock imple
     public static final MapCodec<ComparatorBlock> CODEC = createCodec(ComparatorBlock::new);
     public static final BooleanProperty POWERED = Properties.POWERED;
     public static final BooleanProperty SET = propertyInit.SET;
+    public static final BooleanProperty SWAPPED_DIR = propertyInit.SWAPPED_DIR;
 
     // constructor
     public AbstractLatchBlock(Settings settings) {
@@ -30,6 +39,7 @@ public abstract class AbstractLatchBlock extends AbstractRedstoneGateBlock imple
         setDefaultState(getDefaultState()
                 .with(SET,false)
                 .with(POWERED, false)
+                .with(SWAPPED_DIR, false)
         );
     }
 
@@ -41,6 +51,21 @@ public abstract class AbstractLatchBlock extends AbstractRedstoneGateBlock imple
         this.updatePowered(world,pos,state);
     }
 
+    @Override
+    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        boolean swapped = state.get(SWAPPED_DIR);
+        state = state.with(SWAPPED_DIR, !swapped);
+
+        if (swapped)
+            world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.5F);
+        else
+            world.playSound(player,pos,SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.55F);
+
+        state = state.with(POWERED, hasPower(world, pos, state));
+        world.setBlockState(pos,state);
+        return ActionResult.SUCCESS;
+    }
+
     // don't worry about this, but it is important
     public MapCodec<ComparatorBlock> getCodec() {
         return CODEC;
@@ -49,7 +74,7 @@ public abstract class AbstractLatchBlock extends AbstractRedstoneGateBlock imple
     // defines the special placement properties that can be set later
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(Properties.HORIZONTAL_FACING, Properties.POWERED, SET);
+        builder.add(Properties.HORIZONTAL_FACING, Properties.POWERED, SET, SWAPPED_DIR);
     }
 
     // hitbox for the logic gate
@@ -64,6 +89,7 @@ public abstract class AbstractLatchBlock extends AbstractRedstoneGateBlock imple
         state = state.with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
         state = state.with(SET, hasPower(ctx.getWorld(), ctx.getBlockPos(), state));
         state = state.with(POWERED, hasPower(ctx.getWorld(), ctx.getBlockPos(), state));
+        state = state.with(SWAPPED_DIR, false);
         return state;
     }
 
@@ -83,6 +109,25 @@ public abstract class AbstractLatchBlock extends AbstractRedstoneGateBlock imple
             world.setBlockState(pos,state.with(SET, cond));
 
         return cond;
+    }
+
+    @Override
+    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {update(world,state,pos);}
+
+    protected void update(World world, BlockState state, BlockPos pos){
+        if (!this.isLocked(world, pos, state)) {
+            boolean bl = state.get(POWERED);
+            boolean bl2 = this.hasPower(world, pos, state);
+            if (bl && !bl2) {
+                world.setBlockState(pos, state.with(POWERED, false), 2);
+            } else if (!bl) {
+                world.setBlockState(pos, state.with(POWERED, true), 2);
+                if (!bl2) {
+                    world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+                }
+            }
+
+        }
     }
 
     //=============================================
@@ -129,7 +174,7 @@ public abstract class AbstractLatchBlock extends AbstractRedstoneGateBlock imple
         Direction sideDir = state.get(FACING);
 
         //rotate front direction
-        if(right == 1) sideDir = sideDir.rotateYClockwise();
+        if(right == 1 ^ state.get(SWAPPED_DIR)) sideDir = sideDir.rotateYClockwise();
         else sideDir = sideDir.rotateYCounterclockwise();
 
         //return

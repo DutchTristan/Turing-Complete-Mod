@@ -1,29 +1,53 @@
 {
   "render_type": "cutout",
   "variants": {
-    "facing=north,powered=false" : {
+    "facing=north,powered=false,swapped_direction=false" : {
       "model" : "turingcomplete:block/sr_latch_block", "y": 180
     },
-    "facing=east,powered=false": {
+    "facing=east,powered=false,swapped_direction=false": {
       "model" : "turingcomplete:block/sr_latch_block", "y": 270
     },
-    "facing=south,powered=false": {
+    "facing=south,powered=false,swapped_direction=false": {
       "model" : "turingcomplete:block/sr_latch_block", "y": 0
     },
-    "facing=west,powered=false": {
+    "facing=west,powered=false,swapped_direction=false": {
       "model" : "turingcomplete:block/sr_latch_block", "y": 90
     },
-    "facing=north,powered=true" : {
+    "facing=north,powered=false,swapped_direction=true" : {
+      "model" : "turingcomplete:block/sr_latch_block_flip", "y": 180
+    },
+    "facing=east,powered=false,swapped_direction=true": {
+      "model" : "turingcomplete:block/sr_latch_block_flip", "y": 270
+    },
+    "facing=south,powered=false,swapped_direction=true": {
+      "model" : "turingcomplete:block/sr_latch_block_flip", "y": 0
+    },
+    "facing=west,powered=false,swapped_direction=true": {
+      "model" : "turingcomplete:block/sr_latch_block_flip", "y": 90
+    },
+    "facing=north,powered=true,swapped_direction=false" : {
       "model" : "turingcomplete:block/sr_latch_block_on", "y": 180
     },
-    "facing=east,powered=true": {
+    "facing=east,powered=true,swapped_direction=false": {
       "model" : "turingcomplete:block/sr_latch_block_on", "y": 270
     },
-    "facing=south,powered=true": {
+    "facing=south,powered=true,swapped_direction=false": {
       "model" : "turingcomplete:block/sr_latch_block_on", "y": 0
     },
-    "facing=west,powered=true": {
+    "facing=west,powered=true,swapped_direction=false": {
       "model" : "turingcomplete:block/sr_latch_block_on", "y": 90
+    },
+    "facing=north,powered=true,swapped_direction=true" : {
+      "model" : "turingcomplete:block/sr_latch_block_on_flip", "y": 180
+    },
+    "facing=east,powered=true,swapped_direction=true": {
+      "model" : "turingcomplete:block/sr_latch_block_on_flip", "y": 270
+    },
+    "facing=south,powered=true,swapped_direction=true": {
+      "model" : "turingcomplete:block/sr_latch_block_on_flip", "y": 0
+    },
+    "facing=west,powered=true,swapped_direction=true": {
+      "model" : "turingcomplete:block/sr_latch_block_on_flip", "y": 90
     }
   }
 }

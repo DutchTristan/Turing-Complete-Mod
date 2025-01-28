@@ -29,8 +29,8 @@ public class BiDirectionalRedstoneBridgeBlock extends Abstract2WayGate {
                 state.get(FACING).rotateYCounterclockwise() :
                 state.get(FACING).rotateYClockwise();
 
-        boolean should_power_z = isInputPowered(world,pos,state,state.get(FACING).getOpposite());
-        boolean should_power_x = isInputPowered(world,pos,state,side_direction.getOpposite());
+        boolean should_power_z = isInputPowered(world,pos, state.get(FACING).getOpposite());
+        boolean should_power_x = isInputPowered(world,pos, side_direction.getOpposite());
 
         BlockState newState = state;
 
@@ -47,8 +47,8 @@ public class BiDirectionalRedstoneBridgeBlock extends Abstract2WayGate {
 
     @Override
     protected void checkForUpdate(World world, BlockPos pos, BlockState state) {
-        boolean should_power_z = isInputPowered(world,pos,state,state.get(FACING).getOpposite());
-        boolean should_power_x = isInputPowered(world,pos,state,state.get(SWAPPED_DIR) ?
+        boolean should_power_z = isInputPowered(world,pos, state.get(FACING).getOpposite());
+        boolean should_power_x = isInputPowered(world,pos, state.get(SWAPPED_DIR) ?
                 state.get(FACING).rotateYClockwise() :
                 state.get(FACING).rotateYCounterclockwise()
         );
