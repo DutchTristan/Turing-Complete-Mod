@@ -8,7 +8,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -48,6 +47,9 @@ public abstract class AbstractLogicGate extends AbstractRedstoneGateBlock implem
     protected void appendProperties(StateManager.Builder<Block, net.minecraft.block.BlockState> builder) {
         builder.add(Properties.HORIZONTAL_FACING, Properties.POWERED);
     }
+
+    @Override
+    protected boolean emitsRedstonePower(BlockState state) {return true;}
 
     // hitbox for the logic gate
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {

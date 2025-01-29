@@ -53,6 +53,8 @@ public abstract class Abstract2WayGate extends HorizontalFacingBlock implements 
         );
     }
 
+    @Override
+    protected boolean emitsRedstonePower(BlockState state) {return true;}
 
     //=============================================
 
@@ -120,8 +122,7 @@ public abstract class Abstract2WayGate extends HorizontalFacingBlock implements 
     //=============================================
 
     protected boolean isInputPowered(World world, BlockPos pos, Direction direction) {
-        BlockState sourceState = world.getBlockState(pos.offset(direction));
-        int power = sourceState.getWeakRedstonePower(world,pos,direction.getOpposite());
+        int power = world.getEmittedRedstonePower(pos.offset(direction),direction);
         return power > 0;
     }
 

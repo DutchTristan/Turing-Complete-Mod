@@ -77,6 +77,9 @@ public abstract class AbstractLatchBlock extends AbstractRedstoneGateBlock imple
         builder.add(Properties.HORIZONTAL_FACING, Properties.POWERED, SET, SWAPPED_DIR);
     }
 
+    @Override
+    protected boolean emitsRedstonePower(BlockState state) {return true;}
+
     // hitbox for the logic gate
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {
         return VoxelShapes.cuboid(0, 0, 0, 1, 0.125, 1);
