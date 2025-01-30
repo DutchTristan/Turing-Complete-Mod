@@ -23,8 +23,7 @@ public class RedstoneWireBlockMixin {
             return;
 
         //check for null direction
-        if(dir == null)
-        {
+        if(dir == null) {
             e.setReturnValue(false);
             e.cancel();
             return;

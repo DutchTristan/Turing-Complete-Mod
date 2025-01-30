@@ -1,100 +1,100 @@
 {
   "render_type": "cutout",
   "variants": {
-    "facing=south,powered_z=false,powered_x=false,swapped_direction=false": {
+    "facing=north,powered_z=false,powered_x=false,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block", "y": 180
     },
-    "facing=west,powered_z=false,powered_x=false,swapped_direction=false": {
+    "facing=east,powered_z=false,powered_x=false,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block", "y": 270
     },
-    "facing=north,powered_z=false,powered_x=false,swapped_direction=false": {
+    "facing=south,powered_z=false,powered_x=false,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block", "y": 0
     },
-    "facing=east,powered_z=false,powered_x=false,swapped_direction=false": {
+    "facing=west,powered_z=false,powered_x=false,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block", "y": 90
     },
-    "facing=south,powered_z=false,powered_x=true,swapped_direction=false": {
+    "facing=north,powered_z=false,powered_x=true,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_off", "y": 180
     },
-    "facing=west,powered_z=false,powered_x=true,swapped_direction=false": {
+    "facing=east,powered_z=false,powered_x=true,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_off", "y": 270
     },
-    "facing=north,powered_z=false,powered_x=true,swapped_direction=false": {
+    "facing=south,powered_z=false,powered_x=true,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_off", "y": 0
     },
-    "facing=east,powered_z=false,powered_x=true,swapped_direction=false": {
+    "facing=west,powered_z=false,powered_x=true,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_off", "y": 90
     },
-    "facing=south,powered_z=true,powered_x=true,swapped_direction=false": {
+    "facing=north,powered_z=true,powered_x=true,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_on", "y": 180
     },
-    "facing=west,powered_z=true,powered_x=true,swapped_direction=false": {
+    "facing=east,powered_z=true,powered_x=true,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_on", "y": 270
     },
-    "facing=north,powered_z=true,powered_x=true,swapped_direction=false": {
+    "facing=south,powered_z=true,powered_x=true,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_on", "y": 0
     },
-    "facing=east,powered_z=true,powered_x=true,swapped_direction=false": {
+    "facing=west,powered_z=true,powered_x=true,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_on", "y": 90
     },
-    "facing=south,powered_z=true,powered_x=false,swapped_direction=false": {
+    "facing=north,powered_z=true,powered_x=false,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_on", "y": 180
     },
-    "facing=west,powered_z=true,powered_x=false,swapped_direction=false": {
+    "facing=east,powered_z=true,powered_x=false,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_on", "y": 270
     },
-    "facing=north,powered_z=true,powered_x=false,swapped_direction=false": {
+    "facing=south,powered_z=true,powered_x=false,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_on", "y": 0
     },
-    "facing=east,powered_z=true,powered_x=false,swapped_direction=false": {
+    "facing=west,powered_z=true,powered_x=false,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_on", "y": 90
     },
-    "facing=south,powered_z=false,powered_x=false,swapped_direction=true": {
+    "facing=north,powered_z=false,powered_x=false,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_flip", "y": 180
     },
-    "facing=west,powered_z=false,powered_x=false,swapped_direction=true": {
+    "facing=east,powered_z=false,powered_x=false,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_flip", "y": 270
     },
-    "facing=north,powered_z=false,powered_x=false,swapped_direction=true": {
+    "facing=south,powered_z=false,powered_x=false,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_flip", "y": 0
     },
-    "facing=east,powered_z=false,powered_x=false,swapped_direction=true": {
+    "facing=west,powered_z=false,powered_x=false,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_flip", "y": 90
     },
-    "facing=south,powered_z=false,powered_x=true,swapped_direction=true": {
+    "facing=north,powered_z=false,powered_x=true,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_off_flip", "y": 180
     },
-    "facing=west,powered_z=false,powered_x=true,swapped_direction=true": {
+    "facing=east,powered_z=false,powered_x=true,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_off_flip", "y": 270
     },
-    "facing=north,powered_z=false,powered_x=true,swapped_direction=true": {
+    "facing=south,powered_z=false,powered_x=true,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_off_flip", "y": 0
     },
-    "facing=east,powered_z=false,powered_x=true,swapped_direction=true": {
+    "facing=west,powered_z=false,powered_x=true,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_off_flip", "y": 90
     },
-    "facing=south,powered_z=true,powered_x=true,swapped_direction=true": {
+    "facing=north,powered_z=true,powered_x=true,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_on_flip", "y": 180
     },
-    "facing=west,powered_z=true,powered_x=true,swapped_direction=true": {
+    "facing=east,powered_z=true,powered_x=true,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_on_flip", "y": 270
     },
-    "facing=north,powered_z=true,powered_x=true,swapped_direction=true": {
+    "facing=south,powered_z=true,powered_x=true,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_on_flip", "y": 0
     },
-    "facing=east,powered_z=true,powered_x=true,swapped_direction=true": {
+    "facing=west,powered_z=true,powered_x=true,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_e_on_flip", "y": 90
     },
-    "facing=south,powered_z=true,powered_x=false,swapped_direction=true": {
+    "facing=north,powered_z=true,powered_x=false,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_on_flip", "y": 180
     },
-    "facing=west,powered_z=true,powered_x=false,swapped_direction=true": {
+    "facing=east,powered_z=true,powered_x=false,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_on_flip", "y": 270
     },
-    "facing=north,powered_z=true,powered_x=false,swapped_direction=true": {
+    "facing=south,powered_z=true,powered_x=false,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_on_flip", "y": 0
     },
-    "facing=east,powered_z=true,powered_x=false,swapped_direction=true": {
+    "facing=west,powered_z=true,powered_x=false,swapped_direction=true": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block_on_flip", "y": 90
     }
   }

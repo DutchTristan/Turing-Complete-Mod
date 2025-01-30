@@ -23,7 +23,7 @@ public class Half_Adder extends MultiBlockGate {
     }
 
     @Override
-    public boolean gateConditionsMet(BlockState state, World world, BlockPos pos) {
+    public boolean gateConditionMet(World world, BlockPos pos, BlockState state) {
         if (state.get(PART) == BLOCK_PART.TOP){
             if (getSideInput(world,state,pos) > 0) {
                 this.setHalfSum(world,pos,state,true);
@@ -52,6 +52,8 @@ public class Half_Adder extends MultiBlockGate {
                 else{
                     world.setBlockState(pos1, state1.with(CARRY, false));
                 }
+
+                updateCarryTarget(world,pos1,state);
                 return ((getSideInput(world, state1, pos1) > 0) ^ (getSideInput(world, state2, pos2) > 0));
             }
             return false;
@@ -64,17 +66,17 @@ public class Half_Adder extends MultiBlockGate {
     @Override
     protected int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
         if (state.get(PART) == BLOCK_PART.MIDDLE) {
-            if (!(Boolean) state.get(POWERED)) {
+            if (!(Boolean) state.get(SUM)) {
                 return 0;
             } else {
-                return state.get(FACING) == direction ? this.getOutputLevel(world, pos, state) : 0;
+                return state.get(FACING) == direction ? 15 : 0;
             }
         }
         else if (state.get(PART) == BLOCK_PART.BOTTOM){
             if (!(Boolean) state.get(CARRY)) {
                 return 0;
             } else {
-                return state.get(FACING).rotateYClockwise() == direction ? this.getOutputLevel(world, pos, state) : 0;
+                return state.get(FACING).rotateYClockwise() == direction ? 15 : 0;
             }
         }
         return 0;

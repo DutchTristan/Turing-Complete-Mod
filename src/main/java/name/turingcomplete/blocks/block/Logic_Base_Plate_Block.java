@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Properties;
@@ -13,6 +14,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,6 +25,19 @@ public class Logic_Base_Plate_Block extends HorizontalFacingBlock {
         setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
     }
 
+    @Override
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        if(!canPlaceAt(state,world,pos)){
+            BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+            dropStacks(state, world, pos, blockEntity);
+
+            world.removeBlock(pos, false);
+
+            for (Direction direction : DIRECTIONS)
+                world.updateNeighborsAlways(pos.offset(direction), this);
+
+        }
+    }
 
     @Override
     protected MapCodec<? extends HorizontalFacingBlock> getCodec() {
@@ -31,7 +46,7 @@ public class Logic_Base_Plate_Block extends HorizontalFacingBlock {
 
     @Override
     protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return hasTopRim((BlockView)world, pos.down());
+        return hasTopRim(world, pos.down());
     }
 
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {

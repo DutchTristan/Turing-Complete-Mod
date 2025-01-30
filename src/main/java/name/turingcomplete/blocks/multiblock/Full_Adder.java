@@ -23,9 +23,9 @@ public class Full_Adder extends MultiBlockGate {
     }
 
     @Override
-    public boolean gateConditionsMet(BlockState state, World world, BlockPos pos) {
+    public boolean gateConditionMet(World world, BlockPos pos, BlockState state) {
         if (state.get(PART) == BLOCK_PART.TOP){
-            world.setBlockState(pos,state.with(CARRY,getcarryInput(world,state,pos)>0)
+            world.setBlockState(pos,state.with(CARRY, getCarryInput(world,state,pos)>0)
                                         .with(HALFSUM,getSideInput(world,state,pos)>0));
         }
         else if (state.get(PART) == BLOCK_PART.BOTTOM){
@@ -41,13 +41,15 @@ public class Full_Adder extends MultiBlockGate {
             if (bottomState.isOf(this) && topState.isOf(this)) {
                 boolean a = getSideInput(world, bottomState, bottom) > 0;
                 boolean b = getSideInput(world, topState, top) > 0;
-                boolean c = getcarryInput(world, topState, top) > 0;
+                boolean c = getCarryInput(world, topState, top) > 0;
                 if ((a && b) || (b && c) || (a && c)){
                     world.setBlockState(bottom,bottomState.with(CARRY, true));
                 }
                 else{
                     world.setBlockState(bottom, bottomState.with(CARRY, false));
                 }
+
+                updateCarryTarget(world,bottom,state);
                 return (a ^ b ^ c);
             }
             return false;
@@ -60,17 +62,17 @@ public class Full_Adder extends MultiBlockGate {
     @Override
     protected int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
         if (state.get(PART) == BLOCK_PART.MIDDLE) {
-            if (!(Boolean) state.get(POWERED)) {
+            if (!(Boolean) state.get(SUM)) {
                 return 0;
             } else {
-                return state.get(FACING) == direction ? this.getOutputLevel(world, pos, state) : 0;
+                return state.get(FACING) == direction ? 15 : 0;
             }
         }
         else if (state.get(PART) == BLOCK_PART.BOTTOM){
             if (!(Boolean) state.get(CARRY)) {
                 return 0;
             } else {
-                return state.get(FACING).rotateYClockwise() == direction ? this.getOutputLevel(world, pos, state) : 0;
+                return state.get(FACING).rotateYClockwise() == direction ? 15 : 0;
             }
         }
         return 0;

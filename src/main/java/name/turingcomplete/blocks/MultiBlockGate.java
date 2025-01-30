@@ -15,8 +15,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.*;
+import net.minecraft.world.tick.TickPriority;
 
-public abstract class MultiBlockGate extends AbstractLogicGate{
+public abstract class MultiBlockGate extends AbstractGate{
     public static final EnumProperty<BLOCK_PART> PART = propertyInit.BLOCK_PART;
 
 
@@ -38,9 +39,8 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
-    }
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
+    {return SHAPE;}
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
@@ -71,14 +71,12 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
         }
     }
 
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, net.minecraft.block.BlockState> builder) {
-        builder.add(Properties.HORIZONTAL_FACING, SUM, CARRY, HALFSUM, PART);
-    }
+    protected void properties(StateManager.Builder<Block, BlockState> builder)
+    {builder.add(SUM, CARRY, HALFSUM, PART);}
+
 
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx)
-    {
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
         World world = ctx.getWorld();
         BlockPos midPos = ctx.getBlockPos();
         BlockState midState = this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
@@ -99,6 +97,50 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
             state = state.with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
             return state;
         }
+    }
+
+    @Override
+    protected int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction)
+    {return getWeakRedstonePower(state, world, pos, direction);}
+
+    // ===================================================
+    // Not Used As Intended To Be Updated
+    // ===================================================
+
+    protected BlockState getBlockPlacementState(ItemPlacementContext ctx) {return null;}
+    public boolean supportsSideDirection(BlockState state, Direction direction) {return false;}
+    public boolean supportsBackDirection() {return false;}
+
+    @Override
+    protected void update(World world, BlockState state, BlockPos pos) {
+        boolean bl = state.get(SUM);
+        boolean bl2 = this.gateConditionMet(world, pos, state);
+        if (bl && !bl2) {
+            world.setBlockState(pos, state.with(SUM, false), 2);
+        } else if (!bl) {
+            world.setBlockState(pos, state.with(SUM, true), 2);
+            if (!bl2) {
+                world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+            }
+        }
+        updateTarget(world,pos,state);
+    }
+    @Override
+    protected boolean shouldUpdate(World world, BlockState state, BlockPos pos) {
+        boolean bl = state.get(SUM);
+        boolean bl2 = this.gateConditionMet(world, pos, state);
+        return bl != bl2 && !world.getBlockTickScheduler().isTicking(pos, this);
+    }
+
+
+    // ===================================================
+
+    protected void updateCarryTarget(World world, BlockPos pos, BlockState state) {
+        Direction direction = state.get(FACING).rotateYClockwise();
+        BlockPos blockPos = pos.offset(direction.getOpposite());
+
+        world.updateNeighbor(blockPos, this, pos);
+        world.updateNeighborsExcept(blockPos, this, direction);
     }
 
     @Override
@@ -148,14 +190,12 @@ public abstract class MultiBlockGate extends AbstractLogicGate{
     public int getSideInput(World world, BlockState state, BlockPos pos){
         Direction redstoneDir = state.get(FACING);
         BlockPos redstonePos = pos.offset(redstoneDir);
-        int output = getInput(world,redstonePos,redstoneDir);
-        return output;
+        return world.getEmittedRedstonePower(redstonePos,redstoneDir);
     }
 
-    public int getcarryInput(World world, BlockState state, BlockPos pos){
+    public int getCarryInput(World world, BlockState state, BlockPos pos){
         Direction redstoneDir = state.get(FACING).rotateYClockwise();
         BlockPos redstonePos = pos.offset(redstoneDir);
-        int output = getInput(world,redstonePos,redstoneDir);
-        return output;
+        return world.getEmittedRedstonePower(redstonePos,redstoneDir);
     }
 }
