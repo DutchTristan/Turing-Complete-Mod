@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "R": {
+      "item": "turingcomplete:logic_base_plate_block"
+    },
+    "W": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    " W ",
+    "WRW",
+    " W "
+  ],
+  "result": {
+    "count": 1,
+    "id": "turingcomplete:omni_directional_redstone_bridge_block"
+  }
+}

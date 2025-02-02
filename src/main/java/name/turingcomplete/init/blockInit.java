@@ -1,9 +1,9 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
-import name.turingcomplete.block.*;
-import name.turingcomplete.multiblock.Full_Adder;
-import name.turingcomplete.multiblock.Half_Adder;
+import name.turingcomplete.blocks.block.*;
+import name.turingcomplete.blocks.multiblock.Full_Adder;
+import name.turingcomplete.blocks.multiblock.Half_Adder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.piston.PistonBehavior;
@@ -93,6 +93,14 @@ public class blockInit {
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
     //===============================================================================================
+    public static final SR_LATCH_Block SR_LATCH_BLOCK = registerWithItem("sr_latch_block",
+                new SR_LATCH_Block(AbstractBlock.Settings.create()
+                        .breakInstantly()
+                        .sounds(BlockSoundGroup.STONE)
+                        .pistonBehavior(PistonBehavior.DESTROY)
+                )
+            );
+    //===============================================================================================
 
     public static final Half_Adder HALF_ADDER = registerWithItem("half_adder",
             new Half_Adder(AbstractBlock.Settings.create()
@@ -106,12 +114,17 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final Redstone_Bridge_Block REDSTONE_BRIDGE_BLOCK = registerWithItem("redstone_bridge",
-            new Redstone_Bridge_Block(AbstractBlock.Settings.create()
+    public static final BiDirectionalRedstoneBridgeBlock BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("bi_directional_redstone_bridge_block",
+            new BiDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
+    public static final OmniDirectionalRedstoneBridgeBlock OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("omni_directional_redstone_bridge_block",
+            new OmniDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)));
 
 
 

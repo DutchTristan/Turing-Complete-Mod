@@ -10,10 +10,12 @@
   "block.turingcomplete.3and_gate_block" : "3-AND Gate Block",
   "block.turingcomplete.3or_gate_block" : "3-OR Gate Block",
   "block.turingcomplete.switch_gate_block" : "Switch Gate Block",
+  "block.turingcomplete.sr_latch_block" : "SR Latch Block",
   "block.turingcomplete.switch_gate_block.tooltip" : "Also known as the Tri-state Buffer",
   "block.turingcomplete.memory_cell_gate" : "1-bit Memory Cell Block",
   "block.turingcomplete.half_adder" :  "Half Adder",
   "block.turingcomplete.full_adder" : "Full Adder",
-  "block.turingcomplete.redstone_bridge" : "Redstone Bridge",
+  "block.turingcomplete.bi_directional_redstone_bridge_block" : "2-Way Redstone Bridge",
+  "block.turingcomplete.omni_directional_redstone_bridge_block" : "4-Way Redstone Bridge",
   "itemGroup.turingcomplete.group" : "Turing Complete"
 }

@@ -4,6 +4,7 @@ package name.turingcomplete;
 import name.turingcomplete.init.blockInit;
 import name.turingcomplete.init.itemInit;
 import name.turingcomplete.init.itemGroupInit;
+import name.turingcomplete.init.propertyInit;
 import net.fabricmc.api.ModInitializer;
 
 import net.minecraft.util.Identifier;
@@ -27,6 +28,8 @@ public class TuringComplete implements ModInitializer {
 		LOGGER.info("Loading...");
 		itemInit.load();
 		LOGGER.info("Items initialised...");
+		propertyInit.load();
+		LOGGER.info("Properties initialised...");
 		blockInit.load();
 		LOGGER.info("Blocks initialised...");
 		itemGroupInit.load();
