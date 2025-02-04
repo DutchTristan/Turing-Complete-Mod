@@ -32,12 +32,12 @@ public class SR_LATCH_Block extends AbstractSimpleLogicGate {
 
     @Override
     public boolean gateConditionMet( World world, BlockPos pos, BlockState state) {
-        boolean set = isInputPowered(world,state,pos,getSetDirection(state).getOpposite());
-        boolean reset = isInputPowered(world,state,pos,getSetDirection(state));
+        boolean set = isInputPowered(world,state,pos,getSetDirection(state));
+        boolean reset = isInputPowered(world,state,pos,getSetDirection(state).getOpposite());
 
-        if(!reset && set)
-            return false;
         if(!set && reset)
+            return false;
+        if(set && !reset)
             return true;
         if(reset)
             return false;
