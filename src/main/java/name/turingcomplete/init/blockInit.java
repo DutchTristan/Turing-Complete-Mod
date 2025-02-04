@@ -100,6 +100,14 @@ public class blockInit {
                         .pistonBehavior(PistonBehavior.DESTROY)
                 )
             );
+
+    public static final JK_LATCH_Block JK_LATCH_BLOCK = registerWithItem("jk_latch_block",
+            new JK_LATCH_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+            )
+    );
     //===============================================================================================
 
     public static final Half_Adder HALF_ADDER = registerWithItem("half_adder",
