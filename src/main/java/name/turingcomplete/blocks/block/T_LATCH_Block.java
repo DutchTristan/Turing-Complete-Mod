@@ -37,13 +37,10 @@ public class T_LATCH_Block extends AbstractSimpleLogicGate {
 
         if (toggle && !enabled){
             world.setBlockState(pos,state.with(ENABLED,true));
-            world.scheduleBlockTick(pos, this, 1);
             return !powered;
         }
         else if (!toggle && enabled){
             world.setBlockState(pos,state.with(ENABLED,false));
-            world.scheduleBlockTick(pos, this, 1);
-            return powered;
         }
         return powered;
     }
