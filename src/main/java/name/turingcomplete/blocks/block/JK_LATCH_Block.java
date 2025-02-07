@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 public class JK_LATCH_Block extends AbstractSimpleLogicGate {
     private static final BooleanProperty SWAP = propertyInit.SWAPPED_DIR;
+    private static Boolean ENABLED = false;
 
     public JK_LATCH_Block(Settings settings) {
         super(settings);
@@ -35,15 +36,25 @@ public class JK_LATCH_Block extends AbstractSimpleLogicGate {
         boolean set = isInputPowered(world,state,pos,getSetDirection(state));
         boolean reset = isInputPowered(world,state,pos,getSetDirection(state).getOpposite());
 
-        if (set && reset){
+        if (set && reset && !ENABLED){
+            ENABLED = true;
             return !state.get(POWERED);
         }
-        else if(!set && reset)
-            return false;
-        else if(set)
-            return true;
-
-        return state.get(POWERED);
+        else if (set && reset && ENABLED){
+            return state.get(POWERED);
+        }
+        else{
+            if(!set && reset){
+                ENABLED = false;
+                return false;
+            }
+            else if(set) {
+                ENABLED = false;
+                return true;
+            }
+            ENABLED = false;
+            return state.get(POWERED);
+        }
     }
 
 
