@@ -39,9 +39,7 @@ public abstract class AbstractSimpleLogicGate extends AbstractGate{
             world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.5F);
         else world.playSound(player,pos,SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.55F);
 
-        new_state = updateExtras(world,pos,new_state).with(POWERED, gateConditionMet(world, pos, new_state));
-        world.setBlockState(pos,new_state);
-
+        updateImmediate(world,pos,new_state.with(POWERED, gateConditionMet(world, pos, new_state)));
         return ActionResult.SUCCESS_NO_ITEM_USED;
     }
 
@@ -65,8 +63,6 @@ public abstract class AbstractSimpleLogicGate extends AbstractGate{
 
     @Override
     protected void update(World world, BlockState state, BlockPos pos) {
-        state = updateExtras(world,pos,state);
-
         boolean powered = state.get(POWERED);
         boolean has_power = this.gateConditionMet(world, pos, state);
 

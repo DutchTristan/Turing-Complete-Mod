@@ -43,13 +43,11 @@ public class SWITCH_Gate_Block extends AbstractSimpleLogicGate {
     }
 
     @Override
-    protected BlockState updateExtras(World world, BlockPos pos, BlockState state) {
+    protected void updateImmediate(World world, BlockPos pos, BlockState state) {
         boolean has_enabled = isInputPowered(world,state,pos,getEnabledSide(state));
         boolean enabled = state.get(ENABLED);
 
-        if (enabled != has_enabled) return state.with(ENABLED,has_enabled);
-
-        return state;
+        if (enabled != has_enabled) world.setBlockState(pos,state.with(ENABLED,has_enabled));
     }
 
     private InputDirection getEnabledSide(BlockState state){
@@ -66,7 +64,7 @@ public class SWITCH_Gate_Block extends AbstractSimpleLogicGate {
     {return true;}
 
     @Override
-    protected boolean shouldUpdateExtras(World world, BlockState state, BlockPos pos)
+    protected boolean shouldUpdateImmediate(World world, BlockState state, BlockPos pos)
     {return state.get(ENABLED) != isInputPowered(world,state,pos,getEnabledSide(state));}
 
 
