@@ -1,12 +1,9 @@
 package name.turingcomplete.blocks.block;
 
 import name.turingcomplete.blocks.AbstractSimpleLogicGate;
-import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
@@ -32,19 +29,28 @@ public class T_LATCH_Block extends AbstractSimpleLogicGate {
     @Override
     public boolean gateConditionMet( World world, BlockPos pos, BlockState state) {
         boolean toggle = isInputPowered(world,state,pos,InputDirection.BACK);
-        boolean enabled = state.get(ENABLED);
         boolean powered = state.get(POWERED);
 
-        if (toggle && !enabled){
-            world.setBlockState(pos,state.with(ENABLED,true));
-            return !powered;
-        }
-        else if (!toggle && enabled){
-            world.setBlockState(pos,state.with(ENABLED,false));
-        }
+        if (toggle) return !powered;
+
         return powered;
     }
 
+    @Override
+    protected boolean shouldUpdate(World world, BlockState state, BlockPos pos) {
+        return isInputPowered(world,state,pos,InputDirection.BACK) && !state.get(ENABLED)
+                && !world.getBlockTickScheduler().isTicking(pos, this);
+    }
+
+    @Override
+    protected void updateImmediate(World world, BlockPos pos, BlockState state) {
+        world.setBlockState(pos,state.with(ENABLED, isInputPowered(world,state,pos,InputDirection.BACK)));
+    }
+
+    @Override
+    protected boolean shouldUpdateImmediate(World world, BlockState state, BlockPos pos) {
+        return state.get(ENABLED) != isInputPowered(world,state,pos,InputDirection.BACK);
+    }
 
     @Override
     public boolean supportsSideDirection(BlockState state, Direction direction) {return false;}

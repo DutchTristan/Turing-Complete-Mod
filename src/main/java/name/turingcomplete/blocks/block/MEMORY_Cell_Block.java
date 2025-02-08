@@ -4,19 +4,12 @@ import name.turingcomplete.blocks.AbstractSimpleLogicGate;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
     public static final BooleanProperty ENABLED = Properties.ENABLED;
@@ -46,13 +39,11 @@ public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
     }
 
     @Override
-    protected BlockState updateExtras(World world, BlockPos pos, BlockState state) {
+    protected void updateImmediate(World world, BlockPos pos, BlockState state) {
         boolean store = isInputPowered(world,state,pos,getStoreDirection(state));
         boolean enabled = state.get(ENABLED);
 
-        if (enabled != store) return state.with(ENABLED,store);
-
-        return state;
+        if (enabled != store) world.setBlockState(pos,state.with(ENABLED,store));
     }
 
     private InputDirection getStoreDirection(BlockState state){
@@ -69,11 +60,7 @@ public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
 
 
     @Override
-    protected boolean shouldUpdateExtras(World world, BlockState state, BlockPos pos)
+    protected boolean shouldUpdateImmediate(World world, BlockState state, BlockPos pos)
     {return state.get(ENABLED) != isInputPowered(world,state,pos,getStoreDirection(state));}
 
-    @Override
-    public void appendTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-        tooltip.add(Text.translatable("block.turingcomplete.memory_cell_gate.tooltip").formatted(Formatting.RED).formatted(Formatting.ITALIC));
-    }
 }
