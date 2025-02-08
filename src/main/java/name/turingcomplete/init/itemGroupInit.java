@@ -33,6 +33,8 @@ public class itemGroupInit {
                 entries.add(blockInit.BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK);
                 entries.add(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK);
                 entries.add(blockInit.SR_LATCH_BLOCK);
+                entries.add(blockInit.JK_LATCH_BLOCK);
+                entries.add(blockInit.T_LATCH_BLOCK);
             })
             .build());
 

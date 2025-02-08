@@ -10,12 +10,15 @@
   "block.turingcomplete.3and_gate_block" : "Bloco de Lógica 3-AND",
   "block.turingcomplete.3or_gate_block" : "Bloco de Lógica 3-OR",
   "block.turingcomplete.switch_gate_block" : "Bloco de Lógica de Comutação",
-  "block.turingcomplete.sr_latch_block" : "Bloco de Trava SR",
   "block.turingcomplete.switch_gate_block.tooltip" : "Também Conhecido Como Buffer De Três Estados",
   "block.turingcomplete.memory_cell_gate" : "Bloco de Célula de Memória 1-bit",
   "block.turingcomplete.half_adder" :  "Meio Somador",
   "block.turingcomplete.full_adder" : "Somador",
   "block.turingcomplete.bi_directional_redstone_bridge_block" : "Ponte De Redstone Bi-Direcional",
   "block.turingcomplete.omni_directional_redstone_bridge_block" : "Ponte De Redstone Multi-Direcional",
-  "itemGroup.turingcomplete.group" : "Turing Complete"
+  "block.turingcomplete.sr_latch_block" : "Bloco de Trava SR",
+  "block.turingcomplete.jk_latch_block" : "Bloco de Trava JK",
+  "block.turingcomplete.t_latch_block" : "Bloco de Trava T",
+  "itemGroup.turingcomplete.group" : "Turing Complete",
+  "block.turingcomplete.memory_cell_gate.tooltip": "Also known as a D-latch"
 }

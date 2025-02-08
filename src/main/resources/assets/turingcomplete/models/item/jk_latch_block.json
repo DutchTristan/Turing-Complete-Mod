@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures" : {
+<<<<<<<< HEAD:src/main/resources/assets/turingcomplete/models/item/sr_latch_block.json
+    "layer0": "turingcomplete:item/sr_latch"
+========
+    "layer0": "turingcomplete:item/jk_latch"
+>>>>>>>> upstream/main:src/main/resources/assets/turingcomplete/models/item/jk_latch_block.json
+  }
+}
