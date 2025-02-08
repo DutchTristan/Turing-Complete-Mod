@@ -60,7 +60,7 @@ public abstract class AbstractGate extends HorizontalFacingBlock implements Conn
     public abstract boolean supportsBackDirection();
     protected abstract void properties(StateManager.Builder<Block, BlockState> builder);
     protected abstract BlockState getBlockPlacementState(ItemPlacementContext ctx);
-    protected BlockState updateExtras(World world, BlockPos pos, BlockState state){return state;}
+    protected void updateImmediate(World world, BlockPos pos, BlockState state){world.setBlockState(pos,state);}
 
     protected int getUpdateDelayInternal(BlockState state) {return 2;}
 
@@ -69,7 +69,7 @@ public abstract class AbstractGate extends HorizontalFacingBlock implements Conn
 
     protected abstract void update(World world, BlockState state, BlockPos pos);
     protected abstract boolean shouldUpdate(World world, BlockState state, BlockPos pos);
-    protected  boolean shouldUpdateExtras(World world, BlockState state, BlockPos pos) {return false;}
+    protected  boolean shouldUpdateImmediate(World world, BlockState state, BlockPos pos) {return false;}
 
 
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {update(world,state,pos);}
@@ -88,16 +88,16 @@ public abstract class AbstractGate extends HorizontalFacingBlock implements Conn
         }
 
 
-        if (shouldUpdateExtras(world, state, pos))
-            world.setBlockState(pos,updateExtras(world, pos, state));
+        if (shouldUpdateImmediate(world, state, pos))
+            updateImmediate(world, pos, state);
         if (shouldUpdate(world,state,pos))
             world.scheduleBlockTick(pos,this, getUpdateDelayInternal(state));
     }
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (shouldUpdateExtras(world, state, pos))
-            world.setBlockState(pos,updateExtras(world, pos, state));
+        if (shouldUpdateImmediate(world, state, pos))
+            updateImmediate(world, pos, state);
         if (shouldUpdate(world,state,pos))
             world.scheduleBlockTick(pos,this, getUpdateDelayInternal(state));
     }
