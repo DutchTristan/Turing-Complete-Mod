@@ -24,6 +24,11 @@ public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
     }
 
     @Override
+    protected void update(World world, BlockState state, BlockPos pos) {
+        if (state.get(ENABLED) || world.getBlockState(pos).get(SWAP) != state.get(SWAP)) super.update(world,state,pos);
+    }
+
+    @Override
     protected void properties(StateManager.Builder<Block, BlockState> builder) {
         super.properties(builder);
         builder.add(ENABLED,SWAP);
@@ -42,8 +47,13 @@ public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
     protected void updateImmediate(World world, BlockPos pos, BlockState state) {
         boolean store = isInputPowered(world,state,pos,getStoreDirection(state));
         boolean enabled = state.get(ENABLED);
+        BlockState old_state = world.getBlockState(pos);
+        BlockState new_state = state;
 
-        if (enabled != store) world.setBlockState(pos,state.with(ENABLED,store));
+        if (enabled != store) new_state = new_state.with(ENABLED,store);
+        if (state.get(SWAP) != old_state.get(SWAP)) new_state = new_state.with(SWAP, state.get(SWAP));
+
+        world.setBlockState(pos,new_state);
     }
 
     private InputDirection getStoreDirection(BlockState state){
