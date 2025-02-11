@@ -2,7 +2,7 @@
   "textures": {
     "particle": "block/comparator",
     "slab": "block/smooth_stone",
-    "top": "turingcomplete:block/jk_latch"
+    "top": "turingcomplete:block/jk_latch_flip"
   },
   "elements": [
     {

@@ -40,6 +40,7 @@ public abstract class AbstractSimpleLogicGate extends AbstractGate{
         else world.playSound(player,pos,SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.55F);
 
         updateImmediate(world,pos,new_state.with(POWERED, gateConditionMet(world, pos, new_state)));
+        updateTarget(world,pos,state);
         return ActionResult.SUCCESS_NO_ITEM_USED;
     }
 
