@@ -4,19 +4,12 @@ import name.turingcomplete.blocks.AbstractSimpleLogicGate;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-
-import java.util.List;
 
 public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
     public static final BooleanProperty ENABLED = Properties.ENABLED;
@@ -28,6 +21,11 @@ public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
                 .with(ENABLED,false)
                 .with(SWAP,false)
         );
+    }
+
+    @Override
+    protected void update(World world, BlockState state, BlockPos pos) {
+        if (state.get(ENABLED) || world.getBlockState(pos).get(SWAP) != state.get(SWAP)) super.update(world,state,pos);
     }
 
     @Override
@@ -49,8 +47,13 @@ public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
     protected void updateImmediate(World world, BlockPos pos, BlockState state) {
         boolean store = isInputPowered(world,state,pos,getStoreDirection(state));
         boolean enabled = state.get(ENABLED);
+        BlockState old_state = world.getBlockState(pos);
+        BlockState new_state = state;
 
-        if (enabled != store) world.setBlockState(pos,state.with(ENABLED,store));
+        if (enabled != store) new_state = new_state.with(ENABLED,store);
+        if (state.get(SWAP) != old_state.get(SWAP)) new_state = new_state.with(SWAP, state.get(SWAP));
+
+        world.setBlockState(pos,new_state);
     }
 
     private InputDirection getStoreDirection(BlockState state){
@@ -70,8 +73,4 @@ public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
     protected boolean shouldUpdateImmediate(World world, BlockState state, BlockPos pos)
     {return state.get(ENABLED) != isInputPowered(world,state,pos,getStoreDirection(state));}
 
-    @Override
-    public void appendTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-        tooltip.add(Text.translatable("block.turingcomplete.memory_cell_gate.tooltip").formatted(Formatting.RED).formatted(Formatting.ITALIC));
-    }
 }
