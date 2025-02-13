@@ -178,5 +178,25 @@ public class TuringCompleteRecipeProvider extends FabricRecipeProvider {
                 .pattern("RNR")
                 .criterion(hasItem(blockInit.NOR_GATE),conditionsFromItem(blockInit.NOR_GATE))
                 .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.JK_LATCH_BLOCK, 1)
+                .input('S', blockInit.SR_LATCH_BLOCK)
+                .input('W', Blocks.REDSTONE_WIRE)
+                .input('A', blockInit.AND_GATE)
+                .pattern("AW ")
+                .pattern(" S ")
+                .pattern("AW ")
+                .criterion(hasItem(blockInit.SR_LATCH_BLOCK),conditionsFromItem(blockInit.SR_LATCH_BLOCK))
+                .offerTo(exporter);
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, blockInit.T_LATCH_BLOCK, 1)
+                .input('W', Blocks.REDSTONE_WIRE)
+                .input('J', blockInit.JK_LATCH_BLOCK)
+                .pattern("WW ")
+                .pattern("WJ ")
+                .pattern("WW ")
+                .criterion(hasItem(blockInit.JK_LATCH_BLOCK),conditionsFromItem(blockInit.JK_LATCH_BLOCK))
+                .offerTo(exporter);
     }
+
 }
