@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_sr_latch_block": {
+      "conditions": {
+        "items": [
+          {
+            "items": "turingcomplete:sr_latch_block"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "turingcomplete:jk_latch_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_sr_latch_block"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "turingcomplete:jk_latch_block"
+    ]
+  }
+}
