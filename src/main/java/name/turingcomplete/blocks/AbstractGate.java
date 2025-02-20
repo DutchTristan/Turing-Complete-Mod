@@ -25,10 +25,8 @@ public abstract class AbstractGate extends HorizontalFacingBlock implements Conn
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return getBlockPlacementState(ctx)
-            .with(FACING,ctx.getHorizontalPlayerFacing().getOpposite());
-    }
+    public BlockState getPlacementState(ItemPlacementContext ctx)
+    {return getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());}
 
     @Override
     protected MapCodec<? extends HorizontalFacingBlock> getCodec() {return CODEC;}
@@ -59,7 +57,6 @@ public abstract class AbstractGate extends HorizontalFacingBlock implements Conn
     public abstract boolean supportsSideDirection(BlockState state, Direction direction);
     public abstract boolean supportsBackDirection();
     protected abstract void properties(StateManager.Builder<Block, BlockState> builder);
-    protected abstract BlockState getBlockPlacementState(ItemPlacementContext ctx);
     protected void updateImmediate(World world, BlockPos pos, BlockState state){world.setBlockState(pos,state);}
 
     protected int getUpdateDelayInternal(BlockState state) {return 2;}

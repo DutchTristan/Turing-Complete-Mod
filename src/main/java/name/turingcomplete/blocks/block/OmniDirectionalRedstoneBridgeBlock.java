@@ -12,7 +12,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
@@ -37,7 +36,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
         builder.add(POWER_X,POWER_Z);
     }
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {
-        return VoxelShapes.cuboid(0, 0, 0, 1, 0.125, 1);
+        return Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
     }
 
     protected void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
@@ -57,7 +56,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
 
     protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!moved && !state.isOf(newState.getBlock())) {
-            super.onStateReplaced(state, world, pos, newState, moved);
+            super.onStateReplaced(state, world, pos, newState, false);
             // If World Is Client World, Ignore Rest Of Code
             if(world.isClient) return;
 
