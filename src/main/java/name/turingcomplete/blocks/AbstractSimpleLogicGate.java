@@ -9,8 +9,10 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -19,15 +21,17 @@ import net.minecraft.world.World;
 import net.minecraft.world.tick.TickPriority;
 
 public abstract class AbstractSimpleLogicGate extends AbstractGate{
+    private static final EnumProperty<DyeColor> COLOR = EnumProperty.of("color", DyeColor.class);
     protected static final BooleanProperty POWERED = Properties.POWERED;
 
     protected AbstractSimpleLogicGate(Settings settings) {
         super(settings);
+        setDefaultState(getDefaultState().with(COLOR, DyeColor.RED));
         setDefaultState(getDefaultState().with(POWERED,false));
     }
 
     @Override
-    protected void properties(StateManager.Builder<Block, BlockState> builder) {builder.add(POWERED);}
+    protected void properties(StateManager.Builder<Block, BlockState> builder) {builder.add(COLOR, POWERED);}
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
