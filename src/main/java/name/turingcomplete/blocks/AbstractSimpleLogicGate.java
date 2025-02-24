@@ -98,6 +98,11 @@ public abstract class AbstractSimpleLogicGate extends AbstractGate{
         return true;
     }
 
+    public static int getBlockColor(BlockState state, int tintIndex) {
+        DyeColor colorState = state.get(COLOR);
+        return state.get(POWERED)? colorState.getSignColor() : colorState.getFireworkColor();
+    }
+
     //=============================================
     //=============================================
 
