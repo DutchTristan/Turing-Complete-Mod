@@ -5,12 +5,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -19,18 +25,24 @@ import net.minecraft.world.World;
 import net.minecraft.world.tick.TickPriority;
 
 public abstract class AbstractSimpleLogicGate extends AbstractGate{
+    private static final EnumProperty<DyeColor> COLOR = EnumProperty.of("color", DyeColor.class);
     protected static final BooleanProperty POWERED = Properties.POWERED;
 
     protected AbstractSimpleLogicGate(Settings settings) {
         super(settings);
+        setDefaultState(getDefaultState().with(COLOR, DyeColor.RED));
         setDefaultState(getDefaultState().with(POWERED,false));
     }
 
     @Override
-    protected void properties(StateManager.Builder<Block, BlockState> builder) {builder.add(POWERED);}
+    protected void properties(StateManager.Builder<Block, BlockState> builder) {builder.add(COLOR, POWERED);}
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+        if (updateBlockColor(state, world, pos, player.getMainHandStack())) {
+            return ActionResult.SUCCESS_NO_ITEM_USED;
+        }
+
         if (!state.contains(propertyInit.SWAPPED_DIR)) return ActionResult.PASS;
 
         BlockState new_state = state.with(propertyInit.SWAPPED_DIR,!state.get(propertyInit.SWAPPED_DIR));
@@ -42,6 +54,53 @@ public abstract class AbstractSimpleLogicGate extends AbstractGate{
         updateImmediate(world,pos,new_state.with(POWERED, gateConditionMet(world, pos, new_state)));
         updateTarget(world,pos,state);
         return ActionResult.SUCCESS_NO_ITEM_USED;
+    }
+
+    protected boolean updateBlockColor(BlockState state, World world, BlockPos pos, ItemStack item) {
+        DyeColor newColor = null;
+        if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/white")))) {
+            newColor = DyeColor.WHITE;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/orange")))) {
+            newColor = DyeColor.ORANGE;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/magenta")))) {
+            newColor = DyeColor.MAGENTA;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/light_blue")))) {
+            newColor = DyeColor.LIGHT_BLUE;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/yellow")))) {
+            newColor = DyeColor.YELLOW;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/lime")))) {
+            newColor = DyeColor.LIME;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/pink")))) {
+            newColor = DyeColor.PINK;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/gray")))) {
+            newColor = DyeColor.GRAY;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/light_gray")))) {
+            newColor = DyeColor.LIGHT_GRAY;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/cyan")))) {
+            newColor = DyeColor.CYAN;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/purple")))) {
+            newColor = DyeColor.PURPLE;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/blue")))) {
+            newColor = DyeColor.BLUE;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/brown")))) {
+            newColor = DyeColor.BROWN;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/green")))) {
+            newColor = DyeColor.GREEN;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/red")))) {
+            newColor = DyeColor.RED;
+        } else if (item.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of("c", "dyes/black")))) {
+            newColor = DyeColor.BLACK;
+        }
+
+        if (newColor == null || state.get(COLOR) == newColor) {return false;}
+
+        updateImmediate(world, pos, state.with(COLOR, newColor));
+        return true;
+    }
+
+    public static int getBlockColor(BlockState state, int tintIndex) {
+        DyeColor colorState = state.get(COLOR);
+        return state.get(POWERED)? colorState.getSignColor() : colorState.getFireworkColor();
     }
 
     //=============================================
