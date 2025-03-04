@@ -2,7 +2,7 @@
   "textures": {
     "particle": "block/comparator",
     "slab": "block/smooth_stone",
-    "top": "turingcomplete:block/full_adder/full_adder_bottom_on"
+    "top": "turingcomplete:block/adders/full_adder_middle_on"
   },
   "elements": [
     {

@@ -1,52 +1,52 @@
 {
   "render_type": "cutout",
   "variants": {
-    "facing=north,powered=false,swapped_direction=false" : {
+    "facing=north,powered=false,mirrored=false" : {
       "model" : "turingcomplete:block/jk_latch_block", "y": 180
     },
-    "facing=east,powered=false,swapped_direction=false": {
+    "facing=east,powered=false,mirrored=false": {
       "model" : "turingcomplete:block/jk_latch_block", "y": 270
     },
-    "facing=south,powered=false,swapped_direction=false": {
+    "facing=south,powered=false,mirrored=false": {
       "model" : "turingcomplete:block/jk_latch_block", "y": 0
     },
-    "facing=west,powered=false,swapped_direction=false": {
+    "facing=west,powered=false,mirrored=false": {
       "model" : "turingcomplete:block/jk_latch_block", "y": 90
     },
-    "facing=north,powered=false,swapped_direction=true" : {
+    "facing=north,powered=false,mirrored=true" : {
       "model" : "turingcomplete:block/jk_latch_block_flip", "y": 180
     },
-    "facing=east,powered=false,swapped_direction=true": {
+    "facing=east,powered=false,mirrored=true": {
       "model" : "turingcomplete:block/jk_latch_block_flip", "y": 270
     },
-    "facing=south,powered=false,swapped_direction=true": {
+    "facing=south,powered=false,mirrored=true": {
       "model" : "turingcomplete:block/jk_latch_block_flip", "y": 0
     },
-    "facing=west,powered=false,swapped_direction=true": {
+    "facing=west,powered=false,mirrored=true": {
       "model" : "turingcomplete:block/jk_latch_block_flip", "y": 90
     },
-    "facing=north,powered=true,swapped_direction=false" : {
+    "facing=north,powered=true,mirrored=false" : {
       "model" : "turingcomplete:block/jk_latch_block_on", "y": 180
     },
-    "facing=east,powered=true,swapped_direction=false": {
+    "facing=east,powered=true,mirrored=false": {
       "model" : "turingcomplete:block/jk_latch_block_on", "y": 270
     },
-    "facing=south,powered=true,swapped_direction=false": {
+    "facing=south,powered=true,mirrored=false": {
       "model" : "turingcomplete:block/jk_latch_block_on", "y": 0
     },
-    "facing=west,powered=true,swapped_direction=false": {
+    "facing=west,powered=true,mirrored=false": {
       "model" : "turingcomplete:block/jk_latch_block_on", "y": 90
     },
-    "facing=north,powered=true,swapped_direction=true" : {
+    "facing=north,powered=true,mirrored=true" : {
       "model" : "turingcomplete:block/jk_latch_block_on_flip", "y": 180
     },
-    "facing=east,powered=true,swapped_direction=true": {
+    "facing=east,powered=true,mirrored=true": {
       "model" : "turingcomplete:block/jk_latch_block_on_flip", "y": 270
     },
-    "facing=south,powered=true,swapped_direction=true": {
+    "facing=south,powered=true,mirrored=true": {
       "model" : "turingcomplete:block/jk_latch_block_on_flip", "y": 0
     },
-    "facing=west,powered=true,swapped_direction=true": {
+    "facing=west,powered=true,mirrored=true": {
       "model" : "turingcomplete:block/jk_latch_block_on_flip", "y": 90
     }
   }

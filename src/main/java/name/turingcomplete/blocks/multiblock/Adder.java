@@ -62,6 +62,24 @@ public final class Adder extends AbstractLogicMultiblock{
     }
 
     @Override
+    public boolean canMirrorHere(BlockPos mainPos, BlockState mainState){
+        return true;
+    }
+
+    @Override
+    protected BlockPos mirrorBlockParts(World world, BlockPos mainPos, BlockState mainState){
+        Direction facing = mainState.get(FACING);
+        BlockPos aPos = getAPos(world, mainPos, mainState);
+        BlockState aState = world.getBlockState(aPos);
+        BlockPos bPos = getBPos(world, mainPos, mainState);
+        BlockState bState = world.getBlockState(bPos);
+
+        world.setBlockState(aPos, getBPlacementState(facing).with(POWERED,aState.get(POWERED)));
+        world.setBlockState(bPos, getAPlacementState(facing).with(POWERED,bState.get(POWERED)));
+        return mainPos;
+    }
+
+    @Override
     public Boolean dustConnectsToThis(BlockState state, Direction direction) {
         Direction facing = state.get(FACING);
         boolean mirrored = state.get(MIRRORED);
@@ -93,6 +111,7 @@ public final class Adder extends AbstractLogicMultiblock{
 
     @Override
     public @Nullable BlockPos getMainPos(World world, BlockState partState, BlockPos partPos) {
+        LogUtils.getLogger().info("getting main pos for "+partPos);
         boolean mirrored = partState.get(MIRRORED);
         switch(partState.get(PART)) {
             //B side
@@ -181,6 +200,11 @@ public final class Adder extends AbstractLogicMultiblock{
         if (mainPos == null) return;
 
         BlockState mainState = world.getBlockState(mainPos);
+
+        if (!(mainState.getBlock() instanceof Adder) || !isMultiblockValid(world, mainPos, mainState)) {
+            LogUtils.getLogger().warn("invalid multiblock at "+mainPos);
+            return;
+        }
 
         switch(state.get(PART)) {
             case BOTTOM:
@@ -309,11 +333,8 @@ public final class Adder extends AbstractLogicMultiblock{
         boolean isBActive = getBActive(world, gatePos, gateState);
         boolean isCarryInActive = getCarryInActive(world, gatePos, gateState);
 
-        LogUtils.getLogger().info("evaluateSum: a "+isAActive+" b "+isBActive + " carry "+isCarryInActive);
-
         boolean result = isAActive ^ isBActive ^ isCarryInActive;
 
-        LogUtils.getLogger().info("evaluateSum result: "+result);
         return result;
     }
     
@@ -322,10 +343,7 @@ public final class Adder extends AbstractLogicMultiblock{
         boolean isBActive = getBActive(world, gatePos, gateState);
         boolean isCarryInActive = getCarryInActive(world, gatePos, gateState);
 
-        LogUtils.getLogger().info("evaluateCarryOut: a "+isAActive+" b "+isBActive + " carry "+isCarryInActive);
-
         boolean result = isAActive && isBActive || (isCarryInActive && (isAActive || isBActive));
-        LogUtils.getLogger().info("evaluateCarryOut result: "+result);
         return result;
     }
 
