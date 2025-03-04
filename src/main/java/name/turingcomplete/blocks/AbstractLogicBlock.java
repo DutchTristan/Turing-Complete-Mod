@@ -25,8 +25,16 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
 
     private static final MapCodec<ComparatorBlock> CODEC = createCodec(ComparatorBlock::new);
 
-    protected AbstractLogicBlock(Settings settings) {super(settings);}
+    protected AbstractLogicBlock(Settings settings) {
+        super(settings);
+        if(canMirror()) {
+            setDefaultState(getDefaultState()
+            .with(MIRRORED,false));
+        }
+        
+    }
     
+    //warning: value must not change
     public boolean canMirror(){
         return false;
     }

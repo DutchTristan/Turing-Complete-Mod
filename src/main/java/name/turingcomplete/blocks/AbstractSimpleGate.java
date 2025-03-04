@@ -110,6 +110,7 @@ public abstract class AbstractSimpleGate extends AbstractLogicBlock{
             updateOutputBlock(world,pos,state);
         }
     }
+    
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
