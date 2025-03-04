@@ -1,27 +1,19 @@
 package name.turingcomplete.blocks.block;
 
-import name.turingcomplete.blocks.AbstractSimpleLogicGate;
+import name.turingcomplete.blocks.AbstractSimpleGate;
+import name.turingcomplete.blocks.RelativeSide;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+public class AND_Gate_Block extends AbstractSimpleGate{
 
-public class AND_Gate_Block extends AbstractSimpleLogicGate {
-
-    public AND_Gate_Block(Settings settings)
-    {super(settings);}
+    public AND_Gate_Block(Settings settings) {super(settings);}
 
     @Override
-    protected boolean gateConditionMet(World world, BlockPos pos, BlockState state) {
-        boolean left = isInputPowered(world, state, pos,InputDirection.LEFT);
-        boolean right = isInputPowered(world, state, pos,InputDirection.RIGHT);
+    protected boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState) {
+        boolean left = getInputActive(world, gatePos, gateState,RelativeSide.LEFT);
+        boolean right = getInputActive(world, gatePos, gateState,RelativeSide.RIGHT);
         return (left && right);
     }
-
-    public boolean supportsSideDirection(BlockState state, Direction direction)
-    {return true;}
-    public boolean supportsBackDirection()
-    {return false;}
-
 }
