@@ -93,30 +93,6 @@ public class blockInit {
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
     //===============================================================================================
-    public static final SR_LATCH_Block SR_LATCH_BLOCK = registerWithItem("sr_latch_block",
-                new SR_LATCH_Block(AbstractBlock.Settings.create()
-                        .breakInstantly()
-                        .sounds(BlockSoundGroup.STONE)
-                        .pistonBehavior(PistonBehavior.DESTROY)
-                )
-            );
-
-    public static final JK_LATCH_Block JK_LATCH_BLOCK = registerWithItem("jk_latch_block",
-            new JK_LATCH_Block(AbstractBlock.Settings.create()
-                    .breakInstantly()
-                    .sounds(BlockSoundGroup.STONE)
-                    .pistonBehavior(PistonBehavior.DESTROY)
-            )
-    );
-
-    public static final T_LATCH_Block T_LATCH_BLOCK = registerWithItem("t_latch_block",
-            new T_LATCH_Block(AbstractBlock.Settings.create()
-                    .breakInstantly()
-                    .sounds(BlockSoundGroup.STONE)
-                    .pistonBehavior(PistonBehavior.DESTROY)
-            )
-    );
-    //===============================================================================================
 
     public static final Half_Adder HALF_ADDER = registerWithItem("half_adder",
             new Half_Adder(AbstractBlock.Settings.create()
@@ -136,13 +112,37 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
+    //===============================================================================================
+
     public static final OmniDirectionalRedstoneBridgeBlock OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("omni_directional_redstone_bridge_block",
             new OmniDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
+    public static final SR_LATCH_Block SR_LATCH_BLOCK = registerWithItem("sr_latch_block",
+            new SR_LATCH_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+            )
+    );
 
+    public static final JK_LATCH_Block JK_LATCH_BLOCK = registerWithItem("jk_latch_block",
+            new JK_LATCH_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+            )
+    );
+
+    public static final T_LATCH_Block T_LATCH_BLOCK = registerWithItem("t_latch_block",
+            new T_LATCH_Block(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+            )
+    );
 
 
     public static <T extends Block> T register(String name, T block){

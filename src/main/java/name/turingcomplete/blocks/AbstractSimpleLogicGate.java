@@ -51,8 +51,11 @@ public abstract class AbstractSimpleLogicGate extends AbstractGate{
     {return direction == state.get(FACING) && state.get(POWERED) ? 15 : 0;}
 
     @Override
-    protected BlockState getBlockPlacementState(ItemPlacementContext ctx)
-    {return getDefaultState().with(POWERED, gateConditionMet(ctx.getWorld(),ctx.getBlockPos(),getDefaultState()));}
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        return super.getPlacementState(ctx)
+                .with(POWERED, gateConditionMet(ctx.getWorld(),ctx.getBlockPos(),super.getPlacementState(ctx))
+        );
+    }
 
 
     @Override
