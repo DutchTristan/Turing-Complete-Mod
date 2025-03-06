@@ -1,21 +1,10 @@
 {
+  "parent": "turingcomplete:block/template_gate_block",
   "textures": {
     "particle": "block/comparator",
     "slab": "block/smooth_stone",
+    "base": "turingcomplete:block/logic_base_plate",
+    "connector": "turingcomplete:block/logic_connector_side_back",
     "top": "turingcomplete:block/3or_gate"
-  },
-  "elements": [
-    {
-      "from": [ 0, 0, 0 ],
-      "to": [ 16, 2, 16 ],
-      "faces": {
-        "down":  { "uv": [ 0,  0, 16, 16 ], "texture": "#slab", "cullface": "down" },
-        "up":    { "uv": [ 0,  0, 16, 16 ], "texture": "#top" },
-        "north": { "uv": [ 0, 14, 16, 16 ], "texture": "#slab", "cullface": "north" },
-        "south": { "uv": [ 0, 14, 16, 16 ], "texture": "#slab", "cullface": "south" },
-        "west":  { "uv": [ 0, 14, 16, 16 ], "texture": "#slab", "cullface": "west" },
-        "east":  { "uv": [ 0, 14, 16, 16 ], "texture": "#slab", "cullface": "east" }
-      }
-    }
-  ]
+  }
 }

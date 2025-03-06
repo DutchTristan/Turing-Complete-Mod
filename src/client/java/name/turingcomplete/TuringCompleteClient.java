@@ -11,8 +11,10 @@ public class TuringCompleteClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		// To make some parts of the block transparent (like glass, saplings and doors):
 		BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(),
-				blockInit.NOT_GATE,blockInit.NAND_GATE,
-				blockInit.NOR_GATE,blockInit.XNOR_GATE
+				blockInit.NOT_GATE,
+				blockInit.AND_GATE,blockInit.NAND_GATE,blockInit.THREE_AND_GATE,
+				blockInit.OR_GATE,blockInit.NOR_GATE,blockInit.THREE_OR_GATE,
+				blockInit.XOR_GATE,blockInit.XNOR_GATE
 		);
 
 		BlockRenderLayerMap.INSTANCE.putBlock(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK,RenderLayer.getTranslucent());
