@@ -1,7 +1,7 @@
 package name.turingcomplete.blocks.block;
 
-import name.turingcomplete.blocks.AbstractSimpleLogicGate;
-import name.turingcomplete.init.propertyInit;
+import name.turingcomplete.blocks.AbstractSimpleGate;
+import name.turingcomplete.blocks.RelativeSide;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
@@ -18,67 +18,59 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
+public class MEMORY_Cell_Block extends AbstractSimpleGate {
     public static final BooleanProperty ENABLED = Properties.ENABLED;
-    public static final BooleanProperty SWAP = propertyInit.SWAPPED_DIR;
 
     public MEMORY_Cell_Block(Settings settings) {
         super(settings);
         setDefaultState(getDefaultState()
                 .with(ENABLED,false)
-                .with(SWAP,false)
         );
     }
 
     @Override
-    protected void update(World world, BlockState state, BlockPos pos) {
-        if (state.get(ENABLED) || world.getBlockState(pos).get(SWAP) != state.get(SWAP)) super.update(world,state,pos);
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(ENABLED);
     }
 
     @Override
-    protected void properties(StateManager.Builder<Block, BlockState> builder) {
-        super.properties(builder);
-        builder.add(ENABLED,SWAP);
+    protected boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState) {
+        boolean signal = getInputActive(world, gatePos, gateState,RelativeSide.BACK);
+        boolean enable = getInputActive(world, gatePos, gateState,getEnabledSide(gateState));
+
+        if (enable) {
+            return signal;
+        }
+        else {
+            return gateState.get(POWERED);
+        }
+    }
+
+    @Override 
+    public boolean canMirror(){
+        return true;
     }
 
     @Override
-    protected boolean gateConditionMet(World world, BlockPos pos, BlockState state) {
-        boolean store = isInputPowered(world,state,pos,getStoreDirection(state));
-
-        if (store) return isInputPowered(world,state,pos,InputDirection.BACK);
-
-        return state.get(POWERED);
+    protected void onNeighborUpdate(World world, BlockPos gatePos, BlockState gateState){
+        world.setBlockState(gatePos, gateState.with(
+            ENABLED,
+            getInputActive(world, gatePos, gateState, getEnabledSide(gateState))));
     }
 
     @Override
-    protected void updateImmediate(World world, BlockPos pos, BlockState state) {
-        boolean store = isInputPowered(world,state,pos,getStoreDirection(state));
-        boolean enabled = state.get(ENABLED);
-        BlockState old_state = world.getBlockState(pos);
-        BlockState new_state = state;
-
-        if (enabled != store) new_state = new_state.with(ENABLED,store);
-        if (state.get(SWAP) != old_state.get(SWAP)) new_state = new_state.with(SWAP, state.get(SWAP));
-
-        world.setBlockState(pos,new_state);
+    public Boolean dustConnectsToThis(BlockState gateState, Direction direction){
+        if (direction.getAxis() == gateState.get(FACING).getAxis()) {
+            return true;
+        }
+        Direction facing = gateState.get(FACING);
+        return direction == getEnabledSide(gateState).onDirection(facing);
     }
 
-    private InputDirection getStoreDirection(BlockState state){
-        return state.get(SWAP) ? InputDirection.LEFT : InputDirection.RIGHT;
+    private RelativeSide getEnabledSide(BlockState state){
+        return state.get(MIRRORED) ? RelativeSide.RIGHT : RelativeSide.LEFT;
     }
-
-    @Override
-    public boolean supportsSideDirection(BlockState state, Direction direction)
-    {return direction == getStoreDirection(state).getRelativeDirection(state.get(FACING)).getOpposite();}
-
-    @Override
-    public boolean supportsBackDirection()
-    {return true;}
-
-
-    @Override
-    protected boolean shouldUpdateImmediate(World world, BlockState state, BlockPos pos)
-    {return state.get(ENABLED) != isInputPowered(world,state,pos,getStoreDirection(state));}
 
     @Override
     public void appendTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {

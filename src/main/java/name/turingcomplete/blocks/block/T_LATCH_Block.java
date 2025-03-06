@@ -1,35 +1,28 @@
 package name.turingcomplete.blocks.block;
 
-import name.turingcomplete.blocks.AbstractSimpleLogicGate;
+import name.turingcomplete.blocks.AbstractSimpleGate;
+import name.turingcomplete.blocks.RelativeSide;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class T_LATCH_Block extends AbstractSimpleLogicGate {
-    private static final BooleanProperty ENABLED = BooleanProperty.of("enabled");
+public class T_LATCH_Block extends AbstractSimpleGate {
+    protected static final BooleanProperty WAS_TOGGLED = BooleanProperty.of("was_toggled");
 
     public T_LATCH_Block(Settings settings) {
         super(settings);
-        setDefaultState(getDefaultState()
-                .with(ENABLED,false)
-        );
     }
 
     @Override
-    protected void properties(StateManager.Builder<Block, BlockState> builder)
-    {super.properties(builder);     builder.add(ENABLED);}
-
-    @Override
-    public boolean gateConditionMet( World world, BlockPos pos, BlockState state) {
-        boolean toggle = isInputPowered(world,state,pos,InputDirection.BACK);
-        boolean powered = state.get(POWERED);
+    public boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState) {
+        boolean toggle = getInputActive(world, gatePos, gateState,RelativeSide.BACK);
+        boolean powered = gateState.get(POWERED);
+        boolean was_toggled = gateState.get(WAS_TOGGLED);
+        if(was_toggled) return powered;
 
         if (toggle) return !powered;
 
@@ -37,28 +30,27 @@ public class T_LATCH_Block extends AbstractSimpleLogicGate {
     }
 
     @Override
-    protected boolean shouldUpdate(World world, BlockState state, BlockPos pos) {
-        return isInputPowered(world,state,pos,InputDirection.BACK) && !state.get(ENABLED)
-                && !world.getBlockTickScheduler().isTicking(pos, this);
+    protected void onOutputChange(World world, BlockPos gatePos, BlockState gateState){
+        world.setBlockState(gatePos, gateState.with(WAS_TOGGLED, true));
     }
 
     @Override
-    protected void updateImmediate(World world, BlockPos pos, BlockState state) {
-        world.setBlockState(pos,state.with(ENABLED, isInputPowered(world,state,pos,InputDirection.BACK)));
+    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+        boolean toggle = getInputActive(world, pos, state,RelativeSide.BACK);
+        if (!toggle) {
+            world.setBlockState(pos, state.with(WAS_TOGGLED, false));
+        }
     }
 
     @Override
-    protected boolean shouldUpdateImmediate(World world, BlockState state, BlockPos pos) {
-        return state.get(ENABLED) != isInputPowered(world,state,pos,InputDirection.BACK);
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(WAS_TOGGLED);
     }
 
     @Override
-    public boolean supportsSideDirection(BlockState state, Direction direction) {return false;}
-    @Override
-    public boolean supportsBackDirection() {return true;}
-
-    @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        return ActionResult.PASS;
+    public Boolean dustConnectsToThis(BlockState gateState, Direction direction){
+        return direction.getAxis() == gateState.get(FACING).getAxis();
     }
 }

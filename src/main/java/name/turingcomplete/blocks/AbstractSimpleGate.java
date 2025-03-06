@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks;
 
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.Block;
@@ -60,7 +61,8 @@ public abstract class AbstractSimpleGate extends AbstractLogicBlock{
             return ActionResult.PASS;
         }
 
-        world.setBlockState(pos, state.with(MIRRORED, !state.get(MIRRORED)));
+        state = state.with(MIRRORED, !state.get(MIRRORED));
+        world.setBlockState(pos, state);
         if(state.get(MIRRORED)) {
             world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.5F);
         }
@@ -68,6 +70,8 @@ public abstract class AbstractSimpleGate extends AbstractLogicBlock{
             world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.55F);
         }
         world.scheduleBlockTick(pos,this, getOutputDelay(state), TickPriority.VERY_HIGH);
+        //update input state, becuase inputs have moved
+        onNeighborUpdate(world,pos,state);
 
         return ActionResult.SUCCESS_NO_ITEM_USED;
     }
@@ -88,6 +92,7 @@ public abstract class AbstractSimpleGate extends AbstractLogicBlock{
     }
 
     @Override
+    @MustBeInvokedByOverriders
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
         builder.add(POWERED);

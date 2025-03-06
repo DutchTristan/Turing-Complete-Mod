@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks;
 
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;
 
 import com.mojang.serialization.MapCodec;
@@ -75,6 +76,7 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
     }
 
     @Override
+    @MustBeInvokedByOverriders
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder)
     {
         builder.add(FACING);
@@ -90,6 +92,7 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
     }
 
     @Override
+    @MustBeInvokedByOverriders
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         if (!canPlaceAt(state,world, pos)) {
             BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
