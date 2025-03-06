@@ -23,38 +23,41 @@ public class Full_Adder extends MultiBlockGate {
     }
 
     @Override
-    public boolean gateConditionMet(World world, BlockPos pos, BlockState state) {
-        if (state.get(PART) == BLOCK_PART.TOP){
-            world.setBlockState(pos,state.with(CARRY, getCarryInput(world,state,pos)>0)
-                                        .with(HALFSUM,getSideInput(world,state,pos)>0));
-        }
-        else if (state.get(PART) == BLOCK_PART.BOTTOM){
-            this.setHalfSum(world,pos,state, getSideInput(world, state, pos) > 0);
-        }
-        if (state.get(PART) == BLOCK_PART.MIDDLE) {
-            world.setBlockState(pos, state.with(HALFSUM,false));
-            Direction dir = state.get(FACING).rotateYCounterclockwise();
-            BlockPos bottom = pos.offset(dir);
-            BlockPos top = pos.offset(dir.getOpposite());
-            BlockState bottomState = world.getBlockState(bottom);
-            BlockState topState = world.getBlockState(top);
-            if (bottomState.isOf(this) && topState.isOf(this)) {
-                boolean a = getSideInput(world, bottomState, bottom) > 0;
-                boolean b = getSideInput(world, topState, top) > 0;
-                boolean c = getCarryInput(world, topState, top) > 0;
-                if ((a && b) || (b && c) || (a && c)){
-                    world.setBlockState(bottom,bottomState.with(CARRY, true));
-                }
-                else{
-                    world.setBlockState(bottom, bottomState.with(CARRY, false));
-                }
+    protected BlockState getAdjacentState(World world, BlockPos pos, BlockState initial, BLOCK_PART part) {
+        return super.getAdjacentState(world, pos, part == BLOCK_PART.LEFT ? initial.with(CARRY, getCarryInput(world, initial, pos) > 0) : initial, part);
+    }
 
-                updateCarryTarget(world,bottom,state);
-                return (a ^ b ^ c);
+    @Override
+    public boolean gateConditionMet(World world, BlockPos pos, BlockState state) {
+        switch (state.get(PART)) {
+            case LEFT: {
+                world.setBlockState(pos,state.with(CARRY, getCarryInput(world,state,pos)>0)
+                        .with(HALFSUM,getSideInput(world,state,pos)>0));
+                return false;
             }
-            return false;
+            case RIGHT: {
+                world.setBlockState(pos, state.with(HALFSUM, getSideInput(world, state, pos) > 0));
+                return false;
+            }
+            case MIDDLE: {
+                world.setBlockState(pos, state.with(HALFSUM,false));
+                Direction right = state.get(FACING).rotateYCounterclockwise();
+                BlockPos rightPos = pos.offset(right);
+                BlockPos leftPos = pos.offset(right.getOpposite());
+                BlockState rightState = world.getBlockState(rightPos);
+                BlockState leftState = world.getBlockState(leftPos);
+                if (rightState.isOf(this) && leftState.isOf(this)) {
+                    boolean a = getSideInput(world, rightState, rightPos) > 0;
+                    boolean b = getSideInput(world, leftState, leftPos) > 0;
+                    boolean c = getCarryInput(world, leftState, leftPos) > 0;
+                    boolean carry = (a && b) || (b && c) || (a && c);
+                    world.setBlockState(rightPos, rightState.with(CARRY, carry));
+                    //updateTarget(world, rightPos,state.get(FACING).rotateYCounterclockwise());
+                    return (a ^ b ^ c);
+                }
+            }
+            default: return false;
         }
-        return false;
     }
 
     //=============================================
@@ -68,7 +71,7 @@ public class Full_Adder extends MultiBlockGate {
                 return state.get(FACING) == direction ? 15 : 0;
             }
         }
-        else if (state.get(PART) == BLOCK_PART.BOTTOM){
+        else if (state.get(PART) == BLOCK_PART.RIGHT){
             if (!(Boolean) state.get(CARRY)) {
                 return 0;
             } else {
@@ -84,19 +87,11 @@ public class Full_Adder extends MultiBlockGate {
     public Boolean dustConnectsToThis(BlockState state, Direction dir) {
         //get gate state dir
         Direction output_face = state.get(FACING);
-        if (state.get(PART) == BLOCK_PART.MIDDLE && dir == output_face){
-            return true;
-        }
-        if (state.get(PART) == BLOCK_PART.TOP && (dir == output_face.getOpposite() || dir == output_face.rotateYCounterclockwise())){
-            return true;
-        }
-        if (state.get(PART) == BLOCK_PART.BOTTOM && (dir == output_face.getOpposite() || dir == output_face.rotateYClockwise())){
-            return true;
-        }
-        return false;
+        return switch (state.get(PART)) {
+            case LEFT -> (dir == output_face.getOpposite() || dir == output_face.rotateYCounterclockwise());
+            case MIDDLE -> dir == output_face;
+            case RIGHT -> (dir == output_face.getOpposite() || dir == output_face.rotateYClockwise());
+        };
     }
 
-    public void setHalfSum(World world, BlockPos pos, BlockState state, boolean value){
-        world.setBlockState(pos, state.with(HALFSUM,value));
-    }
 }

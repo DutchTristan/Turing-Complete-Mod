@@ -10,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+import static net.minecraft.state.property.Properties.POWERED;
+
 public class JK_LATCH_Block extends AbstractSimpleLogicGate {
     private static final BooleanProperty SWAP = propertyInit.SWAPPED_DIR;
     private static final BooleanProperty SET_ENABLED = propertyInit.POWERED_X;

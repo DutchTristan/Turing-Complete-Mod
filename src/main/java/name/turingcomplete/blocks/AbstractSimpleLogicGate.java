@@ -8,8 +8,6 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -18,8 +16,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.tick.TickPriority;
 
+import static net.minecraft.state.property.Properties.POWERED;
+
 public abstract class AbstractSimpleLogicGate extends AbstractGate{
-    protected static final BooleanProperty POWERED = Properties.POWERED;
 
     protected AbstractSimpleLogicGate(Settings settings) {
         super(settings);
@@ -40,7 +39,7 @@ public abstract class AbstractSimpleLogicGate extends AbstractGate{
         else world.playSound(player,pos,SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.55F);
 
         updateImmediate(world,pos,new_state.with(POWERED, gateConditionMet(world, pos, new_state)));
-        updateTarget(world,pos,state);
+        updateTarget(world,pos,state.get(FACING));
         return ActionResult.SUCCESS_NO_ITEM_USED;
     }
 
@@ -79,6 +78,6 @@ public abstract class AbstractSimpleLogicGate extends AbstractGate{
             }
         }
 
-        updateTarget(world,pos,state);
+        updateTarget(world,pos,state.get(FACING));
     }
 }

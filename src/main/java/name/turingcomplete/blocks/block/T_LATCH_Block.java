@@ -12,6 +12,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+import static net.minecraft.state.property.Properties.POWERED;
+
 public class T_LATCH_Block extends AbstractSimpleLogicGate {
     private static final BooleanProperty ENABLED = BooleanProperty.of("enabled");
 

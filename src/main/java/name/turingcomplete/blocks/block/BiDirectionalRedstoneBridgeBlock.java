@@ -78,7 +78,6 @@ public class BiDirectionalRedstoneBridgeBlock extends AbstractGate {
 
     @Override
     public void update(World world, BlockState state, BlockPos pos) {
-        Direction side_direction = getSideInputDirection(state).getRelativeDirection(state.get(FACING));
 
         boolean should_power_z = isInputPowered(world, state, pos, InputDirection.BACK);
         boolean should_power_x = isInputPowered(world, state, pos, getSideInputDirection(state));
@@ -92,7 +91,7 @@ public class BiDirectionalRedstoneBridgeBlock extends AbstractGate {
 
         world.setBlockState(pos, newState);
 
-        updateTarget(world,pos,state);
+        updateTarget(world,pos,state.get(FACING));
         updateSideTarget(world,pos,state);
     }
 

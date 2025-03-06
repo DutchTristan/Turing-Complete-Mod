@@ -1,92 +1,92 @@
 {
   "render_type": "cutout",
   "variants": {
-    "facing=north,halfsum=false,part=top": {
-      "model" : "turingcomplete:block/half_adder_top", "y": 180
+    "facing=north,halfsum=false,part=left": {
+      "model" : "turingcomplete:block/half_adder/half_adder_left", "y": 180
     },
-    "facing=east,halfsum=false,part=top": {
-      "model" : "turingcomplete:block/half_adder_top", "y": 270
+    "facing=east,halfsum=false,part=left": {
+      "model" : "turingcomplete:block/half_adder/half_adder_left", "y": 270
     },
-    "facing=south,halfsum=false,part=top": {
-      "model" : "turingcomplete:block/half_adder_top", "y": 0
+    "facing=south,halfsum=false,part=left": {
+      "model" : "turingcomplete:block/half_adder/half_adder_left", "y": 0
     },
-    "facing=west,halfsum=false,part=top": {
-      "model" : "turingcomplete:block/half_adder_top", "y": 90
+    "facing=west,halfsum=false,part=left": {
+      "model" : "turingcomplete:block/half_adder/half_adder_left", "y": 90
     },
-    "facing=north,halfsum=true,part=top": {
-      "model" : "turingcomplete:block/half_adder_top_on", "y": 180
+    "facing=north,halfsum=true,part=left": {
+      "model" : "turingcomplete:block/half_adder/half_adder_left_on", "y": 180
     },
-    "facing=east,halfsum=true,part=top": {
-      "model" : "turingcomplete:block/half_adder_top_on", "y": 270
+    "facing=east,halfsum=true,part=left": {
+      "model" : "turingcomplete:block/half_adder/half_adder_left_on", "y": 270
     },
-    "facing=south,halfsum=true,part=top": {
-      "model" : "turingcomplete:block/half_adder_top_on", "y": 0
+    "facing=south,halfsum=true,part=left": {
+      "model" : "turingcomplete:block/half_adder/half_adder_left_on", "y": 0
     },
-    "facing=west,halfsum=true,part=top": {
-      "model" : "turingcomplete:block/half_adder_top_on", "y": 90
-    },
-
-    "facing=north,halfsum=false,part=bottom,carry=false": {
-      "model" : "turingcomplete:block/half_adder_bottom", "y": 180
-    },
-    "facing=east,halfsum=false,part=bottom,carry=false": {
-      "model" : "turingcomplete:block/half_adder_bottom", "y": 270
-    },
-    "facing=south,halfsum=false,part=bottom,carry=false": {
-      "model" : "turingcomplete:block/half_adder_bottom", "y": 0
-    },
-    "facing=west,halfsum=false,part=bottom,carry=false": {
-      "model" : "turingcomplete:block/half_adder_bottom", "y": 90
-    },
-    "facing=north,halfsum=true,part=bottom,carry=false": {
-      "model" : "turingcomplete:block/half_adder_bottom_on", "y": 180
-    },
-    "facing=east,halfsum=true,part=bottom,carry=false": {
-      "model" : "turingcomplete:block/half_adder_bottom_on", "y": 270
-    },
-    "facing=south,halfsum=true,part=bottom,carry=false": {
-      "model" : "turingcomplete:block/half_adder_bottom_on", "y": 0
-    },
-    "facing=west,halfsum=true,part=bottom,carry=false": {
-      "model" : "turingcomplete:block/half_adder_bottom_on", "y": 90
+    "facing=west,halfsum=true,part=left": {
+      "model" : "turingcomplete:block/half_adder/half_adder_left_on", "y": 90
     },
 
-    "facing=north,halfsum=true,part=bottom,carry=true": {
-      "model" : "turingcomplete:block/half_adder_bottom_on_carry", "y": 180
+    "facing=north,halfsum=false,part=right,carry=false": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right", "y": 180
     },
-    "facing=east,halfsum=true,part=bottom,carry=true": {
-      "model" : "turingcomplete:block/half_adder_bottom_on_carry", "y": 270
+    "facing=east,halfsum=false,part=right,carry=false": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right", "y": 270
     },
-    "facing=south,halfsum=true,part=bottom,carry=true": {
-      "model" : "turingcomplete:block/half_adder_bottom_on_carry", "y": 0
+    "facing=south,halfsum=false,part=right,carry=false": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right", "y": 0
     },
-    "facing=west,halfsum=true,part=bottom,carry=true": {
-      "model" : "turingcomplete:block/half_adder_bottom_on_carry", "y": 90
+    "facing=west,halfsum=false,part=right,carry=false": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right", "y": 90
+    },
+    "facing=north,halfsum=true,part=right,carry=false": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right_on", "y": 180
+    },
+    "facing=east,halfsum=true,part=right,carry=false": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right_on", "y": 270
+    },
+    "facing=south,halfsum=true,part=right,carry=false": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right_on", "y": 0
+    },
+    "facing=west,halfsum=true,part=right,carry=false": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right_on", "y": 90
+    },
+
+    "facing=north,halfsum=true,part=right,carry=true": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right_on_carry", "y": 180
+    },
+    "facing=east,halfsum=true,part=right,carry=true": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right_on_carry", "y": 270
+    },
+    "facing=south,halfsum=true,part=right,carry=true": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right_on_carry", "y": 0
+    },
+    "facing=west,halfsum=true,part=right,carry=true": {
+      "model" : "turingcomplete:block/half_adder/half_adder_right_on_carry", "y": 90
     },
 
     "facing=north,part=middle,powered=false": {
-      "model" : "turingcomplete:block/half_adder_middle", "y": 180
+      "model" : "turingcomplete:block/half_adder/half_adder_middle", "y": 180
     },
     "facing=east,part=middle,powered=false": {
-      "model" : "turingcomplete:block/half_adder_middle", "y": 270
+      "model" : "turingcomplete:block/half_adder/half_adder_middle", "y": 270
     },
     "facing=south,part=middle,powered=false": {
-      "model" : "turingcomplete:block/half_adder_middle", "y": 0
+      "model" : "turingcomplete:block/half_adder/half_adder_middle", "y": 0
     },
     "facing=west,part=middle,powered=false": {
-      "model" : "turingcomplete:block/half_adder_middle", "y": 90
+      "model" : "turingcomplete:block/half_adder/half_adder_middle", "y": 90
     },
     "facing=north,part=middle,powered=true": {
-      "model" : "turingcomplete:block/half_adder_middle_on", "y": 180
+      "model" : "turingcomplete:block/half_adder/half_adder_middle_on", "y": 180
     },
     "facing=east,part=middle,powered=true": {
-      "model" : "turingcomplete:block/half_adder_middle_on", "y": 270
+      "model" : "turingcomplete:block/half_adder/half_adder_middle_on", "y": 270
     },
     "facing=south,part=middle,powered=true": {
-      "model" : "turingcomplete:block/half_adder_middle_on", "y": 0
+      "model" : "turingcomplete:block/half_adder/half_adder_middle_on", "y": 0
     },
     "facing=west,part=middle,powered=true": {
-      "model" : "turingcomplete:block/half_adder_middle_on", "y": 90
+      "model" : "turingcomplete:block/half_adder/half_adder_middle_on", "y": 90
     }
 
   }

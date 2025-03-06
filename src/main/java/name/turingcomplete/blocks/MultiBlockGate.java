@@ -46,29 +46,17 @@ public abstract class MultiBlockGate extends AbstractGate{
     public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
         Direction direction = state.get(FACING);
-        if (state.get(PART) == BLOCK_PART.MIDDLE){
-            switch (direction) {
-                case NORTH: {
-                    world.setBlockState(pos.west(), state.with(PART, BLOCK_PART.BOTTOM).with(FACING, Direction.NORTH), Block.NOTIFY_ALL);
-                    world.setBlockState(pos.east(), state.with(PART, BLOCK_PART.TOP).with(FACING, Direction.NORTH), Block.NOTIFY_ALL);
-                    return;
-                }
-                case SOUTH: {
-                    world.setBlockState(pos.west(), state.with(PART, BLOCK_PART.TOP).with(FACING, Direction.SOUTH), Block.NOTIFY_ALL);
-                    world.setBlockState(pos.east(), state.with(PART, BLOCK_PART.BOTTOM).with(FACING, Direction.SOUTH), Block.NOTIFY_ALL);
-                    return;
-                }
-                case EAST: {
-                    world.setBlockState(pos.south(), state.with(PART, BLOCK_PART.TOP).with(FACING, Direction.EAST), Block.NOTIFY_ALL);
-                    world.setBlockState(pos.north(), state.with(PART, BLOCK_PART.BOTTOM).with(FACING, Direction.EAST), Block.NOTIFY_ALL);
-                    return;
-                }
-                case WEST: {
-                    world.setBlockState(pos.south(), state.with(PART, BLOCK_PART.BOTTOM).with(FACING, Direction.WEST), Block.NOTIFY_ALL);
-                    world.setBlockState(pos.north(), state.with(PART, BLOCK_PART.TOP).with(FACING, Direction.WEST), Block.NOTIFY_ALL);
-                }
-            }
-        }
+        BlockPos right = pos.offset(direction.rotateYCounterclockwise());
+        BlockPos left = pos.offset(direction.rotateYClockwise());
+        world.setBlockState(right, getAdjacentState(world, right, state, BLOCK_PART.RIGHT), Block.NOTIFY_ALL);
+        world.setBlockState(left, getAdjacentState(world, left, state, BLOCK_PART.LEFT), Block.NOTIFY_ALL);
+    }
+
+    protected BlockState getAdjacentState(World world, BlockPos pos, BlockState initial, BLOCK_PART part) {
+        return switch (part) {
+            case RIGHT, LEFT -> initial.with(PART, part).with(HALFSUM, getSideInput(world, initial, pos) > 0);
+            case MIDDLE -> initial.with(PART, part);
+        };
     }
 
     protected void properties(StateManager.Builder<Block, BlockState> builder)
@@ -81,15 +69,15 @@ public abstract class MultiBlockGate extends AbstractGate{
         BlockPos midPos = ctx.getBlockPos();
         BlockState midState = this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
 
-        Direction topDir = midState.get(FACING).rotateYClockwise();
-        BlockPos topPos = midPos.offset(topDir);
-        BlockState topState = this.getDefaultState().with(FACING, midState.get(FACING));
-        boolean top = topState.canPlaceAt(world,topPos) && world.getBlockState(topPos).canReplace(ctx);
+        Direction left = midState.get(FACING).rotateYClockwise();
+        BlockPos leftPos = midPos.offset(left);
+        BlockState leftState = this.getDefaultState().with(FACING, midState.get(FACING));
+        boolean canPlaceLeft = leftState.canPlaceAt(world, leftPos) && world.getBlockState(leftPos).canReplace(ctx);
 
-        BlockPos bottomPos = midPos.offset(topDir.getOpposite());
-        BlockState bottomState = this.getDefaultState().with(FACING, midState.get(FACING));
-        boolean bottom = bottomState.canPlaceAt(world,bottomPos) && world.getBlockState(bottomPos).canReplace(ctx);
-        if (!top || !bottom){
+        BlockPos rightPos = midPos.offset(left.getOpposite());
+        BlockState rightState = this.getDefaultState().with(FACING, midState.get(FACING));
+        boolean canPlaceRight = rightState.canPlaceAt(world, rightPos) && world.getBlockState(rightPos).canReplace(ctx);
+        if (!canPlaceLeft || !canPlaceRight){
             return null;
         }
         else {
@@ -99,32 +87,31 @@ public abstract class MultiBlockGate extends AbstractGate{
         }
     }
 
-    @Override
-    protected int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction)
-    {return getWeakRedstonePower(state, world, pos, direction);}
-
     // ===================================================
     // Not Used As Intended To Be Updated
     // ===================================================
 
-    protected BlockState getBlockPlacementState(ItemPlacementContext ctx) {return null;}
     public boolean supportsSideDirection(BlockState state, Direction direction) {return false;}
     public boolean supportsBackDirection() {return false;}
 
     @Override
     protected void update(World world, BlockState state, BlockPos pos) {
-        boolean bl = state.get(SUM);
-        boolean bl2 = this.gateConditionMet(world, pos, state);
-        if (bl && !bl2) {
-            world.setBlockState(pos, state.with(SUM, false), 2);
-        } else if (!bl) {
-            world.setBlockState(pos, state.with(SUM, true), 2);
-            if (!bl2) {
-                world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+        if (state.get(PART) == BLOCK_PART.MIDDLE) {
+            boolean bl = state.get(SUM);
+            boolean bl2 = this.gateConditionMet(world, pos, state);
+            if (bl && !bl2) {
+                world.setBlockState(pos, state.with(SUM, false), 2);
+            } else if (!bl) {
+                world.setBlockState(pos, state.with(SUM, true), 2);
+                if (!bl2) {
+                    world.scheduleBlockTick(pos, this, this.getUpdateDelayInternal(state), TickPriority.VERY_HIGH);
+                }
             }
+
+            updateTarget(world,pos,state.get(FACING));
         }
-        updateTarget(world,pos,state);
     }
+
     @Override
     protected boolean shouldUpdate(World world, BlockState state, BlockPos pos) {
         boolean bl = state.get(SUM);
@@ -135,14 +122,6 @@ public abstract class MultiBlockGate extends AbstractGate{
 
     // ===================================================
 
-    protected void updateCarryTarget(World world, BlockPos pos, BlockState state) {
-        Direction direction = state.get(FACING).rotateYClockwise();
-        BlockPos blockPos = pos.offset(direction.getOpposite());
-
-        world.updateNeighbor(blockPos, this, pos);
-        world.updateNeighborsExcept(blockPos, this, direction);
-    }
-
     @Override
     protected BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         Direction dir = state.get(FACING);
@@ -152,10 +131,10 @@ public abstract class MultiBlockGate extends AbstractGate{
         else if (direction == dir.rotateYClockwise() && state.get(PART) == BLOCK_PART.MIDDLE){
             return neighborState.isOf(this) ? state : Blocks.AIR.getDefaultState();
         }
-        else if (state.get(PART) == BLOCK_PART.TOP && direction == dir.rotateYCounterclockwise()){
+        else if (state.get(PART) == BLOCK_PART.LEFT && direction == dir.rotateYCounterclockwise()){
             return neighborState.isOf(this) ? state : Blocks.AIR.getDefaultState();
         }
-        else if (state.get(PART) == BLOCK_PART.BOTTOM && direction == dir.rotateYClockwise()){
+        else if (state.get(PART) == BLOCK_PART.RIGHT && direction == dir.rotateYClockwise()){
             return neighborState.isOf(this) ? state : Blocks.AIR.getDefaultState();
         }
         return super.getStateForNeighborUpdate(state,direction,neighborState,world,pos,neighborPos);
@@ -164,36 +143,36 @@ public abstract class MultiBlockGate extends AbstractGate{
     @Override
     public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player){
         Direction direction = state.get(FACING);
-        BlockPos topPos, bottomPos, midPos;
+        BlockPos leftPos, rightPos, midPos;
 
         if (state.get(PART) == BLOCK_PART.MIDDLE){
-            topPos = pos.offset(state.get(FACING).rotateYClockwise());
-            bottomPos = pos.offset(state.get(FACING).rotateYCounterclockwise());
+            leftPos = pos.offset(state.get(FACING).rotateYClockwise());
+            rightPos = pos.offset(state.get(FACING).rotateYCounterclockwise());
             midPos = pos;
         }
-        else if (state.get(PART) == BLOCK_PART.TOP){
-            topPos = pos;
-            bottomPos = pos.offset(direction.rotateYCounterclockwise(), 2);
+        else if (state.get(PART) == BLOCK_PART.LEFT){
+            leftPos = pos;
+            rightPos = pos.offset(direction.rotateYCounterclockwise(), 2);
             midPos = pos.offset(direction.rotateYCounterclockwise());
         }
         else{
-            topPos = pos.offset(direction.rotateYClockwise(), 2);
-            bottomPos = pos;
+            leftPos = pos.offset(direction.rotateYClockwise(), 2);
+            rightPos = pos;
             midPos = pos.offset(direction.rotateYClockwise());
         }
         world.breakBlock(midPos,!player.isCreative(),player,1);
-        world.breakBlock(topPos,false,player,1);
-        world.breakBlock(bottomPos,false,player,1);
+        world.breakBlock(leftPos,false,player,1);
+        world.breakBlock(rightPos,false,player,1);
         return super.onBreak(world,pos,state,player);
     }
 
-    public int getSideInput(World world, BlockState state, BlockPos pos){
+    public static int getSideInput(World world, BlockState state, BlockPos pos){
         Direction redstoneDir = state.get(FACING);
         BlockPos redstonePos = pos.offset(redstoneDir);
         return world.getEmittedRedstonePower(redstonePos,redstoneDir);
     }
 
-    public int getCarryInput(World world, BlockState state, BlockPos pos){
+    public static int getCarryInput(World world, BlockState state, BlockPos pos){
         Direction redstoneDir = state.get(FACING).rotateYClockwise();
         BlockPos redstonePos = pos.offset(redstoneDir);
         return world.getEmittedRedstonePower(redstonePos,redstoneDir);

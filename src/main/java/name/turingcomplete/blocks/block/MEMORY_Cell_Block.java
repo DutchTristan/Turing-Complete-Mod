@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import static net.minecraft.state.property.Properties.POWERED;
+
 public class MEMORY_Cell_Block extends AbstractSimpleLogicGate {
     public static final BooleanProperty ENABLED = Properties.ENABLED;
     public static final BooleanProperty SWAP = propertyInit.SWAPPED_DIR;

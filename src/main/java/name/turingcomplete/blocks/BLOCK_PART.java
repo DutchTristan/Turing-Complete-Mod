@@ -3,9 +3,10 @@ package name.turingcomplete.blocks;
 import net.minecraft.util.StringIdentifiable;
 
 public enum BLOCK_PART implements StringIdentifiable {
-    TOP("top"),
+    // A bit silly. Left/right from the cardinal direction of the **output**.
+    LEFT("left"),
     MIDDLE("middle"),
-    BOTTOM("bottom");
+    RIGHT("right");
 
     private final String name;
 
