@@ -157,11 +157,10 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
         int received = this.getReceivedRedstonePower(world,pos,axis);
         this.wiresGivePower = true;
 
+        int nearby_power = 0;
+
         // If the power is 15 don't check for higher power levels nearby
         if (received < 15) {
-            // Variable Setup
-            BlockPos block_above = pos.up();
-            int nearby_power = 0;
 
             // Goes Through All Directions And Checks If It is in the same Axis.
             for (Direction direction : DIRECTIONS) {
@@ -172,21 +171,12 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
 
                     // Sets nearby_power If The Block Has a Bigger Power Level Then The Currently Highest
                     nearby_power = Math.max(nearby_power, this.increasePower(blockState, axis));
-
-                    // Check For Redstone One Block Above Or Bellow (Also Checks For Blocks, Blocking The Wire)
-                    if (blockState.isSolidBlock(world, blockPos) && !world.getBlockState(block_above).isSolidBlock(world, block_above))
-                        nearby_power = Math.max(nearby_power, this.increasePower(world.getBlockState(blockPos.up()), axis));
-                    else if (!blockState.isSolidBlock(world, blockPos))
-                        nearby_power = Math.max(nearby_power, this.increasePower(world.getBlockState(blockPos.down()), axis));
                 }
             }
-
-            // Returns The Highest Signal Between Received Power And Nearby Power Sources
-            return Math.max(received, nearby_power - 1);
         }
 
-        // If Received Power Is Not Smaller Than 15, Then It Must Be Equal E Higher
-        return 15;
+        // Returns The Highest Signal Between Received Power And Nearby Power Sources
+        return Math.max(received, nearby_power - 1);
     }
 
     private int getReceivedRedstonePower(World world, BlockPos pos, Direction.Axis axis) {
@@ -238,11 +228,20 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
         // If The Block Doesn't Give Power, Return 0
         if (!this.wiresGivePower) return 0;
 
+        BlockState block_to_power = world.getBlockState(pos.offset(direction));
+
+        if (block_to_power.isOf(Blocks.REDSTONE_WIRE)){
+            if (direction.getAxis() == Direction.Axis.X)
+                return state.get(POWER_X) -1;
+            else if (direction.getAxis() == Direction.Axis.Z)
+                return state.get(POWER_Z) -1;
+        }
+
         // Returns Respective Power Levels
         if (direction.getAxis() == Direction.Axis.X)
-            return state.get(POWER_X) -1;
+            return state.get(POWER_X);
         else if (direction.getAxis() == Direction.Axis.Z)
-            return state.get(POWER_Z) -1;
+            return state.get(POWER_Z);
 
         // Returns Zero By Default
         return 0;
