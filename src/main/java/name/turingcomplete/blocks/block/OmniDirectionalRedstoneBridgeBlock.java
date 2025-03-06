@@ -1,5 +1,7 @@
 package name.turingcomplete.blocks.block;
 
+import com.mojang.logging.LogUtils;
+
 import name.turingcomplete.blocks.AbstractLogicBlock;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
@@ -133,6 +135,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     }
 
     // On Neighbor Update
+    @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         if (world.isClient) return;
 
@@ -146,6 +149,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
     //=============================================
 
+    @Override
     protected boolean emitsRedstonePower(BlockState state) {
         return this.wiresGivePower;
     }
@@ -187,6 +191,8 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
         for (Direction direction : directions) {
             int j = world.getEmittedRedstonePower(pos.offset(direction), direction);
+            if (world.getBlockState(pos.offset(direction)).isOf(Blocks.REDSTONE_WIRE))
+                j = j-1;
 
             if (j >= 15) return 15;
             if (j > i) i = j;
@@ -221,7 +227,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         // If The Block Doesn't Give Power, Return 0
         if (!this.wiresGivePower) return 0;
 
-        BlockState block_to_power = world.getBlockState(pos.offset(direction));
+        BlockState block_to_power = world.getBlockState(pos.offset(direction.getOpposite()));
 
         if (block_to_power.isOf(Blocks.REDSTONE_WIRE)){
             if (direction.getAxis() == Direction.Axis.X)
@@ -232,9 +238,13 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
         // Returns Respective Power Levels
         if (direction.getAxis() == Direction.Axis.X)
+        {
             return state.get(POWER_X);
+        }
         else if (direction.getAxis() == Direction.Axis.Z)
+        {
             return state.get(POWER_Z);
+        }
 
         // Returns Zero By Default
         return 0;
