@@ -1,22 +1,14 @@
 package name.turingcomplete.blocks;
 
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
-import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
@@ -28,7 +20,7 @@ import net.minecraft.world.tick.TickPriority;
 
 //any single-block logic unit with one binary output opposite its FACING direction
 //todo: why opposite? why north-facing gate not outputing northward?
-public abstract class AbstractSimpleGate extends AbstractLogicBlock{
+public abstract class AbstractSimpleGate extends AbstractSimpleLogicBlock{
     protected static final BooleanProperty POWERED = Properties.POWERED;
     private static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
 
@@ -38,43 +30,6 @@ public abstract class AbstractSimpleGate extends AbstractLogicBlock{
     }
     
     protected abstract boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState);
-    protected int getOutputDelay(BlockState gateState) {
-        return 2;
-    }
-
-    //allow immediate block state changes in response to input, such as highlighting active inputs
-    protected void onNeighborUpdate(World world, BlockPos gatePos, BlockState gateState){}
-
-    //allow for block state changes after output is calculated, such as highlighting output if active
-    //redstone output is handled by AbstractSimpleGate
-    protected void onOutputChange(World world, BlockPos gatePos, BlockState gateState){}
-
-    //position and state are not relevant
-    @Override
-    public boolean canMirrorHere(BlockPos mainPos, BlockState mainState){
-        return canMirror();
-    }
-
-    @Override
-    protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        if (!canMirror()) {
-            return ActionResult.PASS;
-        }
-
-        state = state.with(MIRRORED, !state.get(MIRRORED));
-        world.setBlockState(pos, state);
-        if(state.get(MIRRORED)) {
-            world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.5F);
-        }
-        else {
-            world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.55F);
-        }
-        world.scheduleBlockTick(pos,this, getOutputDelay(state), TickPriority.VERY_HIGH);
-        //update input state, becuase inputs have moved
-        onNeighborUpdate(world,pos,state);
-
-        return ActionResult.SUCCESS_NO_ITEM_USED;
-    }
 
     //default gate arrangement: output on the front, and inputs on the left and right
     @Override
@@ -115,19 +70,6 @@ public abstract class AbstractSimpleGate extends AbstractLogicBlock{
             updateOutputBlock(world,pos,state);
         }
     }
-    
-    @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
-        onNeighborUpdate(world,pos,state);
-        handleInputChange(world,pos,state);
-    }
-
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        //redstone dust hasn't been redirected yet, so must schedule unconditionally
-        world.scheduleBlockTick(pos,this, getOutputDelay(state), TickPriority.VERY_HIGH);
-    }
 
     @Override
     protected final int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction)
@@ -141,7 +83,9 @@ public abstract class AbstractSimpleGate extends AbstractLogicBlock{
         return (direction == state.get(FACING) && state.get(POWERED)) ? 15 : 0;
     }
 
-    protected final void handleInputChange(World world, BlockPos gatePos, BlockState gateState){
+    @Override
+    @MustBeInvokedByOverriders
+    protected void onNeighborUpdate(World world, BlockPos gatePos, BlockState gateState){
         if (evaluateGate(world, gatePos, gateState) != gateState.get(POWERED)) {
             world.scheduleBlockTick(gatePos,this, getOutputDelay(gateState), TickPriority.VERY_HIGH);
         }

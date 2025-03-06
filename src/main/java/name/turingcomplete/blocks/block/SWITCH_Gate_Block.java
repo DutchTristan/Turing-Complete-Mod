@@ -34,6 +34,7 @@ public class SWITCH_Gate_Block extends AbstractSimpleGate {
 
     @Override
     protected void onNeighborUpdate(World world, BlockPos gatePos, BlockState gateState){
+        super.onNeighborUpdate(world, gatePos, gateState);
         world.setBlockState(gatePos, gateState.with(
             ENABLED,
             getInputActive(world, gatePos, gateState, getEnabledSide(gateState))));
