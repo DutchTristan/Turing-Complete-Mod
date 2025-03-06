@@ -99,12 +99,11 @@ public abstract class AbstractGate extends HorizontalFacingBlock implements Conn
             world.scheduleBlockTick(pos,this, getUpdateDelayInternal(state));
     }
 
-    protected void updateTarget(World world, BlockPos pos, BlockState state) {
-        Direction direction = state.get(FACING);
-        BlockPos blockPos = pos.offset(direction.getOpposite());
+    protected void updateTarget(World world, BlockPos pos, Direction facing) {
+        BlockPos blockPos = pos.offset(facing.getOpposite());
 
         world.updateNeighbor(blockPos, this, pos);
-        world.updateNeighborsExcept(blockPos, this, direction);
+        world.updateNeighborsExcept(blockPos, this, facing);
     }
 
     //=============================================

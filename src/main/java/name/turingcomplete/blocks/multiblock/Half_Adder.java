@@ -24,39 +24,26 @@ public class Half_Adder extends MultiBlockGate {
 
     @Override
     public boolean gateConditionMet(World world, BlockPos pos, BlockState state) {
-        if (state.get(PART) == BLOCK_PART.TOP){
-            if (getSideInput(world,state,pos) > 0) {
-                this.setHalfSum(world,pos,state,true);
-            } else {
-                this.setHalfSum(world,pos,state,false);
-            }
-        }
-        else if (state.get(PART) == BLOCK_PART.BOTTOM){
-            if (getSideInput(world,state,pos) > 0) {
-                this.setHalfSum(world,pos,state,true);
-            } else {
-                this.setHalfSum(world,pos,state,false);
-            }
-        }
-        if (state.get(PART) == BLOCK_PART.MIDDLE) {
-            world.setBlockState(pos, state.with(HALFSUM,false));
-            Direction dir = state.get(FACING).rotateYCounterclockwise();
-            BlockPos pos1 = pos.offset(dir);
-            BlockPos pos2 = pos.offset(dir.getOpposite());
-            BlockState state1 = world.getBlockState(pos1);
-            BlockState state2 = world.getBlockState(pos2);
-            if (state1.isOf(this) && state2.isOf(this)) {
-                if (getSideInput(world, state1, pos1) > 0 && getSideInput(world, state2, pos2) > 0){
-                    world.setBlockState(pos1,state1.with(CARRY, true));
+        switch (state.get(PART)) {
+            case LEFT:
+            case RIGHT:
+                world.setBlockState(pos, state.with(HALFSUM, getSideInput(world,state,pos) > 0));
+                return false;
+            case MIDDLE:
+                world.setBlockState(pos, state.with(HALFSUM,false));
+                Direction right = state.get(FACING).rotateYCounterclockwise();
+                BlockPos rightPos = pos.offset(right);
+                BlockPos leftPos = pos.offset(right.getOpposite());
+                BlockState rightState = world.getBlockState(rightPos);
+                BlockState leftState = world.getBlockState(leftPos);
+                if (rightState.isOf(this) && leftState.isOf(this)) {
+                    boolean a = getSideInput(world, rightState, rightPos) > 0;
+                    boolean b = getSideInput(world, leftState, leftPos) > 0;
+                    boolean carry = a & b;
+                    world.setBlockState(rightPos, rightState.with(CARRY, carry));
+                    updateTarget(world, rightPos,state.get(FACING).rotateYClockwise());
+                    return a ^ b;
                 }
-                else{
-                    world.setBlockState(pos1, state1.with(CARRY, false));
-                }
-
-                updateCarryTarget(world,pos1,state);
-                return ((getSideInput(world, state1, pos1) > 0) ^ (getSideInput(world, state2, pos2) > 0));
-            }
-            return false;
         }
         return false;
     }
@@ -72,7 +59,7 @@ public class Half_Adder extends MultiBlockGate {
                 return state.get(FACING) == direction ? 15 : 0;
             }
         }
-        else if (state.get(PART) == BLOCK_PART.BOTTOM){
+        else if (state.get(PART) == BLOCK_PART.RIGHT){
             if (!(Boolean) state.get(CARRY)) {
                 return 0;
             } else {
@@ -86,21 +73,18 @@ public class Half_Adder extends MultiBlockGate {
     
     @Override
     public Boolean dustConnectsToThis(BlockState state, Direction dir) {
-        //get gate state dir
+        //get gate state right
         Direction output_face = state.get(FACING);
         if (state.get(PART) == BLOCK_PART.MIDDLE && dir == output_face){
             return true;
         }
-        if (state.get(PART) == BLOCK_PART.TOP && dir == output_face.getOpposite()){
+        if (state.get(PART) == BLOCK_PART.LEFT && dir == output_face.getOpposite()){
             return true;
         }
-        if (state.get(PART) == BLOCK_PART.BOTTOM && (dir == output_face.getOpposite() || dir == output_face.rotateYClockwise())){
+        if (state.get(PART) == BLOCK_PART.RIGHT && (dir == output_face.getOpposite() || dir == output_face.rotateYClockwise())){
             return true;
         }
         return false;
     }
 
-    public void setHalfSum(World world, BlockPos pos, BlockState state, boolean value){
-        world.setBlockState(pos, state.with(HALFSUM,value));
-    }
 }
