@@ -168,9 +168,11 @@ public final class Adder extends AbstractLogicMultiblock{
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.scheduledTick(state, world, pos, random);
         if (state.get(PART)!=BLOCK_PART.MIDDLE){
+            LogUtils.getLogger().warn("tick scheduled not on middle block)");
             return;
         }
         if (!isMultiblockValid(world, pos, state)) {
+            LogUtils.getLogger().warn("invalid multiblock in scheduledTick)");
             return;
         }
         boolean newSum = evaluateSum(world, pos, state);
@@ -258,6 +260,12 @@ public final class Adder extends AbstractLogicMultiblock{
 
         world.setBlockState(aPos,aState,Block.NOTIFY_ALL);
         world.setBlockState(bPos,bState,Block.NOTIFY_ALL);
+
+        //redstone dust hasn't been redirected yet, so must schedule unconditionally
+        world.scheduleBlockTick(pos,this, gate_delay, TickPriority.VERY_HIGH);
+        //update parts because otherwise their input states won't update
+        world.updateNeighbor(aPos, this, pos);
+        world.updateNeighbor(bPos, this, pos);
     }
 
     @Override
