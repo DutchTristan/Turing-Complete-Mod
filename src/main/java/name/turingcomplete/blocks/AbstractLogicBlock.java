@@ -35,9 +35,14 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
         
     }
     
-    //warning: value must not change
+    //warning: called in constructor, and value must not change after AbstractLogicBlock constructor called
     public boolean canMirror(){
         return false;
+    }
+
+    //warning: called in constructor, and value must not change after AbstractLogicBlock constructor called
+    public boolean isDirectional(){
+        return true;
     }
 
     //main* naming because on a multiblock, this should only be called on the main block
@@ -68,7 +73,10 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx)
     {
-        BlockState state = getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        BlockState state = getDefaultState();
+        if(isDirectional()) {
+            state = state.with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        }
         if (canMirror()) {
             state = state.with(MIRRORED,false);
         }
@@ -79,7 +87,9 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
     @MustBeInvokedByOverriders
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder)
     {
-        builder.add(FACING);
+        if(isDirectional()) {
+            builder.add(FACING);
+        }
         if(canMirror()) {
             builder.add(MIRRORED);
         }

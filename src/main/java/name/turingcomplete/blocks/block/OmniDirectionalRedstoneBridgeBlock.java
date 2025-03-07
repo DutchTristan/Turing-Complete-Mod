@@ -1,7 +1,5 @@
 package name.turingcomplete.blocks.block;
 
-import com.mojang.logging.LogUtils;
-
 import name.turingcomplete.blocks.AbstractLogicBlock;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
@@ -253,6 +251,11 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     @Override
     public Boolean dustConnectsToThis(BlockState state, Direction di) {
         return true;
+    }
+
+    @Override
+    public boolean isDirectional(){
+        return false;
     }
 
     static {
