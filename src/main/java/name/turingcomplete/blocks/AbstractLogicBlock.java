@@ -22,7 +22,7 @@ import net.minecraft.world.WorldView;
 
 //anything on a logic plate
 public abstract class AbstractLogicBlock extends HorizontalFacingBlock implements ConnectsToRedstone{
-    public static final BooleanProperty MIRRORED = BooleanProperty.of("mirrored");
+    public static final BooleanProperty MIRRORED = BooleanProperty.of("swapped_direction");
 
     private static final MapCodec<ComparatorBlock> CODEC = createCodec(ComparatorBlock::new);
 

@@ -1,102 +1,102 @@
 {
   "render_type": "cutout",
   "variants": {
-    "facing=north,powered=false,mirrored=false,part=top,carry=false": {
+    "facing=north,powered=false,swapped_direction=false,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top", "y": 180
     },
-    "facing=east,powered=false,mirrored=false,part=top,carry=false": {
+    "facing=east,powered=false,swapped_direction=false,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top", "y": 270
     },
-    "facing=south,powered=false,mirrored=false,part=top,carry=false": {
+    "facing=south,powered=false,swapped_direction=false,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top", "y": 0
     },
-    "facing=west,powered=false,mirrored=false,part=top,carry=false": {
+    "facing=west,powered=false,swapped_direction=false,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top", "y": 90
     },
-    "facing=north,powered=true,mirrored=false,part=top,carry=false": {
+    "facing=north,powered=true,swapped_direction=false,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_on", "y": 180
     },
-    "facing=east,powered=true,mirrored=false,part=top,carry=false": {
+    "facing=east,powered=true,swapped_direction=false,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_on", "y": 270
     },
-    "facing=south,powered=true,mirrored=false,part=top,carry=false": {
+    "facing=south,powered=true,swapped_direction=false,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_on", "y": 0
     },
-    "facing=west,powered=true,mirrored=false,part=top,carry=false": {
+    "facing=west,powered=true,swapped_direction=false,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_on", "y": 90
     },
 
-    "facing=north,powered=false,mirrored=false,part=top,carry=true": {
+    "facing=north,powered=false,swapped_direction=false,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_carry", "y": 180
     },
-    "facing=east,powered=false,mirrored=false,part=top,carry=true": {
+    "facing=east,powered=false,swapped_direction=false,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_carry", "y": 270
     },
-    "facing=south,powered=false,mirrored=false,part=top,carry=true": {
+    "facing=south,powered=false,swapped_direction=false,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_carry", "y": 0
     },
-    "facing=west,powered=false,mirrored=false,part=top,carry=true": {
+    "facing=west,powered=false,swapped_direction=false,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_carry", "y": 90
     },
-    "facing=north,powered=true,mirrored=false,part=top,carry=true": {
+    "facing=north,powered=true,swapped_direction=false,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_carry", "y": 180
     },
-    "facing=east,powered=true,mirrored=false,part=top,carry=true": {
+    "facing=east,powered=true,swapped_direction=false,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_carry", "y": 270
     },
-    "facing=south,powered=true,mirrored=false,part=top,carry=true": {
+    "facing=south,powered=true,swapped_direction=false,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_carry", "y": 0
     },
-    "facing=west,powered=true,mirrored=false,part=top,carry=true": {
+    "facing=west,powered=true,swapped_direction=false,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_carry", "y": 90
     },
 
-    "facing=north,powered=false,mirrored=false,part=bottom,carry=false": {
+    "facing=north,powered=false,swapped_direction=false,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom", "y": 180
     },
-    "facing=east,powered=false,mirrored=false,part=bottom,carry=false": {
+    "facing=east,powered=false,swapped_direction=false,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom", "y": 270
     },
-    "facing=south,powered=false,mirrored=false,part=bottom,carry=false": {
+    "facing=south,powered=false,swapped_direction=false,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom", "y": 0
     },
-    "facing=west,powered=false,mirrored=false,part=bottom,carry=false": {
+    "facing=west,powered=false,swapped_direction=false,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom", "y": 90
     },
-    "facing=north,powered=true,mirrored=false,part=bottom,carry=false": {
+    "facing=north,powered=true,swapped_direction=false,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_on", "y": 180
     },
-    "facing=east,powered=true,mirrored=false,part=bottom,carry=false": {
+    "facing=east,powered=true,swapped_direction=false,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_on", "y": 270
     },
-    "facing=south,powered=true,mirrored=false,part=bottom,carry=false": {
+    "facing=south,powered=true,swapped_direction=false,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_on", "y": 0
     },
-    "facing=west,powered=true,mirrored=false,part=bottom,carry=false": {
+    "facing=west,powered=true,swapped_direction=false,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_on", "y": 90
     },
-    "facing=north,powered=true,mirrored=false,part=bottom,carry=true": {
+    "facing=north,powered=true,swapped_direction=false,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_carry", "y": 180
     },
-    "facing=east,powered=true,mirrored=false,part=bottom,carry=true": {
+    "facing=east,powered=true,swapped_direction=false,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_carry", "y": 270
     },
-    "facing=south,powered=true,mirrored=false,part=bottom,carry=true": {
+    "facing=south,powered=true,swapped_direction=false,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_carry", "y": 0
     },
-    "facing=west,powered=true,mirrored=false,part=bottom,carry=true": {
+    "facing=west,powered=true,swapped_direction=false,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_carry", "y": 90
     },
-    "facing=north,powered=false,mirrored=false,part=bottom,carry=true": {
+    "facing=north,powered=false,swapped_direction=false,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_bottom_carry", "y": 180
     },
-    "facing=east,powered=false,mirrored=false,part=bottom,carry=true": {
+    "facing=east,powered=false,swapped_direction=false,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_bottom_carry", "y": 270
     },
-    "facing=south,powered=false,mirrored=false,part=bottom,carry=true": {
+    "facing=south,powered=false,swapped_direction=false,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_bottom_carry", "y": 0
     },
-    "facing=west,powered=false,mirrored=false,part=bottom,carry=true": {
+    "facing=west,powered=false,swapped_direction=false,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_bottom_carry", "y": 90
     },
 
@@ -125,102 +125,102 @@
       "model" : "turingcomplete:block/adders/full_adder_middle_on", "y": 90
     },
 
-    "facing=north,powered=false,mirrored=true,part=top,carry=false": {
+    "facing=north,powered=false,swapped_direction=true,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_flipped", "y": 180
     },
-    "facing=east,powered=false,mirrored=true,part=top,carry=false": {
+    "facing=east,powered=false,swapped_direction=true,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_flipped", "y": 270
     },
-    "facing=south,powered=false,mirrored=true,part=top,carry=false": {
+    "facing=south,powered=false,swapped_direction=true,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_flipped", "y": 0
     },
-    "facing=west,powered=false,mirrored=true,part=top,carry=false": {
+    "facing=west,powered=false,swapped_direction=true,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_flipped", "y": 90
     },
-    "facing=north,powered=true,mirrored=true,part=top,carry=false": {
+    "facing=north,powered=true,swapped_direction=true,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_flipped", "y": 180
     },
-    "facing=east,powered=true,mirrored=true,part=top,carry=false": {
+    "facing=east,powered=true,swapped_direction=true,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_flipped", "y": 270
     },
-    "facing=south,powered=true,mirrored=true,part=top,carry=false": {
+    "facing=south,powered=true,swapped_direction=true,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_flipped", "y": 0
     },
-    "facing=west,powered=true,mirrored=true,part=top,carry=false": {
+    "facing=west,powered=true,swapped_direction=true,part=top,carry=false": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_flipped", "y": 90
     },
 
-    "facing=north,powered=false,mirrored=true,part=top,carry=true": {
+    "facing=north,powered=false,swapped_direction=true,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_carry_flipped", "y": 180
     },
-    "facing=east,powered=false,mirrored=true,part=top,carry=true": {
+    "facing=east,powered=false,swapped_direction=true,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_carry_flipped", "y": 270
     },
-    "facing=south,powered=false,mirrored=true,part=top,carry=true": {
+    "facing=south,powered=false,swapped_direction=true,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_carry_flipped", "y": 0
     },
-    "facing=west,powered=false,mirrored=true,part=top,carry=true": {
+    "facing=west,powered=false,swapped_direction=true,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_carry_flipped", "y": 90
     },
-    "facing=north,powered=true,mirrored=true,part=top,carry=true": {
+    "facing=north,powered=true,swapped_direction=true,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_carry_flipped", "y": 180
     },
-    "facing=east,powered=true,mirrored=true,part=top,carry=true": {
+    "facing=east,powered=true,swapped_direction=true,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_carry_flipped", "y": 270
     },
-    "facing=south,powered=true,mirrored=true,part=top,carry=true": {
+    "facing=south,powered=true,swapped_direction=true,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_carry_flipped", "y": 0
     },
-    "facing=west,powered=true,mirrored=true,part=top,carry=true": {
+    "facing=west,powered=true,swapped_direction=true,part=top,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_top_on_carry_flipped", "y": 90
     },
 
-    "facing=north,powered=false,mirrored=true,part=bottom,carry=false": {
+    "facing=north,powered=false,swapped_direction=true,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_flipped", "y": 180
     },
-    "facing=east,powered=false,mirrored=true,part=bottom,carry=false": {
+    "facing=east,powered=false,swapped_direction=true,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_flipped", "y": 270
     },
-    "facing=south,powered=false,mirrored=true,part=bottom,carry=false": {
+    "facing=south,powered=false,swapped_direction=true,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_flipped", "y": 0
     },
-    "facing=west,powered=false,mirrored=true,part=bottom,carry=false": {
+    "facing=west,powered=false,swapped_direction=true,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_flipped", "y": 90
     },
-    "facing=north,powered=true,mirrored=true,part=bottom,carry=false": {
+    "facing=north,powered=true,swapped_direction=true,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_flipped", "y": 180
     },
-    "facing=east,powered=true,mirrored=true,part=bottom,carry=false": {
+    "facing=east,powered=true,swapped_direction=true,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_flipped", "y": 270
     },
-    "facing=south,powered=true,mirrored=true,part=bottom,carry=false": {
+    "facing=south,powered=true,swapped_direction=true,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_flipped", "y": 0
     },
-    "facing=west,powered=true,mirrored=true,part=bottom,carry=false": {
+    "facing=west,powered=true,swapped_direction=true,part=bottom,carry=false": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_flipped", "y": 90
     },
-    "facing=north,powered=true,mirrored=true,part=bottom,carry=true": {
+    "facing=north,powered=true,swapped_direction=true,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_carry_flipped", "y": 180
     },
-    "facing=east,powered=true,mirrored=true,part=bottom,carry=true": {
+    "facing=east,powered=true,swapped_direction=true,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_carry_flipped", "y": 270
     },
-    "facing=south,powered=true,mirrored=true,part=bottom,carry=true": {
+    "facing=south,powered=true,swapped_direction=true,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_carry_flipped", "y": 0
     },
-    "facing=west,powered=true,mirrored=true,part=bottom,carry=true": {
+    "facing=west,powered=true,swapped_direction=true,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/adder_bottom_on_carry_flipped", "y": 90
     },
-    "facing=north,powered=false,mirrored=true,part=bottom,carry=true": {
+    "facing=north,powered=false,swapped_direction=true,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_bottom_carry_flipped", "y": 180
     },
-    "facing=east,powered=false,mirrored=true,part=bottom,carry=true": {
+    "facing=east,powered=false,swapped_direction=true,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_bottom_carry_flipped", "y": 270
     },
-    "facing=south,powered=false,mirrored=true,part=bottom,carry=true": {
+    "facing=south,powered=false,swapped_direction=true,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_bottom_carry_flipped", "y": 0
     },
-    "facing=west,powered=false,mirrored=true,part=bottom,carry=true": {
+    "facing=west,powered=false,swapped_direction=true,part=bottom,carry=true": {
       "model" : "turingcomplete:block/adders/full_adder_bottom_carry_flipped", "y": 90
     }
   }
