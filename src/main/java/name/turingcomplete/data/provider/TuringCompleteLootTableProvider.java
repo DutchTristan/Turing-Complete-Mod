@@ -46,6 +46,7 @@ public class TuringCompleteLootTableProvider extends FabricBlockLootTableProvide
         addDrop(blockInit.SR_LATCH_BLOCK, drops(blockInit.SR_LATCH_BLOCK));
         addDrop(blockInit.JK_LATCH_BLOCK, drops(blockInit.JK_LATCH_BLOCK));
         addDrop(blockInit.T_LATCH_BLOCK, drops(blockInit.T_LATCH_BLOCK));
+        addDrop(blockInit.MEMORY_CELL, drops(blockInit.MEMORY_CELL));
 
         addDrop(blockInit.HALF_ADDER, drop_if_property(blockInit.HALF_ADDER,propertyInit.BLOCK_PART,BLOCK_PART.MIDDLE));
         addDrop(blockInit.FULL_ADDER, drop_if_property(blockInit.FULL_ADDER,propertyInit.BLOCK_PART,BLOCK_PART.MIDDLE));
