@@ -181,12 +181,15 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
 
     private int getReceivedRedstonePower(World world, BlockPos pos, Direction.Axis axis) {
         int i = 0;
+
         Direction[] directions = new Direction[]{};
         if (axis == Direction.Axis.X) directions = new Direction[]{Direction.EAST, Direction.WEST};
         if (axis == Direction.Axis.Z) directions = new Direction[]{Direction.NORTH, Direction.SOUTH};
 
         for (Direction direction : directions) {
             int j = world.getEmittedRedstonePower(pos.offset(direction), direction);
+            if (world.getBlockState(pos.offset(direction)).isOf(Blocks.REDSTONE_WIRE))
+                j = Math.max(0, j - 1);
 
             if (j >= 15) return 15;
             if (j > i) i = j;
