@@ -231,7 +231,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
         // If The Block Doesn't Give Power, Return 0
         if (!this.wiresGivePower) return 0;
 
-        BlockState block_to_power = world.getBlockState(pos.offset(direction));
+        BlockState block_to_power = world.getBlockState(pos.offset(direction.getOpposite()));
 
         if (block_to_power.isOf(Blocks.REDSTONE_WIRE)){
             if (direction.getAxis() == Direction.Axis.X)
