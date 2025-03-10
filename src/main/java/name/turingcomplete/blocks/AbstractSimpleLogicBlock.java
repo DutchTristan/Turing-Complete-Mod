@@ -29,9 +29,6 @@ public abstract class AbstractSimpleLogicBlock extends AbstractLogicBlock{
         return canMirror();
     }
 
-    //allow immediate block state changes in response to input, such as highlighting active inputs
-    protected void onNeighborUpdate(World world, BlockPos gatePos, BlockState gateState){}
-
     //allow for block state changes after output is calculated, such as highlighting output if active
     //redstone output is handled by AbstractSimpleGate
     protected void onOutputChange(World world, BlockPos gatePos, BlockState gateState){}
@@ -43,7 +40,8 @@ public abstract class AbstractSimpleLogicBlock extends AbstractLogicBlock{
         }
 
         state = state.with(MIRRORED, !state.get(MIRRORED));
-        world.setBlockState(pos, state);
+        //notify neighbors for redstone connectivity
+        world.setBlockState(pos, state, Block.NOTIFY_ALL);
         if(state.get(MIRRORED)) {
             world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.5F);
         }
@@ -52,7 +50,7 @@ public abstract class AbstractSimpleLogicBlock extends AbstractLogicBlock{
         }
         world.scheduleBlockTick(pos,this, getOutputDelay(state), TickPriority.VERY_HIGH);
         //update input state, becuase inputs have moved
-        onNeighborUpdate(world,pos,state);
+        onInputChange(world,pos,state);
 
         return ActionResult.SUCCESS_NO_ITEM_USED;
     }
@@ -65,7 +63,11 @@ public abstract class AbstractSimpleLogicBlock extends AbstractLogicBlock{
     @MustBeInvokedByOverriders
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
-        onNeighborUpdate(world,pos,state);
+        //check for superclass state changes
+        state = world.getBlockState(pos);
+        if (state.isOf(this)) {
+            onInputChange(world,pos,state);
+        }
     }
 
     @Override

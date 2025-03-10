@@ -1,7 +1,6 @@
 package name.turingcomplete.blocks.block;
 
 import name.turingcomplete.blocks.AbstractSimpleGate;
-import name.turingcomplete.blocks.RelativeSide;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
@@ -33,11 +32,15 @@ public class SWITCH_Gate_Block extends AbstractSimpleGate {
     }
 
     @Override
-    protected void onNeighborUpdate(World world, BlockPos gatePos, BlockState gateState){
-        super.onNeighborUpdate(world, gatePos, gateState);
-        world.setBlockState(gatePos, gateState.with(
-            ENABLED,
-            getInputActive(world, gatePos, gateState, getEnabledSide(gateState))));
+    protected void onInputChange(World world, BlockPos gatePos, BlockState gateState){
+        super.onInputChange(world, gatePos, gateState);
+        //don't notify neighbors, because they should not care about this
+        //"listeners" includes server -> client communication, so is probably still needed
+        world.setBlockState(gatePos,
+            gateState.with(
+                ENABLED,
+                getInputActive(world, gatePos, gateState, getEnabledSide(gateState))),
+            Block.NOTIFY_LISTENERS); 
     }
 
     @Override 
@@ -57,7 +60,7 @@ public class SWITCH_Gate_Block extends AbstractSimpleGate {
             return true;
         }
         Direction facing = gateState.get(FACING);
-        return direction == getEnabledSide(gateState).onDirection(facing);
+        return direction == getEnabledSide(gateState).withBackDirection(facing).getOpposite();
     }
 
     private RelativeSide getEnabledSide(BlockState state){

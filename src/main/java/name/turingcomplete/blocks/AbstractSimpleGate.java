@@ -4,7 +4,6 @@ import org.jetbrains.annotations.MustBeInvokedByOverriders;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -13,16 +12,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.tick.TickPriority;
 
 //any single-block logic unit with one binary output opposite its FACING direction
-//todo: why opposite? why north-facing gate not outputing northward?
+//FACING is backwards for save compatibility
 public abstract class AbstractSimpleGate extends AbstractSimpleLogicBlock{
     protected static final BooleanProperty POWERED = Properties.POWERED;
-    private static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
 
     protected AbstractSimpleGate(Settings settings) {
         super(settings);
@@ -54,18 +51,13 @@ public abstract class AbstractSimpleGate extends AbstractSimpleLogicBlock{
     }
 
     @Override
-    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context)
-    {
-        return SHAPE;
-    }
-
-    @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         boolean gateEval = evaluateGate(world, pos, state);
         if (gateEval != state.get(POWERED)) {
             //use separate variable to make sure onOutputChange can add to state
             state = state.with(POWERED,gateEval);
-            world.setBlockState(pos, state);
+            //updateOutputBlock will update the correct neighbors
+            world.setBlockState(pos, state, Block.NOTIFY_LISTENERS);
             onOutputChange(world, pos, state);
             updateOutputBlock(world,pos,state);
         }
@@ -85,7 +77,7 @@ public abstract class AbstractSimpleGate extends AbstractSimpleLogicBlock{
 
     @Override
     @MustBeInvokedByOverriders
-    protected void onNeighborUpdate(World world, BlockPos gatePos, BlockState gateState){
+    protected void onInputChange(World world, BlockPos gatePos, BlockState gateState){
         if (evaluateGate(world, gatePos, gateState) != gateState.get(POWERED)) {
             world.scheduleBlockTick(gatePos,this, getOutputDelay(gateState), TickPriority.VERY_HIGH);
         }
@@ -93,10 +85,7 @@ public abstract class AbstractSimpleGate extends AbstractSimpleLogicBlock{
 
     protected final void updateOutputBlock(World world, BlockPos gatePos, BlockState gateState){
         Direction facing = gateState.get(FACING);
-        BlockPos targetPos = gatePos.offset(facing.getOpposite());
 
-        //I don't understand this part
-        world.updateNeighbor(targetPos, this, gatePos);
-        world.updateNeighborsExcept(targetPos, this, facing);
+        super.updateOutputBlock(world,gatePos,facing.getOpposite());
     }
 }

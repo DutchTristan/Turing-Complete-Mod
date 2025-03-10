@@ -1,7 +1,6 @@
 package name.turingcomplete.blocks.block;
 
 import name.turingcomplete.blocks.AbstractSimpleGate;
-import name.turingcomplete.blocks.RelativeSide;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.StateManager;
@@ -31,7 +30,9 @@ public class T_LATCH_Block extends AbstractSimpleGate {
 
     @Override
     protected void onOutputChange(World world, BlockPos gatePos, BlockState gateState){
-        world.setBlockState(gatePos, gateState.with(WAS_TOGGLED, true));
+        //don't notify neighbors, because they should not care about this
+        //"listeners" includes server -> client communication, so is probably still needed
+        world.setBlockState(gatePos, gateState.with(WAS_TOGGLED, true),Block.NOTIFY_LISTENERS);
     }
 
     @Override
@@ -39,7 +40,9 @@ public class T_LATCH_Block extends AbstractSimpleGate {
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
         boolean toggle = getInputActive(world, pos, state,RelativeSide.BACK);
         if (!toggle) {
-            world.setBlockState(pos, state.with(WAS_TOGGLED, false));
+            //don't notify neighbors, because they should not care about this
+            //"listeners" includes server -> client communication, so is probably still needed
+            world.setBlockState(pos, state.with(WAS_TOGGLED, false),Block.NOTIFY_LISTENERS);
         }
     }
 

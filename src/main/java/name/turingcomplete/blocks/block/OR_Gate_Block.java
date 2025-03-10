@@ -1,7 +1,6 @@
 package name.turingcomplete.blocks.block;
 
 import name.turingcomplete.blocks.AbstractSimpleGate;
-import name.turingcomplete.blocks.RelativeSide;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

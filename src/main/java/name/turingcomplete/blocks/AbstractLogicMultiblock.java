@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.mojang.logging.LogUtils;
-
+import name.turingcomplete.TuringComplete;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,8 +32,8 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
 
     public abstract boolean isMultiblockValid(World world, BlockPos mainPos, BlockState mainState);
 
-    public final void breakAll(World world, BlockPos mainPos, BlockState mainState, PlayerEntity player){
-        boolean shouldDrop = !player.isCreative();
+    public final void breakAll(World world, BlockPos mainPos, BlockState mainState, @Nullable PlayerEntity player){
+        boolean shouldDrop = player == null || !player.isCreative();
         for (BlockPos partPos : getPartPosses(world, mainPos, mainState)){
             world.breakBlock(partPos, false);
 
@@ -51,12 +50,15 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
         return 2;
     }
 
-    //create and destroy blocks, set part properties, reset signal properties if desired.
+    //create and destroy blocks, set non-input part properties
     //mirror property handled by AbstractLogicMultiblock
     //returns new mainPos, since it can change
     protected BlockPos mirrorBlockParts(World world, BlockPos mainPos, BlockState mainState){
         return mainPos;
     }
+
+    //to update strong-power neighbors of old inputs
+    protected void afterMirror(World world, BlockPos mainPos, BlockState mainState){}
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
@@ -68,7 +70,7 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
         BlockState mainState = world.getBlockState(mainPos);
 
         if(!isMultiblockValid(world, mainPos, mainState)){
-            LogUtils.getLogger().warn("invalid multiblock at "+mainPos);
+            TuringComplete.LOGGER.warn("invalid multiblock at "+mainPos+"in AbstractLogicMultiblock onUse");
             return ActionResult.PASS;
         }
 
@@ -81,9 +83,23 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
         mainPos = mirrorBlockParts(world, mainPos, mainState);
         mainState = world.getBlockState(mainPos);
 
-        world.setBlockState(mainPos, mainState.with(MIRRORED, !wasMirrored));
+        
+        //TODO: can we avoid some of these neighbor updates when updating state?
         for (BlockPos partPos : getPartPosses(world, mainPos, mainState)) {
-            world.setBlockState(partPos, world.getBlockState(partPos).with(MIRRORED,!wasMirrored));
+            world.setBlockState(partPos, world.getBlockState(partPos).with(MIRRORED,!wasMirrored),Block.NOTIFY_ALL);
+            world.updateNeighbor(partPos, null, mainPos);
+        }
+        mainState = mainState.with(MIRRORED, !wasMirrored);
+        world.setBlockState(mainPos, mainState,Block.NOTIFY_ALL);
+        if (!isMultiblockValid(world, mainPos, mainState)) {
+            TuringComplete.LOGGER.warn("Invalid multiblock at "+mainPos+"in AbstractLogicMultiblock onUse after mirror");
+        }
+        else {
+            //update inputs, because they have moved
+            onInputChange(world,mainPos,mainState);
+            for (BlockPos partPos : getPartPosses(world, mainPos, mainState)) {
+                onInputChange(world,partPos,world.getBlockState(partPos));
+            }
         }
 
         if(!wasMirrored) {
@@ -92,6 +108,7 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
         else {
             world.playSound(player, pos, SoundEvents.BLOCK_COMPARATOR_CLICK, SoundCategory.BLOCKS, 0.3F, 0.55F);
         }
+        afterMirror(world,mainPos,mainState);
         world.scheduleBlockTick(pos,this, getLeastOutputDelay(mainPos,mainState), TickPriority.VERY_HIGH);
 
         return ActionResult.SUCCESS_NO_ITEM_USED;
@@ -99,8 +116,6 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
 
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
-        
         if (!canPlaceAt(state,world, pos)) {
             BlockPos mainPos = getMainPos(world, state, pos);
             //invalid multiblock
@@ -110,6 +125,9 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
             else{
                 breakAll(world, mainPos, world.getBlockState(mainPos), null);
             }            
+        }
+        else {
+            onInputChange(world,pos,state);
         }
     }
 

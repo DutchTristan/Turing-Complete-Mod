@@ -83,7 +83,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         if (state.get(POWER_X) != received_x_power){
             // Update Block State (With State Check To Make Sure It Doesn't Update Other Blocks)
             if (world.getBlockState(pos) == state){
-                world.setBlockState(pos,state.with(POWER_X,received_x_power),2);
+                world.setBlockState(pos,state.with(POWER_X,received_x_power),Block.NOTIFY_LISTENERS);
             }
 
             // Update Blocks On The X Axis
@@ -95,7 +95,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         if (state.get(POWER_Z) != received_z_power){
             // Update Block State (With State Check To Make Sure It Doesn't Update Other Blocks)
             if (world.getBlockState(pos) == state){
-                world.setBlockState(pos,state.with(POWER_Z,received_z_power),2);
+                world.setBlockState(pos,state.with(POWER_Z,received_z_power),Block.NOTIFY_LISTENERS);
             }
 
             // Update Blocks On The Z Axis
@@ -106,12 +106,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     //
     private void updateNeighborsHorizontally(World world, BlockPos pos){
         for (Direction direction : Direction.Type.HORIZONTAL) {
-            if (world.getBlockState(pos.offset(direction)).isSolidBlock(world, pos.offset(direction))) {
-                this.updateNeighbors(world, pos.offset(direction).up());
-            } else {
-                this.updateNeighbors(world, pos.offset(direction));
-                this.updateNeighbors(world, pos.offset(direction).down());
-            }
+            this.updateNeighbors(world, pos.offset(direction));
         }
     }
 

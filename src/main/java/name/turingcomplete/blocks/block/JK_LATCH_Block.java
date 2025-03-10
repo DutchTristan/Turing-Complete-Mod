@@ -30,7 +30,7 @@ public class JK_LATCH_Block extends SR_LATCH_Block {
             if(was_toggled) return gateState.get(POWERED);
             return !gateState.get(POWERED);
         }
-        
+
         return super.evaluateGate(world, gatePos, gateState);
     }
 
@@ -39,18 +39,22 @@ public class JK_LATCH_Block extends SR_LATCH_Block {
         boolean set = getInputActive(world,gatePos,gateState,getSetDirection(gateState));
         boolean reset = getInputActive(world,gatePos,gateState,getResetDirection(gateState));
         if (set && reset) {
-            world.setBlockState(gatePos, gateState.with(WAS_TOGGLED, true));
+            //don't notify neighbors, because they should not care about this
+            //"listeners" includes server -> client communication, so is probably still needed
+            world.setBlockState(gatePos, gateState.with(WAS_TOGGLED, true),Block.NOTIFY_LISTENERS);
         }
     }
 
     @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
-        boolean set = getInputActive(world,pos,state,getSetDirection(state));
-        boolean reset = getInputActive(world,pos,state,getResetDirection(state));
+    protected void onInputChange(World world, BlockPos gatePos, BlockState gateState) {
+        boolean set = getInputActive(world,gatePos,gateState,getSetDirection(gateState));
+        boolean reset = getInputActive(world,gatePos,gateState,getResetDirection(gateState));
         if (!set || !reset) {
-            world.setBlockState(pos, state.with(WAS_TOGGLED, false));
+            //don't notify neighbors, because they should not care about this
+            //"listeners" includes server -> client communication, so is probably still needed
+            world.setBlockState(gatePos, gateState.with(WAS_TOGGLED, false),Block.NOTIFY_LISTENERS);
         }
+        super.onInputChange(world,gatePos,gateState);
     }
 
     @Override
