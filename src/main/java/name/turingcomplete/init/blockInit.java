@@ -2,8 +2,7 @@ package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
 import name.turingcomplete.blocks.block.*;
-import name.turingcomplete.blocks.multiblock.Full_Adder;
-import name.turingcomplete.blocks.multiblock.Half_Adder;
+import name.turingcomplete.blocks.multiblock.Adder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.piston.PistonBehavior;
@@ -94,17 +93,19 @@ public class blockInit {
 
     //===============================================================================================
 
-    public static final Half_Adder HALF_ADDER = registerWithItem("half_adder",
-            new Half_Adder(AbstractBlock.Settings.create()
+    public static final Adder HALF_ADDER = registerWithItem("half_adder",
+            new Adder(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
-                    .pistonBehavior(PistonBehavior.DESTROY)));
+                    .pistonBehavior(PistonBehavior.DESTROY),
+                    false));
 
-    public static final Full_Adder FULL_ADDER = registerWithItem("full_adder",
-            new Full_Adder(AbstractBlock.Settings.create()
+    public static final Adder FULL_ADDER = registerWithItem("full_adder",
+            new Adder(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
-                    .pistonBehavior(PistonBehavior.DESTROY)));
+                    .pistonBehavior(PistonBehavior.DESTROY),
+                    true));
 
     public static final BiDirectionalRedstoneBridgeBlock BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("bi_directional_redstone_bridge_block",
             new BiDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
