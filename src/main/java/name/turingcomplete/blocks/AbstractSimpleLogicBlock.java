@@ -71,6 +71,8 @@ public abstract class AbstractSimpleLogicBlock extends AbstractLogicBlock{
     }
 
     @Override
+    @MustBeInvokedByOverriders
+    //should be overriden to update strong-powered outputs
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         //redstone dust hasn't been redirected yet, so must schedule unconditionally
         world.scheduleBlockTick(pos,this, getOutputDelay(state), TickPriority.VERY_HIGH);

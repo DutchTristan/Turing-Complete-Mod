@@ -1,9 +1,12 @@
 package name.turingcomplete.blocks;
 
 import org.jetbrains.annotations.MustBeInvokedByOverriders;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -80,6 +83,16 @@ public abstract class AbstractSimpleGate extends AbstractSimpleLogicBlock{
     protected void onInputChange(World world, BlockPos gatePos, BlockState gateState){
         if (evaluateGate(world, gatePos, gateState) != gateState.get(POWERED)) {
             world.scheduleBlockTick(gatePos,this, getOutputDelay(gateState), TickPriority.VERY_HIGH);
+        }
+    }
+
+    @Override
+    @MustBeInvokedByOverriders
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack){
+        super.onPlaced(world, pos, state, placer, itemStack);
+
+        if(state.get(POWERED)) {
+            updateOutputBlock(world, pos, state);
         }
     }
 
