@@ -1,5 +1,7 @@
 package name.turingcomplete.blocks.block;
 
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
+
 import name.turingcomplete.blocks.AbstractLogicBlock;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.Block;
@@ -76,6 +78,23 @@ public class BiDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         super.onPlaced(world, pos, state, placer, itemStack);
         //redstone dust hasn't been redirected yet, so must schedule unconditionally
         world.scheduleBlockTick(pos,this, gate_delay, TickPriority.VERY_HIGH);
+    }
+
+    @Override
+    @MustBeInvokedByOverriders
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        
+        if(state.get(POWERED_Z)) {
+            //need to change blockstate so that getWeakRedstonePower returns 0
+            world.setBlockState(pos, state.with(POWERED_Z,false));
+            updateFrontOutput(world, pos, state);
+        }
+        if(state.get(POWERED_X)) {
+            //need to change blockstate so that getWeakRedstonePower returns 0
+            world.setBlockState(pos, state.with(POWERED_X,false));
+            updateSideOutput(world, pos, state);
+        }
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override

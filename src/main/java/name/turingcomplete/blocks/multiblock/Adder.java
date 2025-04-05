@@ -2,6 +2,7 @@ package name.turingcomplete.blocks.multiblock;
 
 import java.util.List;
 
+import org.jetbrains.annotations.MustBeInvokedByOverriders;
 import org.jetbrains.annotations.Nullable;
 
 import name.turingcomplete.TuringComplete;
@@ -9,6 +10,7 @@ import name.turingcomplete.blocks.AbstractLogicMultiblock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
@@ -286,6 +288,26 @@ public final class Adder extends AbstractLogicMultiblock{
         //update parts because otherwise their input states won't update
         world.updateNeighbor(aPos, this, pos);
         world.updateNeighbor(bPos, this, pos);
+    }
+
+    @Override
+    @MustBeInvokedByOverriders
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        BlockPos mainPos = getMainPos(world, state, pos);
+        BlockState mainState = world.getBlockState(mainPos);
+        if(mainState.get(POWERED)) {
+            //need to change blockstate so that getWeakRedstonePower returns 0
+            world.setBlockState(mainPos, mainState.with(POWERED,false));
+            updateSumBlock(world, mainPos, mainState);
+        }
+        BlockPos bPos = getBPos(world, mainPos, mainState);
+        BlockState bState = world.getBlockState(bPos);
+        if(bState.get(CARRY)) {
+            //need to change blockstate so that getWeakRedstonePower returns 0
+            world.setBlockState(bPos, bState.with(POWERED,false));
+            updateCarryOutBlock(world, mainPos, mainState);
+        }
+        return super.onBreak(world, pos, state, player);
     }
 
     @Override

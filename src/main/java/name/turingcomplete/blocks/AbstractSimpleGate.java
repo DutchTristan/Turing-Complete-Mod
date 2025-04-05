@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
@@ -94,6 +95,17 @@ public abstract class AbstractSimpleGate extends AbstractSimpleLogicBlock{
         if(state.get(POWERED)) {
             updateOutputBlock(world, pos, state);
         }
+    }
+
+    @Override
+    @MustBeInvokedByOverriders
+    public BlockState onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if(state.get(POWERED)) {
+            //need to change blockstate so that getWeakRedstonePower returns 0
+            world.setBlockState(pos, state.with(POWERED,false));
+            updateOutputBlock(world, pos, state);
+        }
+        return super.onBreak(world, pos, state, player);
     }
 
     protected final void updateOutputBlock(World world, BlockPos gatePos, BlockState gateState){
