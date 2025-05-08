@@ -1,8 +1,7 @@
 package name.turingcomplete.data.provider;
 
-import name.turingcomplete.blocks.BLOCK_PART;
+import name.turingcomplete.blocks.multiblock.Adder;
 import name.turingcomplete.init.blockInit;
-import name.turingcomplete.init.propertyInit;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.block.Block;
@@ -46,9 +45,10 @@ public class TuringCompleteLootTableProvider extends FabricBlockLootTableProvide
         addDrop(blockInit.SR_LATCH_BLOCK, drops(blockInit.SR_LATCH_BLOCK));
         addDrop(blockInit.JK_LATCH_BLOCK, drops(blockInit.JK_LATCH_BLOCK));
         addDrop(blockInit.T_LATCH_BLOCK, drops(blockInit.T_LATCH_BLOCK));
+        addDrop(blockInit.MEMORY_CELL, drops(blockInit.MEMORY_CELL));
 
-        addDrop(blockInit.HALF_ADDER, drop_if_property(blockInit.HALF_ADDER,propertyInit.BLOCK_PART,BLOCK_PART.MIDDLE));
-        addDrop(blockInit.FULL_ADDER, drop_if_property(blockInit.FULL_ADDER,propertyInit.BLOCK_PART,BLOCK_PART.MIDDLE));
+        addDrop(blockInit.HALF_ADDER, drop_if_property(blockInit.HALF_ADDER,Adder.PART,Adder.ADDER_PART.MIDDLE));
+        addDrop(blockInit.FULL_ADDER, drop_if_property(blockInit.FULL_ADDER,Adder.PART,Adder.ADDER_PART.MIDDLE));
     }
 
     private <T extends Comparable<T> & StringIdentifiable> LootTable.Builder drop_if_property(Block block, Property<T> property, T value ){

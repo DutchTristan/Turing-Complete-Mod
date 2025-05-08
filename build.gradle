@@ -34,6 +34,10 @@ fabricApi {
 	configureDataGeneration()
 }
 
+//you can comment this out temporarily if you've already run datagen and you're sure you haven't changed datagen
+//loom 1.10 ostensibly improves the time of the runDatagen task when there are no datagen changes
+tasks.build.dependsOn(tasks.runDatagen)
+
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
