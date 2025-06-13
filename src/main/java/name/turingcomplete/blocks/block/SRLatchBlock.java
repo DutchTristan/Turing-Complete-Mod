@@ -5,9 +5,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class SR_LATCH_Block extends AbstractSimpleGate {
+public class SRLatchBlock extends AbstractSimpleGate {
 
-    public SR_LATCH_Block(Settings settings) {
+    public SRLatchBlock(Settings settings) {
         super(settings);
     }
 

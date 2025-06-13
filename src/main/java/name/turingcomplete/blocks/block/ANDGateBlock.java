@@ -5,17 +5,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+public class ANDGateBlock extends AbstractSimpleGate{
 
-public class OR_Gate_Block extends AbstractSimpleGate {
-
-    public OR_Gate_Block(Settings settings) {
-        super(settings);
-    }
+    public ANDGateBlock(Settings settings) {super(settings);}
 
     @Override
     protected boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState) {
         boolean left = getInputActive(world, gatePos, gateState,RelativeSide.LEFT);
         boolean right = getInputActive(world, gatePos, gateState,RelativeSide.RIGHT);
-        return (left || right);
+        return (left && right);
     }
 }

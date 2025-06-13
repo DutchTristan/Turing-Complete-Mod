@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.tick.TickPriority;
 
 public final class Adder extends AbstractLogicMultiblock{
-    public static final EnumProperty<ADDER_PART> PART = EnumProperty.of("part", ADDER_PART.class);
+    public static final EnumProperty<AdderPart> PART = EnumProperty.of("part", AdderPart.class);
 
     //to reduce block states, "powered" is used for both the A and B inputs on the end parts,
     //and the Sum output on the middle part, and "carry" is used for both the carry in and the carry out
@@ -127,7 +127,7 @@ public final class Adder extends AbstractLogicMultiblock{
 
     @Override
     public boolean isMultiblockValid(World world, BlockPos mainPos, BlockState mainState) {
-        if (!mainState.isOf(this) || mainState.get(PART)!=ADDER_PART.MIDDLE){
+        if (!mainState.isOf(this) || mainState.get(PART)!=AdderPart.MIDDLE){
             return false;
         }
         BlockPos aPos = getAPos(world,mainPos,mainState);
@@ -138,8 +138,8 @@ public final class Adder extends AbstractLogicMultiblock{
         if (
             !aState.isOf(this) ||
             !bState.isOf(this) ||
-            aState.get(PART) != ADDER_PART.TOP ||
-            bState.get(PART) != ADDER_PART.BOTTOM ||
+            aState.get(PART) != AdderPart.TOP ||
+            bState.get(PART) != AdderPart.BOTTOM ||
             aState.get(FACING) != mainState.get(FACING) ||
             bState.get(FACING) != mainState.get(FACING) ||
             aState.get(MIRRORED) != mainState.get(MIRRORED) ||
@@ -184,7 +184,7 @@ public final class Adder extends AbstractLogicMultiblock{
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         super.scheduledTick(state, world, pos, random);
-        if (state.get(PART)!=ADDER_PART.MIDDLE){
+        if (state.get(PART)!=AdderPart.MIDDLE){
             TuringComplete.LOGGER.warn("Adder tick scheduled not on middle block)");
             return;
         }
@@ -360,15 +360,15 @@ public final class Adder extends AbstractLogicMultiblock{
     }
 
     private BlockState getMainPlacementState(Direction facing) {
-        return getDefaultState().with(FACING,facing).with(PART,ADDER_PART.MIDDLE);
+        return getDefaultState().with(FACING,facing).with(PART,AdderPart.MIDDLE);
     }
 
     private BlockState getAPlacementState(Direction facing) {
-        return getDefaultState().with(FACING,facing).with(PART,ADDER_PART.TOP);
+        return getDefaultState().with(FACING,facing).with(PART,AdderPart.TOP);
     }
 
     private BlockState getBPlacementState(Direction facing) {
-        return getDefaultState().with(FACING,facing).with(PART,ADDER_PART.BOTTOM);
+        return getDefaultState().with(FACING,facing).with(PART,AdderPart.BOTTOM);
     }
 
     private boolean evaluateSum(World world, BlockPos gatePos, BlockState gateState){
@@ -458,14 +458,14 @@ public final class Adder extends AbstractLogicMultiblock{
          world.updateNeighborsExcept(targetPos, this, oldOutputDirection.getOpposite());
     }
 
-    public enum ADDER_PART implements StringIdentifiable {
+    public enum AdderPart implements StringIdentifiable {
         TOP("top"),
         MIDDLE("middle"),
         BOTTOM("bottom");
 
         private final String name;
 
-        ADDER_PART(String name) {
+        AdderPart(String name) {
             this.name = name;
 
         }

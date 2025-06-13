@@ -6,9 +6,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
-public class XNOR_Gate_Block extends AbstractSimpleGate {
+public class ORGateBlock extends AbstractSimpleGate {
 
-    public XNOR_Gate_Block(Settings settings) {
+    public ORGateBlock(Settings settings) {
         super(settings);
     }
 
@@ -16,6 +16,6 @@ public class XNOR_Gate_Block extends AbstractSimpleGate {
     protected boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState) {
         boolean left = getInputActive(world, gatePos, gateState,RelativeSide.LEFT);
         boolean right = getInputActive(world, gatePos, gateState,RelativeSide.RIGHT);
-        return ! (left ^ right);
+        return (left || right);
     }
 }

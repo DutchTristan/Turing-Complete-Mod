@@ -9,10 +9,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-public class T_LATCH_Block extends AbstractSimpleGate {
+public class TLatchBlock extends AbstractSimpleGate {
     protected static final BooleanProperty WAS_TOGGLED = BooleanProperty.of("was_toggled");
 
-    public T_LATCH_Block(Settings settings) {
+    public TLatchBlock(Settings settings) {
         super(settings);
     }
 

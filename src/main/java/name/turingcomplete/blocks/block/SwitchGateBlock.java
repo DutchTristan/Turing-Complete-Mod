@@ -17,38 +17,18 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class MEMORY_Cell_Block extends AbstractSimpleGate {
+public class SwitchGateBlock extends AbstractSimpleGate {
     public static final BooleanProperty ENABLED = Properties.ENABLED;
-
-    public MEMORY_Cell_Block(Settings settings) {
+    public SwitchGateBlock(Settings settings) {
         super(settings);
-        setDefaultState(getDefaultState()
-                .with(ENABLED,false)
-        );
-    }
-
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
-        builder.add(ENABLED);
+        setDefaultState(getDefaultState().with(ENABLED,false));
     }
 
     @Override
     protected boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState) {
         boolean signal = getInputActive(world, gatePos, gateState,RelativeSide.BACK);
         boolean enable = getInputActive(world, gatePos, gateState,getEnabledSide(gateState));
-
-        if (enable) {
-            return signal;
-        }
-        else {
-            return gateState.get(POWERED);
-        }
-    }
-
-    @Override 
-    public boolean canMirror(){
-        return true;
+        return (signal && enable);
     }
 
     @Override
@@ -60,8 +40,18 @@ public class MEMORY_Cell_Block extends AbstractSimpleGate {
             gateState.with(
                 ENABLED,
                 getInputActive(world, gatePos, gateState, getEnabledSide(gateState))),
-            Block.NOTIFY_LISTENERS
-            );
+            Block.NOTIFY_LISTENERS); 
+    }
+
+    @Override 
+    public boolean canMirror(){
+        return true;
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(ENABLED);
     }
 
     @Override
@@ -79,6 +69,6 @@ public class MEMORY_Cell_Block extends AbstractSimpleGate {
 
     @Override
     public void appendTooltip(ItemStack itemStack, Item.TooltipContext context, List<Text> tooltip, TooltipType options) {
-        tooltip.add(Text.translatable("block.turingcomplete.memory_cell_gate.tooltip").formatted(Formatting.RED).formatted(Formatting.ITALIC));
+        tooltip.add(Text.translatable("block.turingcomplete.switch_gate_block.tooltip").formatted(Formatting.RED).formatted(Formatting.ITALIC));
     }
 }

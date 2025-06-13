@@ -9,9 +9,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
-public class NAND_Gate_Block extends AbstractSimpleGate {
+public class NANDGateBlock extends AbstractSimpleGate {
 
-    public NAND_Gate_Block(Settings settings) {
+    public NANDGateBlock(Settings settings) {
         super(settings);
     }
 

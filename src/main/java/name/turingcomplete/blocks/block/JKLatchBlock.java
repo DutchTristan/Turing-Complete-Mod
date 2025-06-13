@@ -7,10 +7,10 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class JK_LATCH_Block extends SR_LATCH_Block {
+public class JKLatchBlock extends SRLatchBlock {
     protected static final BooleanProperty WAS_TOGGLED = BooleanProperty.of("was_toggled");
 
-    public JK_LATCH_Block(Settings settings) {
+    public JKLatchBlock(Settings settings) {
         super(settings);
     }
 

@@ -7,18 +7,18 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 
-public class THREE_AND_Gate_Block extends AbstractSimpleGate {
+public class ThreeORGateBlock extends AbstractSimpleGate {
 
-    public THREE_AND_Gate_Block(Settings settings) {
+    public ThreeORGateBlock(Settings settings) {
         super(settings);
     }
-    
+
     @Override
     protected boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState) {
         boolean left = getInputActive(world, gatePos, gateState,RelativeSide.LEFT);
         boolean right = getInputActive(world, gatePos, gateState,RelativeSide.RIGHT);
         boolean back = getInputActive(world, gatePos, gateState,RelativeSide.BACK);
-        return (left && right && back);
+        return (left || right || back);
     }
 
     @Override

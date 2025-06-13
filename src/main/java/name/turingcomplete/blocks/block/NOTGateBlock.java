@@ -1,28 +1,37 @@
 package name.turingcomplete.blocks.block;
 
+import org.jetbrains.annotations.Nullable;
+
 import name.turingcomplete.blocks.AbstractSimpleGate;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 
-public class THREE_OR_Gate_Block extends AbstractSimpleGate {
+public class NOTGateBlock extends AbstractSimpleGate {
 
-    public THREE_OR_Gate_Block(Settings settings) {
+    public NOTGateBlock(Settings settings) {
         super(settings);
     }
 
     @Override
     protected boolean evaluateGate(World world, BlockPos gatePos, BlockState gateState) {
-        boolean left = getInputActive(world, gatePos, gateState,RelativeSide.LEFT);
-        boolean right = getInputActive(world, gatePos, gateState,RelativeSide.RIGHT);
         boolean back = getInputActive(world, gatePos, gateState,RelativeSide.BACK);
-        return (left || right || back);
+        return !back;
     }
 
+    @Nullable
+    @Override
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        BlockState state = super.getPlacementState(ctx);
+        state = state.with(POWERED, true);
+        return state;
+    }
+    
     @Override
     public Boolean dustConnectsToThis(BlockState gateState, Direction direction){
-        return true;
+        return direction.getAxis() == gateState.get(FACING).getAxis();
     }
 }

@@ -6,9 +6,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
-public class XOR_Gate_Block extends AbstractSimpleGate {
+public class XORGateBlock extends AbstractSimpleGate {
 
-    public XOR_Gate_Block(Settings settings) {
+    public XORGateBlock(Settings settings) {
         super(settings);
     }
 

@@ -47,8 +47,8 @@ public class TuringCompleteLootTableProvider extends FabricBlockLootTableProvide
         addDrop(blockInit.T_LATCH_BLOCK, drops(blockInit.T_LATCH_BLOCK));
         addDrop(blockInit.MEMORY_CELL, drops(blockInit.MEMORY_CELL));
 
-        addDrop(blockInit.HALF_ADDER, drop_if_property(blockInit.HALF_ADDER,Adder.PART,Adder.ADDER_PART.MIDDLE));
-        addDrop(blockInit.FULL_ADDER, drop_if_property(blockInit.FULL_ADDER,Adder.PART,Adder.ADDER_PART.MIDDLE));
+        addDrop(blockInit.HALF_ADDER, drop_if_property(blockInit.HALF_ADDER,Adder.PART,Adder.AdderPart.MIDDLE));
+        addDrop(blockInit.FULL_ADDER, drop_if_property(blockInit.FULL_ADDER,Adder.PART,Adder.AdderPart.MIDDLE));
     }
 
     private <T extends Comparable<T> & StringIdentifiable> LootTable.Builder drop_if_property(Block block, Property<T> property, T value ){

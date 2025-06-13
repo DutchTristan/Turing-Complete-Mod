@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
-public class Logic_Base_Plate_Block extends HorizontalFacingBlock {
-    public Logic_Base_Plate_Block(Settings settings) {
+public class LogicBasePlateBlock extends HorizontalFacingBlock {
+    public LogicBasePlateBlock(Settings settings) {
         super(settings);
 
         setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
