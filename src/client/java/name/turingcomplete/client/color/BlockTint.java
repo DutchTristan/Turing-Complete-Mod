@@ -1,5 +1,6 @@
 package name.turingcomplete.client.color;
 
+import name.turingcomplete.blocks.block.LogicBasePlateBlock;
 import name.turingcomplete.blocks.block.OmniDirectionalRedstoneBridgeBlock;
 import name.turingcomplete.init.BlockInit;
 import name.turingcomplete.init.PropertyInit;
@@ -21,5 +22,7 @@ public class BlockTint {
                 OmniDirectionalRedstoneBridgeBlock.getWireColor(state,tintIndex == 0 ? PropertyInit.POWER_X : PropertyInit.POWER_Z),
                 BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK
         );
+        registerer.register((state,world,pos,tintIndex)->LogicBasePlateBlock.getWireColor(state),
+        blockInit.LOGIC_BASE_PLATE_BLOCK);
     }
 }

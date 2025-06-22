@@ -3,7 +3,7 @@
 	"textures": {
 		"particle": "block/smooth_stone",
 		"slab": "block/smooth_stone",
-		"top": "turingcomplete:block/logic_base_plate"
+		"top": "turingcomplete:block/logic_plate/logic_base_plate_corner_lf"
 	},
 	"elements": [
 		{

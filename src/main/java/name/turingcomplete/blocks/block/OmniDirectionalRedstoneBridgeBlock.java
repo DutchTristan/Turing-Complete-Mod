@@ -16,8 +16,8 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
-    private static final IntProperty POWER_Z;
-    private static final IntProperty POWER_X;
+    static final IntProperty POWER_Z;
+    static final IntProperty POWER_X;
 
     private static final Vec3d[] COLORS;
 
@@ -58,6 +58,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
         }
     }
 
+    @Override
     protected void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
         if (!moved && !state.isOf(newState.getBlock())) {
             super.onStateReplaced(state, world, pos, newState, false);
@@ -192,52 +193,16 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
         // loop through queried directions
         for (Direction direction : directions) {
-            // get power source position
-            BlockPos blockPos = pos.offset(direction);
+            int j = world.getEmittedRedstonePower(pos.offset(direction), direction);
+            BlockState sender_block_state = world.getBlockState(pos.offset(direction));
+            if (sender_block_state.isOf(Blocks.REDSTONE_WIRE) || sender_block_state.isOf(blockInit.LOGIC_BASE_PLATE_BLOCK))
+                j = j-1;
 
-            // get power emitted from block at direction
-            int emitted_power = this.getEmittedStrongPower(world,blockPos, direction);
-
-            // if power is already at max, return early
-            if (emitted_power >= 15) return 15;
-
-            // else, check if it is bigger then the other power sources
-            else if (emitted_power > power) power = emitted_power;
+            if (j >= 15) return 15;
+            if (j > i) i = j;
         }
 
-        // return biggest power source
-        return power;
-    }
-
-    private int getEmittedStrongPower(World world, BlockPos pos, Direction direction){
-        // get source block
-        BlockState source = world.getBlockState(pos);
-
-        // if the block is solid, check surrounding blocks for strong powering
-        if (source.isSolidBlock(world,pos)){
-            int power = 0;
-            for(Direction sourceNeighbourDirection : DIRECTIONS){
-                BlockPos sourceNeighbourPosition = pos.offset(sourceNeighbourDirection);
-                BlockState sourceNeighbour = world.getBlockState(sourceNeighbourPosition);
-
-                // if block is a redstone wire, ignore it
-                if(sourceNeighbour.isOf(Blocks.REDSTONE_WIRE)) continue;
-
-                // else check if the received power is bigger than the current biggest
-                int neighbourPower = sourceNeighbour.getStrongRedstonePower(world,sourceNeighbourPosition,sourceNeighbourDirection);
-                if(neighbourPower > power) power = neighbourPower;
-            }
-
-            // return biggest power from nearby source
-            return power;
-
-        } // else:
-
-        // if blocks is a redstone wire, return it's power with a falloff
-        if (source.isOf(Blocks.REDSTONE_WIRE)) return source.getWeakRedstonePower(world,pos,direction) -1;
-
-        // else get weak power emitted from the block
-        return source.getWeakRedstonePower(world,pos,direction);
+        return i;
     }
 
     private int increasePower(BlockState state, Direction.Axis axis) {
@@ -268,7 +233,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
 
         BlockState block_to_power = world.getBlockState(pos.offset(direction.getOpposite()));
 
-        if (block_to_power.isOf(Blocks.REDSTONE_WIRE)){
+        if (block_to_power.isOf(Blocks.REDSTONE_WIRE) || block_to_power.isOf(blockInit.LOGIC_BASE_PLATE_BLOCK)){
             if (direction.getAxis() == Direction.Axis.X)
                 return state.get(POWER_X) -1;
             else if (direction.getAxis() == Direction.Axis.Z)
