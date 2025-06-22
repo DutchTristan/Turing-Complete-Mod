@@ -1,5 +1,4 @@
 {
-  "render_type": "cutout",
   "variants": {
     "facing=north,powered_z=false,powered_x=false,swapped_direction=false": {
       "model" : "turingcomplete:block/redstone_bridge/bi_directional_redstone_bridge_block", "y": 180

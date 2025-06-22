@@ -1,5 +1,4 @@
 {
-  "render_type": "cutout",
   "variants": {
     "facing=north,powered=false" : {
       "model" : "turingcomplete:block/xnor_gate_block_on", "y": 180

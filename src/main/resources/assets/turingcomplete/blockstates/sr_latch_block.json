@@ -1,5 +1,4 @@
 {
-  "render_type": "cutout",
   "variants": {
     "facing=north,powered=false,swapped_direction=false" : {
       "model" : "turingcomplete:block/sr_latch_block", "y": 180
