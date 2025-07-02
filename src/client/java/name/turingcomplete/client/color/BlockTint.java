@@ -22,7 +22,7 @@ public class BlockTint {
                 OmniDirectionalRedstoneBridgeBlock.getWireColor(state,tintIndex == 0 ? PropertyInit.POWER_X : PropertyInit.POWER_Z),
                 BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK
         );
-        registerer.register((state,world,pos,tintIndex)->LogicBasePlateBlock.getWireColor(state),
+        registerer.register((state,world,pos,tintIndex)->LogicBasePlateBlock.getWireColor(state.getBlock(),state),
         blockInit.LOGIC_BASE_PLATE_BLOCK);
     }
 }

@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks.block;
 
+import name.turingcomplete.blocks.AbstractLogicWire;
 import name.turingcomplete.blocks.AbstractSimpleLogicBlock;
 import name.turingcomplete.init.blockInit;
 import name.turingcomplete.init.propertyInit;
@@ -25,8 +26,8 @@ import net.minecraft.util.math.Direction.Axis;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class LogicBasePlateBlock extends AbstractSimpleLogicBlock {
-    private static final IntProperty POWER = propertyInit.POWER;
+public class LogicBasePlateBlock extends AbstractLogicWire {
+    //private static final IntProperty POWER = propertyInit.POWER;
     private static final BooleanProperty NORTH_DUST = BooleanProperty.of("north_dust");
     private static final BooleanProperty SOUTH_DUST = BooleanProperty.of("south_dust");
     private static final BooleanProperty EAST_DUST = BooleanProperty.of("east_dust");
@@ -42,6 +43,10 @@ public class LogicBasePlateBlock extends AbstractSimpleLogicBlock {
             colors[i] = new Vec3d(g, h, j);
         }
     });
+
+
+
+    /*
 
     //from OmniDirectionalRedstoneBridgeBlock
     private boolean wiresGivePower = true;
@@ -218,8 +223,12 @@ public class LogicBasePlateBlock extends AbstractSimpleLogicBlock {
         return state.get(POWER);
     }
 
-    public static int getWireColor(BlockState state) {
-        Vec3d vec3d = COLORS[state.get(POWER)];
+    */
+
+    public static int getWireColor(Block block, BlockState state) {
+        LogicBasePlateBlock thisBlock = (LogicBasePlateBlock)block;
+        //Vec3d vec3d = COLORS[state.get(POWER)];
+        Vec3d vec3d = COLORS[state.get(thisBlock.signalStrengthProperties.get(0))];
         return MathHelper.packRgb((float)vec3d.getX(), (float)vec3d.getY(), (float)vec3d.getZ());
     }
 
@@ -227,16 +236,18 @@ public class LogicBasePlateBlock extends AbstractSimpleLogicBlock {
         return state.get(getPropertyFromDirection(direction));
     }
 
+    
     public LogicBasePlateBlock(Settings settings) {
         super(settings);
 
         setDefaultState(getDefaultState()
-        .with(POWER, 0)
         .with(NORTH_DUST,false)
         .with(SOUTH_DUST,false)
         .with(EAST_DUST,false)
         .with(WEST_DUST,false));
     }
+
+    /*
 
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
@@ -255,6 +266,8 @@ public class LogicBasePlateBlock extends AbstractSimpleLogicBlock {
             this.update(world, pos, state);
         }
     }
+
+    */
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
@@ -321,9 +334,11 @@ public class LogicBasePlateBlock extends AbstractSimpleLogicBlock {
             }
         }
         world.setBlockState(pos,state.with(connectionProperty,!state.get(connectionProperty)));
+        world.updateNeighbor(pos, this, pos);
 
         return ActionResult.SUCCESS_NO_ITEM_USED;
     }
+
 
     private static BooleanProperty getPropertyFromDirection(Direction direction){
         switch (direction) {
@@ -343,7 +358,7 @@ public class LogicBasePlateBlock extends AbstractSimpleLogicBlock {
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(POWER);
+        //builder.add(POWER);
         builder.add(NORTH_DUST);
         builder.add(SOUTH_DUST);
         builder.add(EAST_DUST);
