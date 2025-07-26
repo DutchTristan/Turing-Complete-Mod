@@ -1,6 +1,7 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
+import name.turingcomplete.blocks.TruthTable;
 import name.turingcomplete.blocks.block.*;
 import name.turingcomplete.blocks.multiblock.Adder;
 import net.minecraft.block.AbstractBlock;
@@ -144,6 +145,14 @@ public class blockInit {
                     .pistonBehavior(PistonBehavior.DESTROY)
             )
     );
+
+
+    public static final TruthTable TRUTH_TABLE = registerWithItem("truth_table_block",
+            new TruthTable(Block.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+            ));
 
 
     public static <T extends Block> T register(String name, T block){

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "turingcomplete:block/truth_table"
+    }
+  }
+}
