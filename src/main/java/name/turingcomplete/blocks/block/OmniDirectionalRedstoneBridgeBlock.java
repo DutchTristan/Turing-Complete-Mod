@@ -1,6 +1,6 @@
 package name.turingcomplete.blocks.block;
 
-import name.turingcomplete.blocks.ConnectsToRedstone;
+import name.turingcomplete.blocks.AbstractLogicBlock;
 import name.turingcomplete.init.propertyInit;
 import net.minecraft.block.*;
 import net.minecraft.state.StateManager;
@@ -14,9 +14,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
 
-public class OmniDirectionalRedstoneBridgeBlock extends Block implements ConnectsToRedstone {
+public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicBlock {
     private static final IntProperty POWER_Z;
     private static final IntProperty POWER_X;
 
@@ -33,6 +32,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
     }
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
         builder.add(POWER_X,POWER_Z);
     }
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {
@@ -83,7 +83,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
         if (state.get(POWER_X) != received_x_power){
             // Update Block State (With State Check To Make Sure It Doesn't Update Other Blocks)
             if (world.getBlockState(pos) == state){
-                world.setBlockState(pos,state.with(POWER_X,received_x_power),2);
+                world.setBlockState(pos,state.with(POWER_X,received_x_power),Block.NOTIFY_LISTENERS);
             }
 
             // Update Blocks On The X Axis
@@ -95,7 +95,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
         if (state.get(POWER_Z) != received_z_power){
             // Update Block State (With State Check To Make Sure It Doesn't Update Other Blocks)
             if (world.getBlockState(pos) == state){
-                world.setBlockState(pos,state.with(POWER_Z,received_z_power),2);
+                world.setBlockState(pos,state.with(POWER_Z,received_z_power),Block.NOTIFY_LISTENERS);
             }
 
             // Update Blocks On The Z Axis
@@ -106,12 +106,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
     //
     private void updateNeighborsHorizontally(World world, BlockPos pos){
         for (Direction direction : Direction.Type.HORIZONTAL) {
-            if (world.getBlockState(pos.offset(direction)).isSolidBlock(world, pos.offset(direction))) {
-                this.updateNeighbors(world, pos.offset(direction).up());
-            } else {
-                this.updateNeighbors(world, pos.offset(direction));
-                this.updateNeighbors(world, pos.offset(direction).down());
-            }
+            this.updateNeighbors(world, pos.offset(direction));
         }
     }
 
@@ -133,6 +128,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
     }
 
     // On Neighbor Update
+    @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
         if (world.isClient) return;
 
@@ -146,6 +142,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
 
     //=============================================
 
+    @Override
     protected boolean emitsRedstonePower(BlockState state) {
         return this.wiresGivePower;
     }
@@ -181,7 +178,6 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
 
     private int getReceivedRedstonePower(World world, BlockPos pos, Direction.Axis axis) {
         int i = 0;
-
         Direction[] directions = new Direction[]{};
         if (axis == Direction.Axis.X) directions = new Direction[]{Direction.EAST, Direction.WEST};
         if (axis == Direction.Axis.Z) directions = new Direction[]{Direction.NORTH, Direction.SOUTH};
@@ -189,7 +185,7 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
         for (Direction direction : directions) {
             int j = world.getEmittedRedstonePower(pos.offset(direction), direction);
             if (world.getBlockState(pos.offset(direction)).isOf(Blocks.REDSTONE_WIRE))
-                j = Math.max(0, j - 1);
+                j = j-1;
 
             if (j >= 15) return 15;
             if (j > i) i = j;
@@ -209,24 +205,17 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
         return 0;
     }
 
-    @Override
-    protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        BlockPos blockPos = pos.down();
-        return this.canPlaceAbove(world, blockPos, world.getBlockState(blockPos));
-    }
-
-    protected boolean canPlaceAbove(WorldView world, BlockPos pos, BlockState state) {
-        return state.isSideSolid(world, pos, Direction.UP, SideShapeType.RIGID);
-    }
-
     public static int getWireColor(BlockState state, IntProperty property) {
         Vec3d vec3d = COLORS[state.get(property)];
         return MathHelper.packRgb((float)vec3d.getX(), (float)vec3d.getY(), (float)vec3d.getZ());
     }
 
+    @Override
     protected int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
         return this.wiresGivePower ? state.getWeakRedstonePower(world, pos, direction) : 0;
     }
+
+    @Override
     protected int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
         // If The Block Doesn't Give Power, Return 0
         if (!this.wiresGivePower) return 0;
@@ -242,9 +231,13 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
 
         // Returns Respective Power Levels
         if (direction.getAxis() == Direction.Axis.X)
+        {
             return state.get(POWER_X);
+        }
         else if (direction.getAxis() == Direction.Axis.Z)
+        {
             return state.get(POWER_Z);
+        }
 
         // Returns Zero By Default
         return 0;
@@ -253,6 +246,11 @@ public class OmniDirectionalRedstoneBridgeBlock extends Block implements Connect
     @Override
     public Boolean dustConnectsToThis(BlockState state, Direction di) {
         return true;
+    }
+
+    @Override
+    public boolean isDirectional(){
+        return false;
     }
 
     static {

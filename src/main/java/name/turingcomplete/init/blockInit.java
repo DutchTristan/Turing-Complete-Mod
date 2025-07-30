@@ -1,9 +1,9 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
+import name.turingcomplete.blocks.truthtable.TruthTable;
 import name.turingcomplete.blocks.block.*;
-import name.turingcomplete.blocks.multiblock.Full_Adder;
-import name.turingcomplete.blocks.multiblock.Half_Adder;
+import name.turingcomplete.blocks.multiblock.Adder;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.piston.PistonBehavior;
@@ -14,97 +14,99 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 
 public class blockInit {
-    public static final NAND_Gate_Block NAND_GATE = registerWithItem("nand_gate_block",
-            new NAND_Gate_Block(AbstractBlock.Settings.create()
+    public static final NANDGateBlock NAND_GATE = registerWithItem("nand_gate_block",
+            new NANDGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
 
-    public static final NOT_Gate_Block NOT_GATE = registerWithItem("not_gate_block",
-            new NOT_Gate_Block(AbstractBlock.Settings.create()
+    public static final NOTGateBlock NOT_GATE = registerWithItem("not_gate_block",
+            new NOTGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final AND_Gate_Block AND_GATE = registerWithItem("and_gate_block",
-            new AND_Gate_Block(AbstractBlock.Settings.create()
+    public static final ANDGateBlock AND_GATE = registerWithItem("and_gate_block",
+            new ANDGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final Logic_Base_Plate_Block LOGIC_BASE_PLATE_BLOCK = registerWithItem("logic_base_plate_block",
-            new Logic_Base_Plate_Block(Block.Settings.create()
+    public static final LogicBasePlateBlock LOGIC_BASE_PLATE_BLOCK = registerWithItem("logic_base_plate_block",
+            new LogicBasePlateBlock(Block.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)
             ));
 
-    public static final OR_Gate_Block OR_GATE = registerWithItem("or_gate_block",
-            new OR_Gate_Block(AbstractBlock.Settings.create()
+    public static final ORGateBlock OR_GATE = registerWithItem("or_gate_block",
+            new ORGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final NOR_Gate_Block NOR_GATE = registerWithItem("nor_gate_block",
-            new NOR_Gate_Block(AbstractBlock.Settings.create()
+    public static final NORGateBlock NOR_GATE = registerWithItem("nor_gate_block",
+            new NORGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final XNOR_Gate_Block XNOR_GATE = registerWithItem("xnor_gate_block",
-            new XNOR_Gate_Block(AbstractBlock.Settings.create()
+    public static final XNORGateBlock XNOR_GATE = registerWithItem("xnor_gate_block",
+            new XNORGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final XOR_Gate_Block XOR_GATE = registerWithItem("xor_gate_block",
-            new XOR_Gate_Block(AbstractBlock.Settings.create()
-                    .breakInstantly()
-                    .sounds(BlockSoundGroup.STONE)
-                    .pistonBehavior(PistonBehavior.DESTROY)));
-
-    //===============================================================================================
-
-    public static final THREE_AND_Gate_Block THREE_AND_GATE = registerWithItem("3and_gate_block",
-            new THREE_AND_Gate_Block(AbstractBlock.Settings.create()
-                    .breakInstantly()
-                    .sounds(BlockSoundGroup.STONE)
-                    .pistonBehavior(PistonBehavior.DESTROY)));
-
-    public static final THREE_OR_Gate_Block THREE_OR_GATE = registerWithItem("3or_gate_block",
-            new THREE_OR_Gate_Block(AbstractBlock.Settings.create()
+    public static final XORGateBlock XOR_GATE = registerWithItem("xor_gate_block",
+            new XORGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
     //===============================================================================================
 
-    public static final SWITCH_Gate_Block SWITCH_GATE = registerWithItem("switch_gate_block",
-            new SWITCH_Gate_Block(AbstractBlock.Settings.create()
+    public static final ThreeANDGateBlock THREE_AND_GATE = registerWithItem("3and_gate_block",
+            new ThreeANDGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final MEMORY_Cell_Block MEMORY_CELL = registerWithItem("memory_cell_gate",
-            new MEMORY_Cell_Block(AbstractBlock.Settings.create()
+    public static final ThreeORGateBlock THREE_OR_GATE = registerWithItem("3or_gate_block",
+            new ThreeORGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
     //===============================================================================================
 
-    public static final Half_Adder HALF_ADDER = registerWithItem("half_adder",
-            new Half_Adder(AbstractBlock.Settings.create()
+    public static final SwitchGateBlock SWITCH_GATE = registerWithItem("switch_gate_block",
+            new SwitchGateBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final Full_Adder FULL_ADDER = registerWithItem("full_adder",
-            new Full_Adder(AbstractBlock.Settings.create()
+    public static final MemoryCellBlock MEMORY_CELL = registerWithItem("memory_cell_gate",
+            new MemoryCellBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
+
+    //===============================================================================================
+
+    public static final Adder HALF_ADDER = registerWithItem("half_adder",
+            new Adder(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY),
+                    false));
+
+    public static final Adder FULL_ADDER = registerWithItem("full_adder",
+            new Adder(AbstractBlock.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY),
+                    true));
 
     public static final BiDirectionalRedstoneBridgeBlock BI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK = registerWithItem("bi_directional_redstone_bridge_block",
             new BiDirectionalRedstoneBridgeBlock(AbstractBlock.Settings.create()
@@ -120,29 +122,37 @@ public class blockInit {
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)));
 
-    public static final SR_LATCH_Block SR_LATCH_BLOCK = registerWithItem("sr_latch_block",
-            new SR_LATCH_Block(AbstractBlock.Settings.create()
+    public static final SRLatchBlock SR_LATCH_BLOCK = registerWithItem("sr_latch_block",
+            new SRLatchBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)
             )
     );
 
-    public static final JK_LATCH_Block JK_LATCH_BLOCK = registerWithItem("jk_latch_block",
-            new JK_LATCH_Block(AbstractBlock.Settings.create()
+    public static final JKLatchBlock JK_LATCH_BLOCK = registerWithItem("jk_latch_block",
+            new JKLatchBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)
             )
     );
 
-    public static final T_LATCH_Block T_LATCH_BLOCK = registerWithItem("t_latch_block",
-            new T_LATCH_Block(AbstractBlock.Settings.create()
+    public static final TLatchBlock T_LATCH_BLOCK = registerWithItem("t_latch_block",
+            new TLatchBlock(AbstractBlock.Settings.create()
                     .breakInstantly()
                     .sounds(BlockSoundGroup.STONE)
                     .pistonBehavior(PistonBehavior.DESTROY)
             )
     );
+
+
+    public static final TruthTable TRUTH_TABLE = registerWithItem("truth_table_block",
+            new TruthTable(Block.Settings.create()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.STONE)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+            ));
 
 
     public static <T extends Block> T register(String name, T block){

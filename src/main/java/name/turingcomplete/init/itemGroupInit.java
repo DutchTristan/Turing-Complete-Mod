@@ -35,6 +35,7 @@ public class itemGroupInit {
                 entries.add(blockInit.SR_LATCH_BLOCK);
                 entries.add(blockInit.JK_LATCH_BLOCK);
                 entries.add(blockInit.T_LATCH_BLOCK);
+                entries.add(blockInit.TRUTH_TABLE);
             })
             .build());
 
