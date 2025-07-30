@@ -78,7 +78,7 @@ public abstract class AbstractLogicWire extends AbstractSimpleLogicBlock {
 
     protected Optional<Integer> getConnectedSignalStrength(BlockPos pos, BlockState state, BlockPos connectedPos){
         if(signalCount(state)!=1){
-            throw new IllegalStateException("incorrect implementation of AbstractLogicWire: signalCountor maxSignalCount was overriden, but getConnectedSignalStrength was not");
+            throw new IllegalStateException("incorrect implementation of AbstractLogicWire: signalCount or maxSignalCount was overriden, but getConnectedSignalStrength was not");
         }
         for(Direction fromConnectedDirection: Direction.Type.HORIZONTAL){
             if((connectedPos.offset(fromConnectedDirection)).equals(pos)){

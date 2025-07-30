@@ -3,7 +3,6 @@ package name.turingcomplete.client.color;
 import name.turingcomplete.blocks.block.LogicBasePlateBlock;
 import name.turingcomplete.blocks.block.OmniDirectionalRedstoneBridgeBlock;
 import name.turingcomplete.init.BlockInit;
-import name.turingcomplete.init.PropertyInit;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
@@ -19,10 +18,10 @@ public class BlockTint {
     public static void create() {
         ColorProviderRegistry<Block, BlockColorProvider> registerer = ColorProviderRegistry.BLOCK;
         registerer.register((state, world, pos, tintIndex) ->
-                OmniDirectionalRedstoneBridgeBlock.getWireColor(state,tintIndex == 0 ? PropertyInit.POWER_X : PropertyInit.POWER_Z),
+                OmniDirectionalRedstoneBridgeBlock.getWireColor(state,tintIndex),
                 BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK
         );
         registerer.register((state,world,pos,tintIndex)->LogicBasePlateBlock.getWireColor(state.getBlock(),state),
-        blockInit.LOGIC_BASE_PLATE_BLOCK);
+        BlockInit.LOGIC_BASE_PLATE_BLOCK);
     }
 }

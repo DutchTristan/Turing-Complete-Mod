@@ -1,7 +1,6 @@
 package name.turingcomplete.blocks.block;
 
-import com.mojang.logging.LogUtils;
-
+import name.turingcomplete.TuringComplete;
 import name.turingcomplete.blocks.logicwire.AbstractLogicWire;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -58,28 +57,6 @@ public class LogicBasePlateBlock extends AbstractLogicWire {
         .with(EAST_DUST,false)
         .with(WEST_DUST,false));
     }
-
-    /*
-
-    @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if(!state.canPlaceAt(world,pos)){
-            BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-            dropStacks(state, world, pos, blockEntity);
-
-            world.removeBlock(pos, false);
-
-            for (Direction direction : DIRECTIONS)
-                world.updateNeighborsAlways(pos.offset(direction), this);
-
-        }
-        else {
-            //From OmniDirectionalRedstoneBridgeBlock
-            this.update(world, pos, state);
-        }
-    }
-
-    */
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
@@ -146,7 +123,7 @@ public class LogicBasePlateBlock extends AbstractLogicWire {
             }
         }
         world.setBlockState(pos,state.with(connectionProperty,!state.get(connectionProperty)));
-        LogUtils.getLogger().warn("queueing update for "+pos+" for onUse");
+        TuringComplete.LOGGER.trace("queueing update for "+pos+" for onUse");
         world.updateNeighbor(pos, this, pos);
 
         return ActionResult.SUCCESS_NO_ITEM_USED;

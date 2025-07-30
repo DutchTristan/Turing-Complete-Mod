@@ -1,8 +1,7 @@
 package name.turingcomplete.blocks.logicwire;
 import java.util.Optional;
 
-import com.mojang.logging.LogUtils;
-
+import name.turingcomplete.TuringComplete;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
@@ -11,11 +10,11 @@ import net.minecraft.world.World;
 
 public class VanillaWireUpdateStrategy extends WireUpdateStrategy{
     public void onNeighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        LogUtils.getLogger().warn("wire updated at "+pos+" from "+sourcePos);
+        TuringComplete.LOGGER.trace("wire updated at "+pos+" from "+sourcePos);
         Block block = state.getBlock();
         Optional<LogicWireAdapter<? extends Block>> maybeAdapter = getAdapter(block);
         if(maybeAdapter.isEmpty()){
-            LogUtils.getLogger().error("attempt to use VanillaWireUpdateStrategy on non-wire block "+block+" (at "+pos+")");
+            TuringComplete.LOGGER.error("attempt to use VanillaWireUpdateStrategy on non-wire block "+block+" (at "+pos+")");
             return;
         }
         LogicWireAdapter<? extends Block> adapter = maybeAdapter.get();
@@ -44,7 +43,7 @@ public class VanillaWireUpdateStrategy extends WireUpdateStrategy{
                 }
             }
             if(oldStrength != newStrength) {
-                LogUtils.getLogger().warn("signal "+signalIndex+" changed from "+oldStrength+" to "+newStrength);
+                TuringComplete.LOGGER.trace("signal "+signalIndex+" changed from "+oldStrength+" to "+newStrength);
                 world.setBlockState(pos, state.with(adapter.getSignalProperty(world,state,signalIndex),newStrength),Block.NOTIFY_LISTENERS);
                 for(BlockPos connectedPos: adapter.getConnectedBlocks(world, pos, state, signalIndex)){
                     world.updateNeighbor(connectedPos, state.getBlock(), pos);

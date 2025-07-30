@@ -75,7 +75,7 @@ abstract class LogicWireAdapter<Block extends net.minecraft.block.Block> {
         public int getSignalCount(BlockState state) {
             net.minecraft.block.Block block = state.getBlock();
             if(!(block == Blocks.REDSTONE_WIRE)) {
-                throw new IllegalArgumentException("Attempt to use Trivial LogicWireAdapter not on AbstractLogicWire");
+                throw new IllegalArgumentException("Attempt to use RedstoneAdapter not on redstone dust");
             }
             return 1;
         }
@@ -84,7 +84,7 @@ abstract class LogicWireAdapter<Block extends net.minecraft.block.Block> {
         public IntProperty getSignalProperty(World world, BlockState state, int signalIndex) {
             net.minecraft.block.Block block = state.getBlock();
             if(!(block == Blocks.REDSTONE_WIRE)) {
-                throw new IllegalArgumentException("Attempt to use Trivial LogicWireAdapter not on AbstractLogicWire");
+                throw new IllegalArgumentException("Attempt to use RedstoneAdapter not on redstone dust");
             }
             else if(signalIndex == 0){
                 return RedstoneWireBlock.POWER;
@@ -98,7 +98,7 @@ abstract class LogicWireAdapter<Block extends net.minecraft.block.Block> {
         public Optional<Integer> getConnectedSignalStrength(World world, BlockPos pos, BlockState state, BlockPos connectedPos) {
             net.minecraft.block.Block block = state.getBlock();
             if(!(block == Blocks.REDSTONE_WIRE)) {
-                throw new IllegalArgumentException("Attempt to use Trivial LogicWireAdapter not on AbstractLogicWire");
+                throw new IllegalArgumentException("Attempt to use RedstoneAdapter not on redstone dust");
             }
             if(getConnectedBlocks(world, pos, state, 0).contains(connectedPos)){
                 return Optional.of(state.get(RedstoneWireBlock.POWER));
@@ -112,7 +112,7 @@ abstract class LogicWireAdapter<Block extends net.minecraft.block.Block> {
         public List<BlockPos> getConnectedBlocks(World world, BlockPos pos, BlockState state, int signalIndex) {
             net.minecraft.block.Block block = state.getBlock();
             if(!(block == Blocks.REDSTONE_WIRE)) {
-                throw new IllegalArgumentException("Attempt to use Trivial LogicWireAdapter not on AbstractLogicWire");
+                throw new IllegalArgumentException("Attempt to use RedstoneAdapter not on redstone dust");
             }
 
              List<BlockPos> positions = new ArrayList<>(4);
