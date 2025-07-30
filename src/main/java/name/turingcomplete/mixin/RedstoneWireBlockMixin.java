@@ -2,9 +2,12 @@ package name.turingcomplete.mixin;
 
 import name.turingcomplete.blocks.ConnectsToRedstone;
 import name.turingcomplete.init.BlockInit;
+import name.turingcomplete.blocks.logicwire.AbstractLogicWire;
+import name.turingcomplete.blocks.logicwire.OnePassWireUpdateStrategy;
 import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
 import org.spongepowered.asm.mixin.Mixin;
 
 import org.spongepowered.asm.mixin.Unique;
@@ -13,7 +16,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 
 @Mixin(RedstoneWireBlock.class)
 public class RedstoneWireBlockMixin {
@@ -70,7 +80,7 @@ public class RedstoneWireBlockMixin {
                 BlockState sourceNeighbour = world.getBlockState(sourceNeighbourPosition);
 
                 // if block is a redstone wire, ignore it
-                if(sourceNeighbour.isOf(BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK)) continue;
+                if(sourceNeighbour.getBlock() instanceof AbstractLogicWire) continue;
 
                 // else check if the received power is bigger than the current biggest
                 int neighbourPower = sourceNeighbour.getStrongRedstonePower(world,sourceNeighbourPosition,sourceNeighbourDirection);
@@ -83,9 +93,17 @@ public class RedstoneWireBlockMixin {
         } // else:
 
         // if blocks is a redstone wire, return it's power with a falloff
-        if (source.isOf(BlockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK)) return source.getWeakRedstonePower(world,pos,direction) -1;
+        if (source.getBlock() instanceof AbstractLogicWire) return source.getWeakRedstonePower(world,pos,direction) -1;
 
         // else get weak power emitted from the block
         return source.getWeakRedstonePower(world,pos,direction);
+    }
+
+    @WrapOperation(
+        method = "neighborUpdate(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/Block;Lnet/minecraft/util/math/BlockPos;Z)V",
+        at = @At(value = "invoke", target = "Lnet/minecraft/block/RedstoneWireBlock;update(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V")
+    )
+    private void update_neighborUpdate_tcd_mixin(RedstoneWireBlock instance, World world, BlockPos pos, BlockState state, Operation<Void> original, BlockState stateAgain, World worldAgain, BlockPos posAgain, Block sourceBlock, BlockPos sourcePos, boolean notify){
+        new OnePassWireUpdateStrategy().onNeighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
     }
 }
