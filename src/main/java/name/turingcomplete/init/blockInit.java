@@ -1,7 +1,7 @@
 package name.turingcomplete.init;
 
 import name.turingcomplete.TuringComplete;
-import name.turingcomplete.blocks.TruthTable;
+import name.turingcomplete.blocks.truthtable.TruthTable;
 import name.turingcomplete.blocks.block.*;
 import name.turingcomplete.blocks.multiblock.Adder;
 import net.minecraft.block.AbstractBlock;

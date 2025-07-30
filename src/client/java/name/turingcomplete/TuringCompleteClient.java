@@ -1,9 +1,12 @@
 package name.turingcomplete;
 
+import name.turingcomplete.blocks.truthtable.TruthTableScreenHandler;
+import name.turingcomplete.client.screen.TruthTableScreen;
 import name.turingcomplete.color.BlockTint;
 import name.turingcomplete.init.blockInit;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.RenderLayer;
 
 public class TuringCompleteClient implements ClientModInitializer {
@@ -18,5 +21,7 @@ public class TuringCompleteClient implements ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlock(blockInit.OMNI_DIRECTIONAL_REDSTONE_BRIDGE_BLOCK,RenderLayer.getTranslucent());
 
 		BlockTint.create();
+
+		HandledScreens.register(TruthTableScreenHandler.TYPE, TruthTableScreen::new);
 	}
 }
