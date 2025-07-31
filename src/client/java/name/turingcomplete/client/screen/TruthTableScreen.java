@@ -12,19 +12,19 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
-    private static final Identifier TEXTURE = Identifier.of(TuringComplete.MOD_ID, "textures/gui/truth_table.png");
+    private static final Identifier TEXTURE = Identifier.of(TuringComplete.MOD_ID, "textures/gui/container/truth_table.png");
 
     public TruthTableScreen(TruthTableScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
-        this.backgroundWidth = 176;
-        this.backgroundHeight = 166;
+        this.backgroundWidth = 320;
+        this.backgroundHeight = 192;
     }
 
     @Override
     protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
         int x = (this.width - this.backgroundWidth) / 2;
         int y = (this.height - this.backgroundHeight) / 2;
-        context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
+        context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
     }
 
     @Override

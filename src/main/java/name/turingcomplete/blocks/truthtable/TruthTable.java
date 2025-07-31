@@ -22,7 +22,6 @@ public class TruthTable extends BlockWithEntity {
 
     @Override
     protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        System.out.println("Truth Table block used!");
         if (!world.isClient) {
             player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
         }

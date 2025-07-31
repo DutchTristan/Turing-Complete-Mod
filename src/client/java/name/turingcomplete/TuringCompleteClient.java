@@ -1,6 +1,6 @@
 package name.turingcomplete;
 
-import name.turingcomplete.blocks.truthtable.TruthTableScreenHandler;
+import name.turingcomplete.init.screenHandlerInit;
 import name.turingcomplete.client.screen.TruthTableScreen;
 import name.turingcomplete.color.BlockTint;
 import name.turingcomplete.init.blockInit;
@@ -22,6 +22,6 @@ public class TuringCompleteClient implements ClientModInitializer {
 
 		BlockTint.create();
 
-		HandledScreens.register(TruthTableScreenHandler.TYPE, TruthTableScreen::new);
+		HandledScreens.register(screenHandlerInit.TRUTH_TABLE, TruthTableScreen::new);
 	}
 }
