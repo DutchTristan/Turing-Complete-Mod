@@ -1,5 +1,6 @@
 package name.turingcomplete.blocks.truthtable;
 
+import name.turingcomplete.init.blockInit;
 import name.turingcomplete.init.screenHandlerInit;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -7,16 +8,29 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.RecipeInputInventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.CraftingResultSlot;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 public class TruthTableScreenHandler extends ScreenHandler {
     private final RecipeInputInventory input;
     private final Inventory result;
 
     public static ScreenHandlerType<TruthTableScreenHandler> TYPE;
+    // List of rules for each input slot for the GUI. Items listed here are allowed in the slots.
+    // Example to add multiple items to one slot: stack -> stack.isOf(Items.item1) || stack.isOf(Items.item2)
+    private static final List<Predicate<ItemStack>> INPUT_RULES = List.of(
+            stack -> stack.isOf(blockInit.LOGIC_BASE_PLATE_BLOCK.asItem()),
+            stack -> stack.isOf(Items.REDSTONE),
+            stack -> stack.isOf(Items.REDSTONE_TORCH),
+            stack -> false,
+            stack -> false
+    );
 
     public TruthTableScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, new TruthTableInputInventory(), new SimpleInventory(1));
@@ -27,20 +41,45 @@ public class TruthTableScreenHandler extends ScreenHandler {
         this.input = input;
         this.result = result;
 
-        for(int i = 0; i < 5; i++){
-            this.addSlot(new Slot(input,i,20 + i * 18,20));
+        // Input slots for crafting
+        for (int i = 0; i < INPUT_RULES.size(); i++){
+            Predicate<ItemStack> rule = INPUT_RULES.get(i);
+            int startX;
+            int startY;
+
+            if (i < 3) {
+                startX = 148;
+                startY = 21;
+            }
+            else {
+                startX = 103; // 157 - 3*18
+                startY = 39;
+            }
+            this.addSlot(new Slot(input, i, startX + i * 18, startY){
+                @Override
+                public boolean canInsert(ItemStack stack){
+                    return rule.test(stack);
+                }
+            });
         }
+        
+        // Output slot
+        this.addSlot(new CraftingResultSlot(playerInventory.player, input, result, 0, 247, 30));
 
-        this.addSlot(new CraftingResultSlot(playerInventory.player, input, result, 0, 124, 35));
-
+        // Player inventory
+        int invOffsetX = 126;
+        int invOffsetY = 74;
         for (int row = 0; row < 3; ++row){
             for (int col = 0; col < 9; ++col){
-                this.addSlot(new Slot(playerInventory, col + row * 9 + 9, 8 + col * 18, 84 + row * 18));
+                this.addSlot(new Slot(playerInventory, col + row * 9 + 9, invOffsetX + col * 18, invOffsetY + row * 18));
             }
         }
 
+        // Hotbar
+        int hotbarOffsetX = 126;
+        int hotbarOffsetY = 132;
         for (int col = 0; col < 9; ++col){
-            this.addSlot(new Slot(playerInventory, col, 8 + col * 18, 142));
+            this.addSlot(new Slot(playerInventory, col, hotbarOffsetX + col * 18, hotbarOffsetY));
         }
     }
 
