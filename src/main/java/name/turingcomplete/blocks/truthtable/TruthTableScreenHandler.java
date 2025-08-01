@@ -14,6 +14,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.CraftingResultSlot;
 
+import java.awt.*;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -28,8 +29,13 @@ public class TruthTableScreenHandler extends ScreenHandler {
             stack -> stack.isOf(blockInit.LOGIC_BASE_PLATE_BLOCK.asItem()),
             stack -> stack.isOf(Items.REDSTONE),
             stack -> stack.isOf(Items.REDSTONE_TORCH),
-            stack -> false,
             stack -> false
+    );
+    private static final List<Point> SLOT_POSITIONS = List.of(
+            new Point(144, 30),  // slot 0 - top-left
+            new Point(162, 21),  // slot 1 - center
+            new Point(180, 30),  // slot 2 - top-right
+            new Point(162, 39)   // slot 3 - bottom-center
     );
 
     public TruthTableScreenHandler(int syncId, PlayerInventory playerInventory) {
@@ -44,18 +50,11 @@ public class TruthTableScreenHandler extends ScreenHandler {
         // Input slots for crafting
         for (int i = 0; i < INPUT_RULES.size(); i++){
             Predicate<ItemStack> rule = INPUT_RULES.get(i);
-            int startX;
-            int startY;
+            Point pos = SLOT_POSITIONS.get(i);
+            int startX = pos.x;
+            int startY = pos.y;
 
-            if (i < 3) {
-                startX = 148;
-                startY = 21;
-            }
-            else {
-                startX = 103; // 157 - 3*18
-                startY = 39;
-            }
-            this.addSlot(new Slot(input, i, startX + i * 18, startY){
+            this.addSlot(new Slot(input, i, startX, startY){
                 @Override
                 public boolean canInsert(ItemStack stack){
                     return rule.test(stack);
@@ -64,7 +63,7 @@ public class TruthTableScreenHandler extends ScreenHandler {
         }
         
         // Output slot
-        this.addSlot(new CraftingResultSlot(playerInventory.player, input, result, 0, 247, 30));
+        this.addSlot(new CraftingResultSlot(playerInventory.player, input, result, 0, 243, 30));
 
         // Player inventory
         int invOffsetX = 126;
@@ -110,9 +109,9 @@ public class TruthTableScreenHandler extends ScreenHandler {
         moved = original.copy();
 
         final int INPUT_START = 0;
-        final int INPUT_END   = 5;   // exclusive: slots 0–4 are inputs
-        final int RESULT_SLOT = 5;   // slot 5 is the crafting result
-        final int PLAYER_START= 6;   // slot 6 is first player-inventory slot
+        final int INPUT_END   = 4;   // exclusive: slots 0–4 are inputs
+        final int RESULT_SLOT = 4;   // slot 5 is the crafting result
+        final int PLAYER_START= 5;   // slot 6 is first player-inventory slot
         final int PLAYER_END  = PLAYER_START + 27 + 9; // 27 inv + 9 hotbar = 42 total
 
         if (slot == RESULT_SLOT) {
