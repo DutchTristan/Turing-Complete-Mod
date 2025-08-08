@@ -13,6 +13,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.CraftingResultSlot;
+import net.minecraft.village.TradeOfferList;
 
 import java.awt.*;
 import java.util.List;
@@ -109,9 +110,9 @@ public class TruthTableScreenHandler extends ScreenHandler {
         moved = original.copy();
 
         final int INPUT_START = 0;
-        final int INPUT_END   = 4;   // exclusive: slots 0–4 are inputs
-        final int RESULT_SLOT = 4;   // slot 5 is the crafting result
-        final int PLAYER_START= 5;   // slot 6 is first player-inventory slot
+        final int INPUT_END   = 4;   // exclusive: slots 0–3 are inputs
+        final int RESULT_SLOT = 4;   // slot 4 is the crafting result
+        final int PLAYER_START= 5;   // slot 5 is first player-inventory slot
         final int PLAYER_END  = PLAYER_START + 27 + 9; // 27 inv + 9 hotbar = 42 total
 
         if (slot == RESULT_SLOT) {
@@ -147,6 +148,10 @@ public class TruthTableScreenHandler extends ScreenHandler {
     @Override
     public boolean canUse(PlayerEntity player) {
         return true;
+    }
+
+    public TradeOfferList getRecipes(){
+        return new TradeOfferList();
     }
 
     public Inventory getInput(){
