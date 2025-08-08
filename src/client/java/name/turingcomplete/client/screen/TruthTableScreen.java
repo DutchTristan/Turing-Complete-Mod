@@ -41,18 +41,19 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
     private void renderScrollbar (DrawContext context, int x, int y, TradeOfferList offerList){
         int i = offerList.size() + 1 - 7;
         if (i > 1){
+            // Not yet fixed to match expected results. There are no recipes yet,
+            // so this if statement is never entered until there are.
             int j = 139 - (27 + (i - 1) * 139 / i);
             int k = 1 + j / i + 139 / i;
             int m = Math.min(113, this.indexStartOffset * k);
             if (this.indexStartOffset == i - 1) {
                 m = 113;
             }
-            context.drawGuiTexture(SCROLL_BAR,x+106, y+20+m, 0, 6, 27);
+            // Does match proper values, ignoring m, that likely needs tweaking
+            context.drawGuiTexture(SCROLL_BAR,x+106, y+7+m, 0, 6, 27);
         } else {
             context.drawGuiTexture(SCROLL_BAR_DISABLED,x+106, y+7, 0, 6, 27);
         }
-
-
     }
 
     @Override
