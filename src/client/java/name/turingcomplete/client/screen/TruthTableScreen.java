@@ -36,6 +36,8 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
     protected void init(){
         super.init();
         this.titleX = (backgroundWidth - this.textRenderer.getWidth(this.title)) / 2;
+        this.playerInventoryTitleX = this.titleX;
+        this.playerInventoryTitleY = (this.playerInventoryTitleY - 10);
     }
 
     private void renderScrollbar (DrawContext context, int x, int y, TradeOfferList offerList){
