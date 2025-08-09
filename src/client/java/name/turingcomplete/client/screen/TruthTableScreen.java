@@ -7,13 +7,25 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.village.TradeOfferList;
 
+import java.awt.*;
+import java.util.List;
+
+import static name.turingcomplete.blocks.truthtable.TruthTableScreenHandler.SLOT_POSITIONS;
+
 @Environment(EnvType.CLIENT)
 public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
     private static final Identifier TEXTURE = Identifier.of(TuringComplete.MOD_ID, "textures/gui/container/truth_table.png");
+    private static final List<Identifier> SLOT_TEXTURES = List.of(
+            Identifier.of(TuringComplete.MOD_ID, "textures/gui/container/tr_ta_base_plate_icon.png"),
+            Identifier.of(TuringComplete.MOD_ID, "textures/gui/container/tr_ta_redstone_icon.png"),
+            Identifier.of(TuringComplete.MOD_ID, "textures/gui/container/tr_ta_torch_icon.png"),
+            Identifier.of(TuringComplete.MOD_ID, "textures/gui/container/tr_ta_upgrade_icon.png")
+    );
     private static final Identifier SCROLL_BAR = Identifier.ofVanilla("container/villager/scroller");
     private static final Identifier SCROLL_BAR_DISABLED = Identifier.ofVanilla("container/villager/scroller_disabled");
     int indexStartOffset;
@@ -30,6 +42,21 @@ public class TruthTableScreen extends HandledScreen<TruthTableScreenHandler> {
         int x = (this.width - this.backgroundWidth) / 2;
         int y = (this.height - this.backgroundHeight) / 2;
         context.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight, backgroundWidth, backgroundHeight);
+
+        for (int i = 0; i < SLOT_POSITIONS.size(); i++){
+            Slot slot = this.handler.slots.get(i);
+
+            Point p = SLOT_POSITIONS.get(i);
+            int m = x + p.x;
+            int n = y + p.y;
+
+            if (!slot.hasStack()){
+                Identifier bgTex = SLOT_TEXTURES.get(i);
+                if (bgTex != null){
+                    context.drawTexture(bgTex, m, n, 0, 0, 16, 16, 16, 16);
+                }
+            }
+        }
     }
 
     @Override
