@@ -40,10 +40,10 @@ public class SRLatchBlock extends AbstractSimpleGate {
 
 
     protected RelativeSide getSetDirection(BlockState state){
-        return state.get(MIRRORED) ? RelativeSide.LEFT : RelativeSide.RIGHT;
+        return state.get(MIRRORED) ? RelativeSide.RIGHT : RelativeSide.LEFT;
     }
 
     protected RelativeSide getResetDirection(BlockState state){
-        return state.get(MIRRORED) ? RelativeSide.RIGHT : RelativeSide.LEFT;
+        return state.get(MIRRORED) ? RelativeSide.LEFT : RelativeSide.RIGHT;
     }
 }
