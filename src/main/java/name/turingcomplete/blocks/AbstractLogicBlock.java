@@ -153,7 +153,7 @@ public abstract class AbstractLogicBlock extends HorizontalFacingBlock implement
     @Override
     @MustBeInvokedByOverriders
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (!canPlaceAt(state,world, pos)) {
+        if (!state.canPlaceAt(world, pos)) {
             world.breakBlock(pos, true);
 
             for (Direction direction : DIRECTIONS)

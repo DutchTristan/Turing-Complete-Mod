@@ -27,7 +27,7 @@ public class LogicBasePlateBlock extends HorizontalFacingBlock {
 
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if(!canPlaceAt(state,world,pos)){
+        if(!state.canPlaceAt(world,pos)){
             BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
             dropStacks(state, world, pos, blockEntity);
 
