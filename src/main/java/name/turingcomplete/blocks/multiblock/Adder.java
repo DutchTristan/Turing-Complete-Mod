@@ -9,6 +9,7 @@ import name.turingcomplete.TuringComplete;
 import name.turingcomplete.blocks.AbstractLogicMultiblock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
@@ -24,6 +25,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.tick.TickPriority;
 
 public final class Adder extends AbstractLogicMultiblock{
@@ -351,8 +353,12 @@ public final class Adder extends AbstractLogicMultiblock{
         if (
             !canPlaceAt(mainState, world, mainPos) ||
             !canPlaceAt(bState, world, bPos) ||
-            !canPlaceAt(aState, world, aPos)
+            !canPlaceAt(aState, world, aPos) ||
+            //canPlaceAt assumes position is not occupied, but that is only known true for mainPos
+            world.getBlockState(aPos).getBlock() != Blocks.AIR ||
+            world.getBlockState(bPos).getBlock() != Blocks.AIR
         ) {
+            //returning null cancels block placement
             return null;
         }
 
@@ -411,7 +417,7 @@ public final class Adder extends AbstractLogicMultiblock{
         return getInputActive(world, partPos, world.getBlockState(partPos),RelativeSide.BACK);
     }
 
-    private BlockPos getAPos(World world, BlockPos mainPos, BlockState mainState){
+    private BlockPos getAPos(WorldView world, BlockPos mainPos, BlockState mainState){
         boolean mirrored = mainState.get(MIRRORED);
         if(mirrored) {
             return mainPos.offset(mainState.get(FACING).rotateYCounterclockwise());
@@ -421,7 +427,7 @@ public final class Adder extends AbstractLogicMultiblock{
         }
     }
 
-    private BlockPos getBPos(World world, BlockPos mainPos, BlockState mainState){
+    private BlockPos getBPos(WorldView world, BlockPos mainPos, BlockState mainState){
         boolean mirrored = mainState.get(MIRRORED);
         if(mirrored) {
             return mainPos.offset(mainState.get(FACING).rotateYClockwise());
