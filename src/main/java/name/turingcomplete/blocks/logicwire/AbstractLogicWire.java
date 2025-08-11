@@ -129,7 +129,7 @@ public abstract class AbstractLogicWire extends AbstractSimpleLogicBlock {
     @Override
     protected int getStrongRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction toThisDirection)
     {
-        return getWeakRedstonePower(state, world, pos, toThisDirection);
+        return 0;
     }
 
     @Override
