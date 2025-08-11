@@ -116,7 +116,7 @@ public abstract class AbstractLogicMultiblock extends AbstractLogicBlock {
 
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        if (!canPlaceAt(state,world, pos)) {
+        if (!state.canPlaceAt(world, pos)) {
             BlockPos mainPos = getMainPos(world, state, pos);
             //invalid multiblock
             if (mainPos == null) {

@@ -351,9 +351,9 @@ public final class Adder extends AbstractLogicMultiblock{
         BlockState bState = getBPlacementState(facing);
 
         if (
-            !canPlaceAt(mainState, world, mainPos) ||
-            !canPlaceAt(bState, world, bPos) ||
-            !canPlaceAt(aState, world, aPos) ||
+            !mainState.canPlaceAt(world, mainPos) ||
+            !bState.canPlaceAt(world, bPos) ||
+            !aState.canPlaceAt(world, aPos) ||
             //canPlaceAt assumes position is not occupied, but that is only known true for mainPos
             world.getBlockState(aPos).getBlock() != Blocks.AIR ||
             world.getBlockState(bPos).getBlock() != Blocks.AIR
