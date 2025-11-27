@@ -20,5 +20,6 @@
   "block.turingcomplete.sr_latch_block" : "Bloque SR Latch",
   "block.turingcomplete.jk_latch_block" : "Bloque JK Latch",
   "block.turingcomplete.t_latch_block" : "Bloque T Latch",
+  "block.turingcomplete.truth_table_block" : "Mesa de Verdad",
   "itemGroup.turingcomplete.group" : "Turing Complete"
 }
