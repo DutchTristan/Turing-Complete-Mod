@@ -1,3 +1,3 @@
 {
-  "parent": "turingcomplete:block/logic_base_plate_block"
+  "parent": "turingcomplete:block/logic_plate/empty"
 }

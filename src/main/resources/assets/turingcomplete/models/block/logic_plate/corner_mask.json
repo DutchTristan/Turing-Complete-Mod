@@ -1,0 +1,15 @@
+{
+    "textures":{
+        "mask": "turingcomplete:block/logic_plate/logic_base_plate_corner_mask"
+    },
+    "elements":[
+		{
+			"from": [0, 2, 0],
+			"to": [16, 2, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 2, 0]},
+			"faces": {
+				"up": {"uv": [0, 0, 16, 16], "texture": "#mask", "tintindex": 0}
+			}
+		}
+    ]
+}

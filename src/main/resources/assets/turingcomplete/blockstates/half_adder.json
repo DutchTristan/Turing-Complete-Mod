@@ -1,5 +1,4 @@
 {
-  "render_type": "cutout",
   "variants": {
     "facing=north,powered=false,swapped_direction=false,part=top": {
       "model" : "turingcomplete:block/adders/half_adder_top", "y": 180

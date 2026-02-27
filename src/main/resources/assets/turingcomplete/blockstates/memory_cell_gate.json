@@ -1,5 +1,4 @@
 {
-  "render_type": "cutout",
   "variants": {
     "facing=north,powered=false,enabled=false,swapped_direction=false": {
       "model" : "turingcomplete:block/memory_cell_block", "y": 180
