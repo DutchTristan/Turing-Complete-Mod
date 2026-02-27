@@ -9,7 +9,14 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 public class VanillaWireUpdateStrategy extends WireUpdateStrategy{
-    public void onNeighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    public void onNeighborUpdate(
+        BlockState state,
+        World world,
+        BlockPos pos,
+        Optional<Block> sourceBlock,
+        Optional<BlockPos> sourcePos,
+        boolean notify
+    ) {
         TuringComplete.LOGGER.trace("wire updated at "+pos+" from "+sourcePos);
         Block block = state.getBlock();
         Optional<LogicWireAdapter<? extends Block>> maybeAdapter = getAdapter(block);

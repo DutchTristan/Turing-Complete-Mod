@@ -9,7 +9,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class WireUpdateStrategy {
-    public abstract void onNeighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify);
+    public abstract void onNeighborUpdate(
+        BlockState state,
+        World world, BlockPos pos,
+        Optional<Block> sourceBlock,
+        Optional<BlockPos> sourcePos,
+        boolean notify);
 
     //TODO: use a registry so blocks from other mods can integrate
     protected static Optional<LogicWireAdapter<? extends Block>> getAdapter(Block block){

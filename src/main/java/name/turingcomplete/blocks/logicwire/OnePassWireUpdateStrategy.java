@@ -12,7 +12,14 @@ import net.minecraft.world.World;
 public class OnePassWireUpdateStrategy extends WireUpdateStrategy {
 
     @Override
-    public void onNeighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
+    public void onNeighborUpdate(
+        BlockState state,
+        World world,
+        BlockPos pos,
+        Optional<Block> sourceBlock,
+        Optional<BlockPos> sourcePos,
+        boolean notify
+    ) {
         TuringComplete.LOGGER.trace("wire updated at "+pos+" from "+sourcePos);
         Block block = state.getBlock();
         Optional<LogicWireAdapter<? extends Block>> maybeAdapter = getAdapter(block);
@@ -39,7 +46,7 @@ public class OnePassWireUpdateStrategy extends WireUpdateStrategy {
                             // and thus has power from elsewhere we should honor
                             connectedStrength.get() >= oldStrength || 
                             // algorithm invariant: if the update source is a logic wire, then that logic wire is powered not by us
-                            connectedPos.equals(sourcePos)
+                            (sourcePos.isPresent() && connectedPos.equals(sourcePos.get()))
                         ) &&
                         connectedStrength.get() -1 > newStrength
                     ){
@@ -82,13 +89,13 @@ public class OnePassWireUpdateStrategy extends WireUpdateStrategy {
                                 //skip update if neighbor is already consistent with it and us being unpowered
                                 (neighborStrength.get()==0 && newStrength == 0) ||
                                 //skip update for source if it is still consistent with us being powered by it
-                                (connectedPos.equals(sourcePos) && newStrength == neighborStrength.get()-1)
+                                (sourcePos.isPresent() && connectedPos.equals(sourcePos.get()) && newStrength == neighborStrength.get()-1)
                             )
                         ){
                             world.updateNeighbor(connectedPos, block, pos);
                         }
                     }
-                    else if(!connectedPos.equals(sourcePos)){
+                    else if(!(sourcePos.isPresent() && connectedPos.equals(sourcePos.get()))){
                         world.updateNeighbor(connectedPos, block, pos);
                     }
                 }

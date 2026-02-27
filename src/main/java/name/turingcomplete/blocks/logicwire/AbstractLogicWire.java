@@ -11,10 +11,12 @@ import name.turingcomplete.blocks.AbstractSimpleLogicBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
@@ -35,6 +37,9 @@ import net.minecraft.world.World;
  * Without this registry, transitioning between TC and third-party wires will cause redstone signals to continue 1 block extra
  */
 public abstract class AbstractLogicWire extends AbstractSimpleLogicBlock {
+    //should not be changed during a block update
+    public static WireUpdateStrategy WireUpdateStrategy= new VanillaWireUpdateStrategy();
+
     //immutable
     //set in appendProperties because it is needed in super constructor
     //cannot use explicit =null because that will run after the super constructor, and thus erase
@@ -92,6 +97,11 @@ public abstract class AbstractLogicWire extends AbstractSimpleLogicBlock {
     }
 
     @Override
+    protected int getOutputDelay(BlockState state){
+        return 0;
+    }
+
+    @Override
     @MustBeInvokedByOverriders
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
@@ -123,7 +133,13 @@ public abstract class AbstractLogicWire extends AbstractSimpleLogicBlock {
 
         super.neighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
 
-        new OnePassWireUpdateStrategy().onNeighborUpdate(state, world, pos, sourceBlock, sourcePos, notify);
+        WireUpdateStrategy.onNeighborUpdate(
+            state,
+            world,
+            pos,
+            Optional.of(sourceBlock),
+            Optional.of(sourcePos),
+            notify);
     }    
     
     @Override
@@ -153,5 +169,16 @@ public abstract class AbstractLogicWire extends AbstractSimpleLogicBlock {
         }
         //not connected
         return 0;
+    }
+
+    @Override
+    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        WireUpdateStrategy.onNeighborUpdate(
+            state,
+            world,
+            pos,
+            Optional.empty(),
+            Optional.empty(),
+            false);
     }
 }
