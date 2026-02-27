@@ -1,11 +1,12 @@
 package name.turingcomplete.blocks.block;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import name.turingcomplete.TuringComplete;
 import name.turingcomplete.blocks.logicwire.AbstractLogicWire;
 import net.minecraft.block.*;
-import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
@@ -28,15 +29,10 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicWire {
         POWER_Z = signalStrengthProperties.get(POWER_Z_INDEX);
         POWER_X = signalStrengthProperties.get(POWER_X_INDEX);
     }
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
-        builder.add(POWER_X,POWER_Z);
-    }
+
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext ctx) {
         return Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0);
     }
-
 
     public static int getWireColor(BlockState state, int tintIndex) {
         OmniDirectionalRedstoneBridgeBlock block = (OmniDirectionalRedstoneBridgeBlock)state.getBlock();
@@ -50,6 +46,11 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicWire {
     public static int getWireColor(BlockState state, IntProperty property) {
         Vec3d vec3d = COLORS[state.get(property)];
         return MathHelper.packRgb((float)vec3d.getX(), (float)vec3d.getY(), (float)vec3d.getZ());
+    }
+
+    @Override
+    protected int maxSignalCount(){
+        return 2;
     }
 
     @Override
@@ -70,6 +71,23 @@ public class OmniDirectionalRedstoneBridgeBlock extends AbstractLogicWire {
         else {
             return Optional.empty();
         }
+    }
+
+    @Override
+    protected List<BlockPos> getConnectedBlocks(BlockPos pos, BlockState state, int signalIndex){
+        List<BlockPos> positions = new ArrayList<>(2);
+        switch(signalIndex){
+            case POWER_X_INDEX:
+                positions.add(pos.offset(Direction.EAST));
+                positions.add(pos.offset(Direction.WEST));
+                break;
+            case POWER_Z_INDEX:
+                positions.add(pos.offset(Direction.NORTH));
+                positions.add(pos.offset(Direction.SOUTH));
+                break;
+            default:
+        }
+        return positions;
     }
 
     @Override

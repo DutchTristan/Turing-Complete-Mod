@@ -92,7 +92,7 @@ public class RedstoneWireBlockMixin {
         } // else:
 
         // if blocks is a redstone wire, return it's power with a falloff
-        if (source.getBlock() instanceof AbstractLogicWire) return source.getWeakRedstonePower(world,pos,direction) -1;
+        //if (source.getBlock() instanceof AbstractLogicWire) return source.getWeakRedstonePower(world,pos,direction) -1;
 
         // else get weak power emitted from the block
         return source.getWeakRedstonePower(world,pos,direction);
