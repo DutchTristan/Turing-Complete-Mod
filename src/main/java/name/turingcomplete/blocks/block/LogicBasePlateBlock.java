@@ -89,25 +89,31 @@ public class LogicBasePlateBlock extends AbstractLogicWire {
             }
         }
 
+        ItemStack mainHandStack = player.getMainHandStack();
         BooleanProperty connectionProperty = getPropertyFromDirection(hit_direction);
         boolean already_connected = state.get(connectionProperty);
         if(!already_connected){
             //add connection
             //need redstone to apply
-            if(player.getMainHandStack().getItem() != Items.REDSTONE){
+            if(mainHandStack.getItem() != Items.REDSTONE){
                 return ActionResult.PASS;
             }
             //consume redstone
             if(!player.isCreative()){
-                player.getMainHandStack().decrement(1);
+                mainHandStack.decrement(1);
             }
             world.setBlockState(pos,state.with(connectionProperty,true));
         }
         else{
             //remove connection
             if(!player.isCreative()){
-                if(player.getMainHandStack().getItem() == Items.REDSTONE){
-                    player.getMainHandStack().increment(1);
+                if(mainHandStack.getItem() == Items.REDSTONE){
+                    if(mainHandStack.getCount() < mainHandStack.getMaxCount()){
+                        mainHandStack.increment(1);
+                    }
+                    else {
+                        player.giveItemStack(new ItemStack(Items.REDSTONE, 1));
+                    }
                 }
                 else if(player.isSneaking()){
                     player.giveItemStack(new ItemStack(Items.REDSTONE, 1));
