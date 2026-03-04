@@ -19,7 +19,7 @@ public class TruthTableBlockEntity extends BlockEntity implements NamedScreenHan
 
     @Override
     public Text getDisplayName() {
-        return Text.literal("Truth Table");
+        return Text.translatable("block.turingcomplete.truth_table_block");
     }
 
     @Override
